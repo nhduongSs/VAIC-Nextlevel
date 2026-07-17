@@ -1,0 +1,71 @@
+{
+  "doc_number": "48/2014/TT-NHNN",
+  "item_id": "47237",
+  "source": "vbpl.vn Lược đồ tab",
+  "source_url": "https://vbpl.vn/van-ban/chi-tiet/thong-tu-so-48-2014-tt-nhnn-quy-dinh-viec-phat-ngon-va-cung-cap-thong-tin-cua-ngan-hang-nha-nuoc-viet-nam--47237?tabs=luoc-do",
+  "relations": {
+    "duoc_huong_dan": {
+      "label_vi": "Văn bản được hướng dẫn (văn bản quy định chi tiết, hướng dẫn thi hành văn bản này)",
+      "direction": "incoming",
+      "documents": []
+    },
+    "sua_doi_bo_sung": {
+      "label_vi": "Văn bản sửa đổi bổ sung (văn bản này sửa đổi, bổ sung các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "bi_dinh_chinh": {
+      "label_vi": "Văn bản bị đính chính (văn bản khác đính chính văn bản này)",
+      "direction": "incoming",
+      "documents": []
+    },
+    "bi_thay_the": {
+      "label_vi": "Văn bản bị thay thế (văn bản khác thay thế văn bản này)",
+      "direction": "incoming",
+      "documents": [
+        {"doc_number": "26/2020/TT-NHNN", "title": "Thông tư số 26/2020/TT-NHNN Quy định việc phát ngôn và cung cấp thông tin của Ngân hàng Nhà nước Việt Nam"}
+      ]
+    },
+    "duoc_dan_chieu": {
+      "label_vi": "Văn bản được dẫn chiếu (văn bản này dẫn chiếu đến các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "duoc_can_cu": {
+      "label_vi": "Căn cứ ban hành (văn bản làm căn cứ pháp lý ban hành văn bản này)",
+      "direction": "outgoing",
+      "documents": [
+        {"doc_number": "25/2013/QĐ-TTg", "title": "Quyết định số 25/2013/QĐ-TTg Ban hành Quy chế phát ngôn và cung cấp thông tin cho báo chí"},
+        {"doc_number": "47/2010/QH12", "title": "Luật Các tổ chức tín dụng số 47/2010/QH12"},
+        {"doc_number": "46/2010/QH12", "title": "Luật Ngân hàng Nhà nước Việt Nam số 46/2010/QH12"}
+      ]
+    },
+    "huong_dan": {
+      "label_vi": "Văn bản được quy định chi tiết, hướng dẫn thi hành (văn bản này hướng dẫn thi hành các văn bản khác)",
+      "direction": "outgoing",
+      "documents": [
+        {"doc_number": "25/2013/QĐ-TTg", "title": "Quyết định số 25/2013/QĐ-TTg Ban hành Quy chế phát ngôn và cung cấp thông tin cho báo chí"},
+        {"doc_number": "47/2010/QH12", "title": "Luật Các tổ chức tín dụng số 47/2010/QH12"},
+        {"doc_number": "46/2010/QH12", "title": "Luật Ngân hàng Nhà nước Việt Nam số 46/2010/QH12"}
+      ]
+    },
+    "hop_nhat": {
+      "label_vi": "Văn bản được hợp nhất (văn bản này hợp nhất các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "dinh_chinh": {
+      "label_vi": "Văn bản được đính chính (văn bản này đính chính các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "thay_the": {
+      "label_vi": "Văn bản được thay thế (văn bản này thay thế các văn bản khác)",
+      "direction": "outgoing",
+      "documents": [
+        {"doc_number": "18/2012/TT-NHNN", "title": "Thông tư số 18/2012/TT-NHNN Sửa đổi thời hạn công bố một số thông tin quy định tại Thông tư số 35/2011/TT-NHNN ngày 11/11/2011 của Ngân hàng Nhà nước quy định việc công bố và cung cấp thông tin của Ngân hàng Nhà nước"},
+        {"doc_number": "35/2011/TT-NHNN", "title": "Thông tư số 35/2011/TT-NHNN Quy định việc công bố và cung cấp thông tin của Ngân hàng Nhà nước"}
+      ]
+    }
+  }
+}
