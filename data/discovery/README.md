@@ -132,6 +132,15 @@ PR #4) — toàn bộ 50 entry cũ bị gãy path nếu ai đó thử mở file 
 
 ## 4. Đề xuất mapping vào `data/raw/<loai>/` (4 thư mục brief gợi ý)
 
+> **✅ ĐÃ THỰC HIỆN 2026-07-18**: 14 văn bản trong scope đã được convert sang `data/raw/`
+> bằng `data/discovery/convert_to_raw.py` (chạy `py data/discovery/convert_to_raw.py` từ repo
+> root để tái sinh). Layout cuối: `lai_suat/` (3), `rut_truoc_han/` (1), `bao_hiem/` (6),
+> `to_chuc_tin_dung/` (2), `ngoai_hoi/` (2) — tổng 474 Điều, đã validate bằng chính
+> `document_loader.py` của backend (14/14 văn bản parse được, 0 chunk rỗng). 3 văn bản loại
+> khỏi scope: TT 48/2014, TT 48/2025, VBHN 28/2023 (lý do ở bảng dưới). Lưu ý: 2 file schema A
+> (TT 48/2018, 48/2024) có heading `## Điều N.` trần không kèm tiêu đề (blob gốc không có xuống
+> dòng nên không tách được tiêu đề) — tiêu đề vẫn nằm trong content nên vector search không mất.
+
 17 văn bản pháp lý không chia đều 4 thư mục gợi ý trong docstring `scripts/ingest.py`
 (`lai_suat`, `rut_truoc_han`, `kyc`, `bao_hiem`) — đề xuất:
 
