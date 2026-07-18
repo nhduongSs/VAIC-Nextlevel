@@ -28,7 +28,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        "synapse-gradient": "linear-gradient(135deg, hsl(258 90% 66%) 0%, hsl(217 91% 60%) 100%)",
+        "synapse-gradient": "linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(226 71% 40%) 100%)",
       },
     },
   },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type KeyboardEvent } from "react";
+import { Send } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
@@ -40,6 +41,7 @@ export function MessageInput({ disabled, onSend }: MessageInputProps) {
       />
       <Button onClick={handleSubmit} disabled={disabled || !value.trim()}>
         Gửi
+        <Send className="h-4 w-4" aria-hidden="true" />
       </Button>
     </div>
   );
