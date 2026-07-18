@@ -26,6 +26,27 @@ log: structlog.stdlib.BoundLogger = structlog.get_logger(__name__)
 
 _MAX_QUERY_LENGTH = 1000
 
+_BUSINESS_KEYWORDS = ("doanh nghiệp", "công ty", "tổ chức")
+_BANK_NAMES = (
+    "Vietcombank", "VietinBank", "BIDV", "Agribank", "Techcombank",
+    "MBBank", "ACB", "VPBank", "Sacombank", "TPBank", "HDBank",
+    "SCB", "OCB", "MSB", "SeABank", "Eximbank", "VIB", "SHB",
+    "LienVietPostBank",
+)
+
+
+def _infer_filters(query: str) -> SearchFilters:
+    """Intent routing tối thiểu: keyword trên query, không cần LLM (48h scope)."""
+    q = query.lower()
+    filters = SearchFilters(exclude_expired=True)
+    if any(kw in q for kw in _BUSINESS_KEYWORDS):
+        filters.doi_tuong = "doanh_nghiep"
+    for bank in _BANK_NAMES:
+        if bank.lower() in q:
+            filters.bank = bank
+            break
+    return filters
+
 
 class RAGService:
     """Orchestrates the retrieval pipeline: validate → filter → hybrid search."""
@@ -65,6 +86,8 @@ class RAGService:
     ) -> list[SearchResult]:
         """Retrieve chunks using hybrid search."""
         self._validate_query(query)
+        if filters is None:
+            filters = _infer_filters(query)
         alpha = (
             vector_weight if vector_weight is not None else settings.SEARCH_HYBRID_ALPHA
         )

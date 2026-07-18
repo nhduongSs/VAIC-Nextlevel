@@ -15,7 +15,7 @@ from uuid import UUID
 
 import httpx
 import structlog
-from sqlalchemy import ColumnElement, Float, cast, func, select, text
+from sqlalchemy import ColumnElement, Float, cast, func, or_, select, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -120,6 +120,9 @@ class SearchFilters:
     document_ids: list[UUID] = field(default_factory=list)
     bank: str | None = None
     category: str | None = None
+    exclude_expired: bool = True
+    doc_class: str | None = None
+    doi_tuong: str | None = None
 
 
 @dataclass
@@ -186,6 +189,26 @@ class MetadataFilter:
         if filters.category:
             conditions.append(
                 DocumentModel.metadata_extra["category"].astext == filters.category
+            )
+
+        if filters.exclude_expired:
+            conditions.append(
+                or_(
+                    DocumentModel.metadata_extra["legal_status"].astext.is_(None),
+                    DocumentModel.metadata_extra["legal_status"].astext != "het_hieu_luc",
+                )
+            )
+
+        if filters.doc_class:
+            conditions.append(
+                DocumentModel.metadata_extra["doc_class"].astext == filters.doc_class
+            )
+
+        if filters.doi_tuong:
+            conditions.append(
+                DocumentModel.metadata_extra["doi_tuong_ap_dung"].op("@>")(
+                    cast([filters.doi_tuong], JSONB)
+                )
             )
 
         return conditions

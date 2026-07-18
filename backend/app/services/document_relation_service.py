@@ -594,7 +594,16 @@ class DocumentRelationService:
         return chunks
 
     def detect_conflicts(self, chunks: list[SearchResult]) -> list[ConflictInfo]:
-        """Simple heuristic conflict detection between chunk pairs."""
+        """Simple heuristic conflict detection between chunk pairs.
+
+        Not wired into process()/_build_pipeline() — the live chat flow uses
+        ConflictDetectionProcessor instead, which only flags explicit
+        CONFLICTS_WITH document_relations rows. This method is exercised only
+        by unit tests. Corpus docs sharing an Điều title (e.g. "Điều 1. Phạm
+        vi điều chỉnh") across unrelated văn bản would false-positive here if
+        this were ever wired up — guard with same-category or an explicit
+        relation before doing so.
+        """
         conflicts: list[ConflictInfo] = []
         for a, b in combinations(chunks, 2):
             if a.document_id == b.document_id:
