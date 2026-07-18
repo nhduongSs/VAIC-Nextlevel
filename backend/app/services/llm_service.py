@@ -25,7 +25,10 @@ QUY TẮC BẮT BUỘC:
 
 class LLMService:
     def __init__(self):
-        self._client = OpenAI(api_key=settings.deepseek_api_key, base_url=settings.deepseek_base_url)
+        self._client = OpenAI(
+            api_key=settings.DEEPSEEK_API_KEY,
+            base_url=settings.DEEPSEEK_BASE_URL,
+        )
 
     def generate_answer(self, question: str, context_block: str, conflict_block: str = "") -> str:
         user_content = (
@@ -34,9 +37,9 @@ class LLMService:
             f"CÂU HỎI CỦA KHÁCH HÀNG:\n{question}"
         )
         response = self._client.chat.completions.create(
-            model=settings.llm_model,
-            max_tokens=settings.llm_max_tokens,
-            temperature=settings.llm_temperature,
+            model=settings.LLM_MODEL,
+            max_tokens=settings.LLM_MAX_TOKENS,
+            temperature=settings.LLM_TEMPERATURE,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},
