@@ -1,0 +1,11 @@
+line-length = 120
+target-version = "py311"
+
+[lint]
+# E/W: pycodestyle, F: pyflakes, N: naming, UP: pyupgrade
+select = ["E", "F", "N", "W", "UP"]
+# Ignore các rule mà code hiện tại chưa đạt — PR CI/CD không sửa file ngoài phạm vi.
+# Khi nào format/dọn codebase (PR riêng) thì bỏ ignore và thêm "I" (isort) vào select:
+#   UP042: class X(str, Enum) -> StrEnum (unsafe fix, đổi hành vi str() của enum)
+#   UP037: bỏ quote trong type annotation
+ignore = ["UP042", "UP037"]
