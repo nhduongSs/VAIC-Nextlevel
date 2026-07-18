@@ -1,0 +1,84 @@
+{
+  "doc_number": "24/2014/TT-NHNN",
+  "item_id": "44192",
+  "title": "Thông tư số 24/2014/TT-NHNN Hướng dẫn một số nội dung về hoạt động bảo hiểm tiền gửi",
+  "eff_from": "2014-10-24T00:00:00",
+  "eff_to": "2026-05-01T00:00:00",
+  "eff_status": "Hết hiệu lực toàn bộ",
+  "source": "vbpl-bientap-gateway.moj.gov.vn API (references field) — NOT the full Luoc do tab, incoming-direction relations (duoc_huong_dan, bi_thay_the, sua_doi_bo_sung, bi_dinh_chinh) are not available via this API and are omitted",
+  "source_url": "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-luocdo.aspx?ItemID=44192",
+  "api_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/44192",
+  "relations": {
+    "duoc_can_cu": {
+      "label_vi": "Căn cứ ban hành (văn bản làm căn cứ pháp lý ban hành văn bản này)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "46/2010/QH12",
+          "title": "Luật Ngân hàng Nhà nước Việt Nam số 46/2010/QH12"
+        },
+        {
+          "doc_number": "47/2010/QH12",
+          "title": "Luật Các tổ chức tín dụng số 47/2010/QH12"
+        },
+        {
+          "doc_number": "156/2013/NĐ-CP",
+          "title": "Nghị định số 156/2013/NĐ-CP Quy định chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức của Ngân hàng Nhà nước Việt Nam"
+        },
+        {
+          "doc_number": "68/2013/NĐ-CP",
+          "title": "Nghị định số 68/2013/NĐ-CP Quy định chi tiết và hướng dẫn thi hành Luật Bảo hiểm tiền gửi"
+        },
+        {
+          "doc_number": "06/2012/QH13",
+          "title": "Luật Bảo hiểm tiền gửi số 06/2012/QH13"
+        }
+      ]
+    },
+    "huong_dan": {
+      "label_vi": "Văn bản được quy định chi tiết, hướng dẫn thi hành (văn bản này hướng dẫn thi hành các văn bản khác)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "46/2010/QH12",
+          "title": "Luật Ngân hàng Nhà nước Việt Nam số 46/2010/QH12"
+        },
+        {
+          "doc_number": "47/2010/QH12",
+          "title": "Luật Các tổ chức tín dụng số 47/2010/QH12"
+        },
+        {
+          "doc_number": "06/2012/QH13",
+          "title": "Luật Bảo hiểm tiền gửi số 06/2012/QH13"
+        },
+        {
+          "doc_number": "68/2013/NĐ-CP",
+          "title": "Nghị định số 68/2013/NĐ-CP Quy định chi tiết và hướng dẫn thi hành Luật Bảo hiểm tiền gửi"
+        }
+      ]
+    },
+    "thay_the": {
+      "label_vi": "Văn bản được thay thế (văn bản này thay thế các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "khac_chua_phan_loai": {
+      "label_vi": "Quan hệ khác chưa phân loại rõ từ API (referenceType ngoài {3,9,12}) — cần đối chiếu thủ công với tab Lược đồ trên vbpl.vn",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "06/2012/QH13",
+          "title": "Luật Bảo hiểm tiền gửi số 06/2012/QH13"
+        },
+        {
+          "doc_number": "03/2006/TT-NHNN",
+          "title": "Thông tư số 03/2006/TT-NHNN Về việc hướng dẫn một số nội dung tại Nghị định số 89/1999/NĐ-CP ngày 01/9/1999 của Chính phủ về bảo hiểm tiền gửi và Nghị định số 109/2005/NĐ-CP ngày 24/8/2005 của Chính phủ về việc sửa đổi, bổ sung một số điều của Nghị định số 89/1999/NĐ-CP"
+        },
+        {
+          "doc_number": "68/2013/NĐ-CP",
+          "title": "Nghị định số 68/2013/NĐ-CP Quy định chi tiết và hướng dẫn thi hành Luật Bảo hiểm tiền gửi"
+        }
+      ]
+    }
+  }
+}

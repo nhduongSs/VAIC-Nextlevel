@@ -1,0 +1,47 @@
+{
+  "doc_number": "28/2005/PL-UBTVQH11",
+  "item_id": "16868",
+  "title": "Pháp lệnh số 28/2005/PL-UBTVQH11 Ngoại hối",
+  "eff_from": "2006-06-01T00:00:00",
+  "eff_to": null,
+  "eff_status": "Còn hiệu lực",
+  "source": "vbpl-bientap-gateway.moj.gov.vn API (references field) — NOT the full Luoc do tab, incoming-direction relations (duoc_huong_dan, bi_thay_the, sua_doi_bo_sung, bi_dinh_chinh) are not available via this API and are omitted",
+  "source_url": "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-luocdo.aspx?ItemID=16868",
+  "api_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/16868",
+  "relations": {
+    "duoc_can_cu": {
+      "label_vi": "Căn cứ ban hành (văn bản làm căn cứ pháp lý ban hành văn bản này)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "42/2005/QH11",
+          "title": "Luật Sửa đổi, bổ sung một số điều của Luật Hải quan số 42/2005/QH11"
+        },
+        {
+          "doc_number": "Không số",
+          "title": "Hiến pháp năm 1992 (sửa đổi, bổ sung năm 2001)"
+        }
+      ]
+    },
+    "huong_dan": {
+      "label_vi": "Văn bản được quy định chi tiết, hướng dẫn thi hành (văn bản này hướng dẫn thi hành các văn bản khác)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "Không số",
+          "title": "Hiến pháp năm 1992 (sửa đổi, bổ sung năm 2001)"
+        }
+      ]
+    },
+    "thay_the": {
+      "label_vi": "Văn bản được thay thế (văn bản này thay thế các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "khac_chua_phan_loai": {
+      "label_vi": "Quan hệ khác chưa phân loại rõ từ API (referenceType ngoài {3,9,12}) — cần đối chiếu thủ công với tab Lược đồ trên vbpl.vn",
+      "direction": "outgoing",
+      "documents": []
+    }
+  }
+}

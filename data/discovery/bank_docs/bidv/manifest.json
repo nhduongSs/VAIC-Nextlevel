@@ -1,0 +1,55 @@
+[
+  {
+    "bank": "BIDV",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "ca_nhan",
+    "title": "Lãi suất tiền gửi cá nhân theo kỳ hạn (Hà Nội & TP.HCM, VND/USD/JPY/EUR)",
+    "source_url": "https://bidv.com.vn/vn/tra-cuu-lai-suat/",
+    "api_url": "https://bidv.com.vn/ServicesBIDV/InterestDetailServlet",
+    "file_type": "json",
+    "local_path": "pages/lai_suat_ca_nhan_20260713.json",
+    "crawl_date": "2026-07-18",
+    "notes": "Dữ liệu ngày 13/04/2026 theo trường day_vi trong JSON — không phải ngày crawl. Đây là API AJAX công khai (POST rỗng) mà trang web dùng để tải bảng lãi suất động."
+  },
+  {
+    "bank": "BIDV",
+    "category": "bieu_phi",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu phí dịch vụ khách hàng cá nhân (áp dụng từ 10/05/2025) — bao gồm phí quản lý tài khoản, gửi/rút tiền mặt, tiết kiệm",
+    "source_url": "https://bidv.com.vn/vn/tra-cuu-lai-suat/",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_phi_dich_vu_ca_nhan_2025-05-10.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "BIDV",
+    "category": "bieu_phi",
+    "customer_segment": "doanh_nghiep",
+    "title": "Biểu phí dịch vụ tài khoản áp dụng cho khách hàng tổ chức (KHTC)",
+    "source_url": "https://bidv.com.vn/vn/doanh-nghiep/cong-cu-tien-ich/bieu-phi",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_phi_tai_khoan_doanh_nghiep.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "BIDV",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "Điều khoản, điều kiện về mở và sử dụng tài khoản thanh toán dành cho khách hàng cá nhân (108 trang, bao gồm điều khoản tiền gửi)",
+    "source_url": "https://bidv.com.vn/bidv/ca-nhan/thong-bao/tien-gui/dieu-kien-dieu-khoan-ve-mo-va-su-dung-tai-khoan-danh-cho-khcn",
+    "file_type": "pdf",
+    "local_path": "pdfs/dieu_khoan_dieu_kien_tk_thanh_toan_ca_nhan.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "BIDV",
+    "category": "thu_tuc_mo_so",
+    "customer_segment": "ca_nhan",
+    "title": "Sản phẩm tiết kiệm (thường/tích lũy), số tiền tối thiểu, kỳ hạn, thủ tục mở sổ, quy tắc rút trước hạn",
+    "source_url": "https://bidv.com.vn/bidv/bidv-blog/tien-gui/gui-tiet-kiem-hang-thang",
+    "file_type": "markdown_summary",
+    "local_path": "pages/thu_tuc_mo_so_tiet_kiem.md",
+    "crawl_date": "2026-07-18",
+    "notes": "Tóm tắt qua WebFetch, không phải bản snapshot HTML gốc — dùng để trả lời nhanh, nên đối chiếu lại trang gốc nếu cần trích dẫn chính xác."
+  }
+]

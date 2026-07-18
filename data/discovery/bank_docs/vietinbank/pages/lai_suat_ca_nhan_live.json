@@ -1,0 +1,142 @@
+[
+  {
+    "term_vi": "Không kỳ hạn",
+    "vnd_rate": "0.1",
+    "usd_rate": "0",
+    "eur_rate": "0.1",
+    "date_created": "2026-04-12T17:00:00.595Z"
+  },
+  {
+    "term_vi": "Dưới 1 tháng",
+    "vnd_rate": "0.2",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:00.617Z"
+  },
+  {
+    "term_vi": "Từ 1 tháng đến dưới 2 tháng",
+    "vnd_rate": "2.1",
+    "usd_rate": "0",
+    "eur_rate": "0.4",
+    "date_created": "2026-04-12T17:00:00.652Z"
+  },
+  {
+    "term_vi": "Từ 2 tháng đến dưới 3 tháng",
+    "vnd_rate": "2.1",
+    "usd_rate": "0",
+    "eur_rate": "0.4",
+    "date_created": "2026-04-12T17:00:00.698Z"
+  },
+  {
+    "term_vi": "Từ 3 tháng đến dưới 4 tháng",
+    "vnd_rate": "2.4",
+    "usd_rate": "0",
+    "eur_rate": "0.5",
+    "date_created": "2026-04-12T17:00:00.732Z"
+  },
+  {
+    "term_vi": "Từ 4 tháng đến dưới 5 tháng",
+    "vnd_rate": "2.4",
+    "usd_rate": "0",
+    "eur_rate": "0.5",
+    "date_created": "2026-04-12T17:00:00.782Z"
+  },
+  {
+    "term_vi": "Từ 5 tháng đến dưới 6 tháng",
+    "vnd_rate": "2.4",
+    "usd_rate": "0",
+    "eur_rate": "0.5",
+    "date_created": "2026-04-12T17:00:00.802Z"
+  },
+  {
+    "term_vi": "Từ 6 tháng đến dưới 7 tháng",
+    "vnd_rate": "3.5",
+    "usd_rate": "0",
+    "eur_rate": "0.5",
+    "date_created": "2026-04-12T17:00:00.825Z"
+  },
+  {
+    "term_vi": "Từ 7 tháng đến dưới 8 tháng",
+    "vnd_rate": "3.5",
+    "usd_rate": "0",
+    "eur_rate": "0.4",
+    "date_created": "2026-04-12T17:00:00.846Z"
+  },
+  {
+    "term_vi": "Từ 8 tháng đến dưới 9 tháng",
+    "vnd_rate": "3.5",
+    "usd_rate": "0",
+    "eur_rate": "0.4",
+    "date_created": "2026-04-12T17:00:00.866Z"
+  },
+  {
+    "term_vi": "Từ 9 tháng đến dưới 10 tháng",
+    "vnd_rate": "3.5",
+    "usd_rate": "0",
+    "eur_rate": "0.4",
+    "date_created": "2026-04-12T17:00:00.887Z"
+  },
+  {
+    "term_vi": "Từ 10 tháng đến dưới 11 tháng",
+    "vnd_rate": "3.5",
+    "usd_rate": "0",
+    "eur_rate": "0.4",
+    "date_created": "2026-04-12T17:00:00.908Z"
+  },
+  {
+    "term_vi": "Từ 11 tháng đến dưới 12 tháng",
+    "vnd_rate": "3.5",
+    "usd_rate": "0",
+    "eur_rate": "0.4",
+    "date_created": "2026-04-12T17:00:00.933Z"
+  },
+  {
+    "term_vi": "12 tháng",
+    "vnd_rate": "5.9",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:00.955Z"
+  },
+  {
+    "term_vi": "Trên 12 tháng đến 13 tháng",
+    "vnd_rate": "5.9",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:00.976Z"
+  },
+  {
+    "term_vi": "Trên 13 tháng đến dưới 18 tháng",
+    "vnd_rate": "5.9",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:00.998Z"
+  },
+  {
+    "term_vi": "Từ 18 tháng đến dưới 24 tháng",
+    "vnd_rate": "5.9",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:01.020Z"
+  },
+  {
+    "term_vi": "Từ 24 tháng đến dưới 36 tháng",
+    "vnd_rate": "6",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:01.048Z"
+  },
+  {
+    "term_vi": "36 tháng",
+    "vnd_rate": "6",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:01.072Z"
+  },
+  {
+    "term_vi": "Trên 36 tháng",
+    "vnd_rate": "6",
+    "usd_rate": "0",
+    "eur_rate": "0.3",
+    "date_created": "2026-04-12T17:00:01.096Z"
+  }
+]

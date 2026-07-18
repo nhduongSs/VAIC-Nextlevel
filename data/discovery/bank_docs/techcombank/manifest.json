@@ -1,0 +1,65 @@
+[
+  {
+    "bank": "Techcombank",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu lãi suất tiền gửi cá nhân — VND, đầy đủ 4 sản phẩm (Phát Lộc tại quầy, Phát Lộc Online, Rút gốc linh hoạt tại quầy, Rút gốc linh hoạt Online), phân theo hạng KH (Private/Priority/Inspire/Thường) và số dư (<1B/1-3B/3B+)",
+    "source_url": "https://techcombank.com/cong-cu-tien-ich/bieu-phi-lai-suat",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_lai_suat_tien_gui_tiet_kiem_2026-03-28.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "PDF chính thức từ domain techcombank.com, hiệu lực từ 28/03/2026 (khoảng 3.5 tháng trước ngày crawl — có thể đã có bản mới hơn, nên định kỳ kiểm tra lại). Trang HTML chính (AEM/Adobe Experience Manager) không nhúng dữ liệu trong HTML tĩnh và không dùng RSC/data-properties như VietinBank/Vietcombank — không dò được cơ chế client-fetch, phải tìm PDF thay thế qua tìm kiếm."
+  },
+  {
+    "bank": "Techcombank",
+    "category": "bieu_phi",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu phí dịch vụ tài khoản cho khách hàng thường",
+    "source_url": "https://techcombank.com/en/tools-utilities/fees-forms",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_phi_dich_vu_tai_khoan_kh_thuong.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "Techcombank",
+    "category": "bieu_phi",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu phí dịch vụ tiền gửi tiết kiệm riêng cho khách hàng thường",
+    "source_url": "https://techcombank.com/en/tools-utilities/fees-forms",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_phi_tien_gui_tiet_kiem_kh_thuong.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Có biểu phí riêng cho tiết kiệm (khác VietinBank/Vietcombank chỉ có phí tài khoản thanh toán chung)."
+  },
+  {
+    "bank": "Techcombank",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "Điều kiện, điều khoản kiêm thỏa thuận Tiền gửi Phát Lộc Online",
+    "source_url": "https://techcombank.com/content/dam/techcombank/public-site/imported-assets/DKDK-kiem-thoa-thuan-Tien-gui-Phat-loc-online-1fee3cbf51.pdf",
+    "file_type": "pdf",
+    "local_path": "pdfs/dkdk_tien_gui_phat_loc_online.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "Techcombank",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "3 sản phẩm tiền gửi có kỳ hạn (Thường/Phát Lộc/Trả lãi trước) — số tiền tối thiểu, kỳ hạn, rút trước hạn, đối tượng",
+    "source_url": "https://techcombank.com/en/personal/save/term-deposit",
+    "file_type": "markdown_summary",
+    "local_path": "pages/san_pham_tien_gui_co_ky_han.md",
+    "crawl_date": "2026-07-18",
+    "notes": "Điểm khác biệt quan trọng: Tiết kiệm Phát Lộc KHÔNG cho rút trước hạn — khác 4 ngân hàng quốc doanh (đều cho rút trước hạn với lãi suất không kỳ hạn)."
+  },
+  {
+    "bank": "Techcombank",
+    "category": "thu_tuc_mo_so",
+    "customer_segment": "ca_nhan",
+    "title": "Điều kiện mở tài khoản/sổ tiết kiệm (công dân VN/người nước ngoài cư trú hợp pháp, CMND/hộ chiếu, người giám hộ nếu dưới 15 tuổi)",
+    "source_url": "https://techcombank.com/en/tools-utilities/fees-forms",
+    "file_type": "markdown_summary",
+    "local_path": "pages/san_pham_tien_gui_co_ky_han.md",
+    "crawl_date": "2026-07-18"
+  }
+]
