@@ -155,6 +155,7 @@ async def compare_rates(
         grouped.setdefault(row.bank, []).append(
             BankRateItem(
                 term=row.term,
+                term_months=float(row.term_months) if row.term_months is not None else None,
                 rate_value=float(row.rate_value),
                 currency=row.currency,
                 customer_segment=row.customer_segment,

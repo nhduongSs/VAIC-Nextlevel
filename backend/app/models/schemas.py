@@ -516,7 +516,12 @@ class RetrieveHealthResponse(BaseModel):
 
 
 class BankRateItem(BaseModel):
-    term: str = Field(description="Kỳ hạn, ví dụ: '12 tháng', 'Không kỳ hạn'")
+    term: str = Field(description="Kỳ hạn hiển thị, ví dụ: '12 tháng', 'Không kỳ hạn'")
+    term_months: float | None = Field(
+        None,
+        description="Kỳ hạn dạng số (tháng) để sort/group/nối trực tiếp vào UI — "
+        "null cho 'Không kỳ hạn'. Dùng field này thay vì tự parse chuỗi `term`.",
+    )
     rate_value: float = Field(description="Lãi suất %/năm")
     currency: str = Field(description="Đơn vị tiền tệ, ví dụ: VND")
     customer_segment: str = Field(description="ca_nhan hoặc doanh_nghiep")
