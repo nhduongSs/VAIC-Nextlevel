@@ -1,0 +1,38 @@
+{
+  "doc_number": "32/2024/QH15",
+  "item_id": "166170",
+  "title": "Luật Các tổ chức tín dụng số 32/2024/QH15",
+  "eff_from": "2024-07-01T00:00:00",
+  "eff_to": null,
+  "eff_status": "Hết hiệu lực một phần",
+  "source": "vbpl-bientap-gateway.moj.gov.vn API (references field) — NOT the full Luoc do tab, incoming-direction relations (duoc_huong_dan, bi_thay_the, sua_doi_bo_sung, bi_dinh_chinh) are not available via this API and are omitted",
+  "source_url": "https://vbpl.vn/nganhangnhanuoc/pages/vbpq-luocdo.aspx?ItemID=166170",
+  "api_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/166170",
+  "relations": {
+    "duoc_can_cu": {
+      "label_vi": "Căn cứ ban hành (văn bản làm căn cứ pháp lý ban hành văn bản này)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "huong_dan": {
+      "label_vi": "Văn bản được quy định chi tiết, hướng dẫn thi hành (văn bản này hướng dẫn thi hành các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "thay_the": {
+      "label_vi": "Văn bản được thay thế (văn bản này thay thế các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "khac_chua_phan_loai": {
+      "label_vi": "Quan hệ khác chưa phân loại rõ từ API (referenceType ngoài {3,9,12}) — cần đối chiếu thủ công với tab Lược đồ trên vbpl.vn",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "12/2025/TT-NHNN",
+          "title": "Thông tư số 12/2025/TT-NHNN Sửa đổi, bổ sung một số điều của các Thông tư quy định hồ sơ, thủ tục cấp Giấy phép lần đầu của ngân hàng thương mại, chi nhánh ngân hàng nước ngoài, văn phòng đại diện nước ngoài, tổ chức tín dụng phi ngân hàng"
+        }
+      ]
+    }
+  }
+}

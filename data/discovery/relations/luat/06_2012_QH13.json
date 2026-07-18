@@ -1,0 +1,47 @@
+{
+  "doc_number": "06/2012/QH13",
+  "item_id": "27704",
+  "title": "Luật Bảo hiểm tiền gửi số 06/2012/QH13",
+  "eff_from": "2013-01-01T00:00:00",
+  "eff_to": "2026-05-01T00:00:00",
+  "eff_status": "Hết hiệu lực toàn bộ",
+  "source": "vbpl-bientap-gateway.moj.gov.vn API (references field) — NOT the full Luoc do tab, incoming-direction relations (duoc_huong_dan, bi_thay_the, sua_doi_bo_sung, bi_dinh_chinh) are not available via this API and are omitted",
+  "source_url": "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-luocdo.aspx?ItemID=27704",
+  "api_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/27704",
+  "relations": {
+    "duoc_can_cu": {
+      "label_vi": "Căn cứ ban hành (văn bản làm căn cứ pháp lý ban hành văn bản này)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "Không số",
+          "title": "Hiến pháp năm 1992"
+        },
+        {
+          "doc_number": "Không số",
+          "title": "Hiến pháp năm 1992 (sửa đổi, bổ sung năm 2001)"
+        }
+      ]
+    },
+    "huong_dan": {
+      "label_vi": "Văn bản được quy định chi tiết, hướng dẫn thi hành (văn bản này hướng dẫn thi hành các văn bản khác)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "Không số",
+          "title": "Hiến pháp năm 1992"
+        }
+      ]
+    },
+    "thay_the": {
+      "label_vi": "Văn bản được thay thế (văn bản này thay thế các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "khac_chua_phan_loai": {
+      "label_vi": "Quan hệ khác chưa phân loại rõ từ API (referenceType ngoài {3,9,12}) — cần đối chiếu thủ công với tab Lược đồ trên vbpl.vn",
+      "direction": "outgoing",
+      "documents": []
+    }
+  }
+}

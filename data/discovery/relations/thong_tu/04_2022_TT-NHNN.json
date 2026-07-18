@@ -1,0 +1,55 @@
+{
+  "doc_number": "04/2022/TT-NHNN",
+  "item_id": "154314",
+  "title": "Thông tư số 04/2022/TT-NHNN Quy định về việc áp dụng lãi suất rút trước hạn tiền gửi \ntại tổ chức tín dụng, chi nhánh ngân hàng nước ngoài",
+  "eff_from": "2022-08-01T00:00:00",
+  "eff_to": null,
+  "eff_status": "Hết hiệu lực một phần",
+  "source": "vbpl-bientap-gateway.moj.gov.vn API (references field) — NOT the full Luoc do tab, incoming-direction relations (duoc_huong_dan, bi_thay_the, sua_doi_bo_sung, bi_dinh_chinh) are not available via this API and are omitted",
+  "source_url": "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-luocdo.aspx?ItemID=154314",
+  "api_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/154314",
+  "relations": {
+    "duoc_can_cu": {
+      "label_vi": "Căn cứ ban hành (văn bản làm căn cứ pháp lý ban hành văn bản này)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "46/2010/QH12",
+          "title": "Luật Ngân hàng Nhà nước Việt Nam số 46/2010/QH12"
+        },
+        {
+          "doc_number": "17/2017/QH14",
+          "title": "Luật sửa đổi, bổ sung một số điều của Luật các tổ chức tín dụng số 17/2017/QH14"
+        },
+        {
+          "doc_number": "16/2017/NĐ-CP",
+          "title": "Nghị định số 16/2017/NĐ-CP Quy định chức năng, nhiệm vụ, quyền hạn và \ncơ cấu tổ chức của Ngân hàng Nhà nước Việt Nam"
+        },
+        {
+          "doc_number": "47/2010/QH12",
+          "title": "Luật Các tổ chức tín dụng số 47/2010/QH12"
+        }
+      ]
+    },
+    "huong_dan": {
+      "label_vi": "Văn bản được quy định chi tiết, hướng dẫn thi hành (văn bản này hướng dẫn thi hành các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "thay_the": {
+      "label_vi": "Văn bản được thay thế (văn bản này thay thế các văn bản khác)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "04/2011/TT-NHNN",
+          "title": "Thông tư số 04/2011/TT-NHNN Quy định áp dụng lãi suất trong trường hợp tổ chức, cá nhân rút tiền gửi trước hạn tại tổ chức tín dụng"
+        }
+      ]
+    },
+    "khac_chua_phan_loai": {
+      "label_vi": "Quan hệ khác chưa phân loại rõ từ API (referenceType ngoài {3,9,12}) — cần đối chiếu thủ công với tab Lược đồ trên vbpl.vn",
+      "direction": "outgoing",
+      "documents": []
+    }
+  }
+}
