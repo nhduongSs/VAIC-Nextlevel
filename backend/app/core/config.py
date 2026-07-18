@@ -2,7 +2,9 @@
 Cấu hình tập trung cho toàn hệ thống.
 Đọc từ biến môi trường / file .env
 """
+
 from functools import lru_cache
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 

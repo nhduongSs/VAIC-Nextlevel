@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  # Chỉ chạy khi workflow CI hoàn thành thành công trên nhánh main
+  workflow_run:
+    workflows: [CI]
+    branches: [main]
+    types: [completed]
+  # Cho phép deploy thủ công từ tab Actions trên GitHub
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy backend (Render)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      # RENDER_DEPLOY_HOOK lấy từ: Render Dashboard -> Service -> Settings -> Deploy Hook
+      # Thêm vào GitHub: repo Settings -> Secrets and variables -> Actions -> RENDER_DEPLOY_HOOK
+      # Secrets runtime (DEEPSEEK_API_KEY, SUPABASE_URL, SUPABASE_KEY) cấu hình
+      # trong Render Dashboard -> Environment, không nằm trong workflow này.
+      - name: Trigger Render deploy hook
+        run: curl -fsSL -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+      - name: Log deployment
+        run: echo "Triggered Render deploy for commit ${{ github.sha }}"

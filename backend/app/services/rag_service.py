@@ -21,7 +21,5 @@ class RAGService:
         """Định dạng context kèm nguồn để LLM có thể trích dẫn, tăng độ tin cậy."""
         parts = []
         for i, c in enumerate(chunks, 1):
-            parts.append(
-                f"[Nguồn {i}: {c.title} - {c.clause} - hiệu lực từ {c.effective_date}]\n{c.content}"
-            )
+            parts.append(f"[Nguồn {i}: {c.title} - {c.clause} - hiệu lực từ {c.effective_date}]\n{c.content}")
         return "\n\n".join(parts)

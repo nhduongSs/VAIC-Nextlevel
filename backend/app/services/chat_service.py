@@ -55,8 +55,7 @@ class ChatService:
             session_id=session_id,
             answer=final_answer,
             sources=[
-                Source(doc_id=c.doc_id, title=c.title, clause=c.clause, effective_date=c.effective_date)
-                for c in chunks
+                Source(doc_id=c.doc_id, title=c.title, clause=c.clause, effective_date=c.effective_date) for c in chunks
             ],
             conflicts=conflicts,
             blocked=False,

@@ -22,3 +22,7 @@ logs/
 
 # OS
 .DS_Store
+
+# Coverage
+.coverage
+coverage.xml

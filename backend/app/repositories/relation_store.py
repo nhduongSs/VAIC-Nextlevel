@@ -9,6 +9,7 @@ Bảng gợi ý (Postgres):
     superseded_clause  -- clause bị thay thế, null nếu là cross_reference
   )
 """
+
 from app.core.config import get_settings
 
 try:
@@ -22,7 +23,7 @@ settings = get_settings()
 
 class RelationStore:
     def __init__(self):
-        self._client: "Client | None" = (
+        self._client: Client | None = (
             create_client(settings.supabase_url, settings.supabase_key)
             if create_client and settings.supabase_url
             else None

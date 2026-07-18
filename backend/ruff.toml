@@ -1,0 +1,9 @@
+line-length = 120
+target-version = "py311"
+
+[lint]
+# E/W: pycodestyle, F: pyflakes, I: isort, N: naming, UP: pyupgrade
+select = ["E", "F", "I", "N", "W", "UP"]
+# UP042 đề nghị đổi `class X(str, Enum)` -> `StrEnum`: unsafe fix, đổi hành vi
+# str()/format() của enum member — giữ nguyên để không ảnh hưởng serialize
+ignore = ["UP042"]
