@@ -2,15 +2,22 @@ import asyncio
 from logging.config import fileConfig
 from typing import Any
 
+from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
+
+load_dotenv()  # load backend/.env into os.environ before settings reads it
 
 from alembic import context
 from app.config import settings
 from app.infrastructure.database.base import Base
 
-# Import all models here so Alembic autogenerate picks them up.
-# Wave 2 will add: from app.infrastructure.database.models import *
+# Import all models so Alembic autogenerate picks them up.
+from app.infrastructure.database.models.chunk_model import ChunkModel  # noqa: F401
+from app.infrastructure.database.models.document_model import DocumentModel  # noqa: F401
+from app.infrastructure.database.models.embedding_job_model import EmbeddingJobModel  # noqa: F401
+from app.infrastructure.database.models.processing_log_model import ProcessingLogModel  # noqa: F401
+from app.infrastructure.database.models.relation_model import DocumentRelationModel  # noqa: F401
 
 config = context.config
 

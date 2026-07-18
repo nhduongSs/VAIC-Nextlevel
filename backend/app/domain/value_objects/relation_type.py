@@ -1,0 +1,10 @@
+from enum import StrEnum
+
+
+class RelationType(StrEnum):
+    REPLACES = "REPLACES"
+    AMENDS = "AMENDS"
+    REFERENCES = "REFERENCES"
+    SUPPLEMENTS = "SUPPLEMENTS"
+    IMPLEMENTS = "IMPLEMENTS"
+    CONFLICTS_WITH = "CONFLICTS_WITH"

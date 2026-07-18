@@ -2,16 +2,16 @@ services:
   postgres:
     image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_DB: vaic_db
-      POSTGRES_USER: vaic_user
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5432:5432"
+      - "5434:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U vaic_user -d vaic_db"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,6 +26,8 @@ services:
       - model_cache:/root/.cache/huggingface
     environment:
       MODEL_NAME: BAAI/bge-m3
+      RERANKER_MODEL_NAME: BAAI/bge-reranker-v2-m3
+      MODEL_LOAD_STRATEGY: ${MODEL_LOAD_STRATEGY:-lazy}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
       interval: 30s
@@ -40,7 +42,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://vaic_user:${POSTGRES_PASSWORD}@postgres:5432/vaic_db
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       EMBEDDING_SERVICE_URL: http://embedding-service:8001
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}

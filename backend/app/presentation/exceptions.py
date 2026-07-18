@@ -38,7 +38,7 @@ class ForbiddenException(AppException):
 
 class ValidationException(AppException):
     def __init__(self, message: str = "Validation failed") -> None:
-        super().__init__(status.HTTP_422_UNPROCESSABLE_ENTITY, "VALIDATION_ERROR", message)
+        super().__init__(status.HTTP_422_UNPROCESSABLE_CONTENT, "VALIDATION_ERROR", message)
 
 
 class DatabaseException(AppException):
