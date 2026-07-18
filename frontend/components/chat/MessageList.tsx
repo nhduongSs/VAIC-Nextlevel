@@ -36,6 +36,7 @@ export function MessageList({ messages, isSending, selectedMessageId, onSelectMe
             isSelected={message.id === selectedMessageId}
             onSelect={onSelectMessage}
             onRetry={onRetry}
+            isSending={isSending}
           />
         ))}
         {isSending && <TypingIndicator />}

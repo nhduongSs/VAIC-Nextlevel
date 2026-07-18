@@ -20,6 +20,7 @@ export function MessageInput({ disabled, onSend }: MessageInputProps) {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.nativeEvent.isComposing) return;
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       handleSubmit();
