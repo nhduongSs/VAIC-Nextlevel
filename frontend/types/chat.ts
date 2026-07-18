@@ -30,9 +30,12 @@ export interface ChatApiResponse {
 
 export type MessageRole = "user" | "assistant" | "blocked" | "error";
 
+export type MessageKind = "text" | "rate_table" | "calculator";
+
 export interface Message {
   id: string;
   role: MessageRole;
+  kind?: MessageKind;
   content: string;
   createdAt: string;
   sources?: Source[];

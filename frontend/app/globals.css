@@ -4,21 +4,23 @@
 
 @layer base {
   :root {
-    --background: 224 41% 7%;
-    --foreground: 220 23% 92%;
-    --card: 224 33% 11%;
-    --card-foreground: 220 23% 92%;
-    --border: 223 32% 22%;
-    --muted: 222 33% 12%;
-    --muted-foreground: 221 14% 60%;
-    --accent: 217 91% 60%;
+    --background: 40 14% 96%;
+    --foreground: 216 8% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 216 8% 12%;
+    --border: 220 14% 90%;
+    --muted: 40 10% 94%;
+    --muted-foreground: 220 9% 40%;
+    --accent: 22 90% 54%;
     --accent-foreground: 0 0% 100%;
-    --primary: 217 91% 60%;
+    --primary: 22 90% 54%;
     --primary-foreground: 0 0% 100%;
-    --destructive: 0 72% 51%;
+    --destructive: 6 63% 46%;
     --destructive-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
     --warning-foreground: 20 14% 10%;
+    --success: 141 57% 43%;
+    --success-foreground: 0 0% 100%;
     --radius: 1rem;
   }
 
@@ -29,17 +31,12 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    background-image:
-      radial-gradient(1200px circle at 85% -10%, hsl(var(--primary) / 0.14), transparent 60%),
-      radial-gradient(1000px circle at -10% 110%, hsl(226 71% 40% / 0.12), transparent 60%);
-    background-attachment: fixed;
   }
 }
 
 @layer utilities {
-  .glass-card {
-    background-color: hsl(var(--card) / 0.55);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  .surface-card {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
   }
 }

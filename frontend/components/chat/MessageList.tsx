@@ -9,12 +9,10 @@ import type { Message } from "@/types/chat";
 interface MessageListProps {
   messages: Message[];
   isSending: boolean;
-  selectedMessageId: string | null;
-  onSelectMessage: (messageId: string) => void;
   onRetry: () => void;
 }
 
-export function MessageList({ messages, isSending, selectedMessageId, onSelectMessage, onRetry }: MessageListProps) {
+export function MessageList({ messages, isSending, onRetry }: MessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,22 +20,15 @@ export function MessageList({ messages, isSending, selectedMessageId, onSelectMe
   }, [messages.length, isSending]);
 
   return (
-    <ScrollArea className="flex-1 px-4">
-      <div className="flex flex-col gap-4 py-4">
+    <ScrollArea className="flex-1 px-7">
+      <div className="flex flex-col gap-5 py-6">
         {messages.length === 0 && (
           <p className="mt-10 text-center text-sm text-muted-foreground">
             Bắt đầu hỏi về lãi suất, kỳ hạn, điều khoản tiền gửi SHB.
           </p>
         )}
         {messages.map((message) => (
-          <MessageBubble
-            key={message.id}
-            message={message}
-            isSelected={message.id === selectedMessageId}
-            onSelect={onSelectMessage}
-            onRetry={onRetry}
-            isSending={isSending}
-          />
+          <MessageBubble key={message.id} message={message} onRetry={onRetry} isSending={isSending} />
         ))}
         {isSending && <TypingIndicator />}
         <div ref={bottomRef} />
