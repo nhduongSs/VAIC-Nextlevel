@@ -1,0 +1,23 @@
+# Development overrides — hot-reload, volume mounts, debug mode
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+
+  backend:
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      ENV: development
+      DEBUG: "true"
+      LOG_LEVEL: DEBUG
+      WATCHFILES_FORCE_POLLING: "true"
+
+  frontend:
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0 --port 3000

@@ -1,30 +1,26 @@
+from __future__ import annotations
+
 import logging
-import os
-from datetime import datetime
 
-from app.core.config import get_settings
-
-settings = get_settings()
-os.makedirs(settings.log_dir, exist_ok=True)
-
-logger = logging.getLogger("rag_tien_gui_shb")
-logger.setLevel(logging.INFO)
-
-_fmt = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
-
-_file_handler = logging.FileHandler(
-    os.path.join(settings.log_dir, f"app_{datetime.now():%Y%m%d}.log"), encoding="utf-8"
-)
-_file_handler.setFormatter(_fmt)
-
-_console_handler = logging.StreamHandler()
-_console_handler.setFormatter(_fmt)
-
-if not logger.handlers:
-    logger.addHandler(_file_handler)
-    logger.addHandler(_console_handler)
+import structlog
 
 
-def log_conversation(session_id: str, role: str, content: str, meta: dict | None = None):
-    """Ghi lại mọi lượt hội thoại để audit / đối soát sau này."""
-    logger.info(f"[session={session_id}] [{role}] {content} | meta={meta or {}}")
+def configure_logging(log_level: str = "INFO") -> None:
+    level = getattr(logging, log_level.upper(), logging.INFO)
+
+    logging.basicConfig(
+        format="%(message)s",
+        level=level,
+    )
+
+    structlog.configure(
+        processors=[
+            structlog.stdlib.add_log_level,
+            structlog.stdlib.add_logger_name,
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.processors.JSONRenderer(),
+        ],
+        wrapper_class=structlog.make_filtering_bound_logger(level),
+        context_class=dict,
+        logger_factory=structlog.stdlib.LoggerFactory(),
+    )

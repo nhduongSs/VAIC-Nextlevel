@@ -1,17 +1,31 @@
+"""Aggregate router — imports all sub-routers and registers them on one APIRouter."""
+
 from fastapi import APIRouter
 
-from app.models.schemas import ChatRequest, ChatResponse
-from app.services.chat_service import ChatService
+from app.api import chat, documents, embeddings, health, ingestion, prompt, retrieval, search
 
 router = APIRouter()
-_chat_service = ChatService()
 
+# Health / liveness / readiness probes
+router.include_router(health.router)
 
-@router.post("/chat", response_model=ChatResponse)
-def chat(request: ChatRequest) -> ChatResponse:
-    return _chat_service.handle_message(request.session_id, request.message)
+# Document CRUD
+router.include_router(documents.router)
 
+# Embedding pipeline
+router.include_router(embeddings.router)
 
-@router.get("/health")
-def health():
-    return {"status": "ok"}
+# Ingestion pipeline (process, chunks, relationships)
+router.include_router(ingestion.router)
+
+# Hybrid search
+router.include_router(search.router)
+
+# Retrieval + Knowledge Intelligence
+router.include_router(retrieval.router)
+
+# Chat (Wave 4)
+router.include_router(chat.router)
+
+# Prompt building / debugging (Wave 4)
+router.include_router(prompt.router)

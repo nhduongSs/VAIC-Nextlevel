@@ -1,63 +1,64 @@
-"""
-Bảng quan hệ văn bản (cross-reference, văn bản sửa đổi/thay thế) — Huy thu thập,
-lưu chung trong Supabase Postgres, join với bảng vector (TechStack mục Vector DB).
+"""PgDocumentRelationRepository — from infrastructure/database/repositories/pg_relation_repo.py."""
 
-Bảng gợi ý (Postgres):
-  document_relations(
-    id, source_doc_id, related_doc_id,
-    relation_type,  -- 'cross_reference' | 'amends' | 'supersedes'
-    superseded_clause  -- clause bị thay thế, null nếu là cross_reference
-  )
-"""
-from app.core.config import get_settings
+from __future__ import annotations
 
-try:
-    from supabase import Client, create_client
-except ImportError:  # cho phép chạy test mà chưa cài supabase
-    Client = None
-    create_client = None
+import uuid
 
-settings = get_settings()
+from sqlalchemy import delete, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.entities import DocumentRelation
+from app.models.enums import RelationType
+from app.models.orm import DocumentRelationModel
 
 
-class RelationStore:
-    def __init__(self):
-        self._client: "Client | None" = (
-            create_client(settings.supabase_url, settings.supabase_key)
-            if create_client and settings.supabase_url
-            else None
+class PgDocumentRelationRepository:
+    def __init__(self, session: AsyncSession) -> None:
+        self._session = session
+
+    def _to_entity(self, m: DocumentRelationModel) -> DocumentRelation:
+        return DocumentRelation(
+            id=m.id,
+            source_doc_id=m.source_doc_id,
+            target_doc_id=m.target_doc_id,
+            relation_type=RelationType(m.relation_type),
+            confidence=m.confidence,
+            description=m.description,
+            metadata_extra=dict(m.metadata_extra) if m.metadata_extra else {},
+            created_at=m.created_at,
         )
 
-    def get_related_doc_ids(self, doc_id: str) -> list[str]:
-        if not self._client:
-            return []
-        res = (
-            self._client.table("document_relations")
-            .select("related_doc_id")
-            .eq("source_doc_id", doc_id)
-            .eq("relation_type", "cross_reference")
-            .execute()
+    def _to_model(self, entity: DocumentRelation) -> DocumentRelationModel:
+        return DocumentRelationModel(
+            id=entity.id,
+            source_doc_id=entity.source_doc_id,
+            target_doc_id=entity.target_doc_id,
+            relation_type=entity.relation_type.value,
+            description=entity.description,
+            confidence=entity.confidence,
+            metadata_extra=entity.metadata_extra,
         )
-        return [row["related_doc_id"] for row in res.data]
 
-    def get_superseded_clauses(self, doc_id: str) -> set[str]:
-        if not self._client:
-            return set()
-        res = (
-            self._client.table("document_relations")
-            .select("superseded_clause")
-            .eq("related_doc_id", doc_id)
-            .eq("relation_type", "supersedes")
-            .execute()
+    async def bulk_insert(
+        self, relations: list[DocumentRelation]
+    ) -> list[DocumentRelation]:
+        models = [self._to_model(r) for r in relations]
+        self._session.add_all(models)
+        await self._session.flush()
+        return [self._to_entity(m) for m in models]
+
+    async def get_by_document(self, document_id: uuid.UUID) -> list[DocumentRelation]:
+        stmt = select(DocumentRelationModel).where(
+            (DocumentRelationModel.source_doc_id == document_id)
+            | (DocumentRelationModel.target_doc_id == document_id)
         )
-        return {row["superseded_clause"] for row in res.data if row["superseded_clause"]}
+        result = await self._session.execute(stmt)
+        return [self._to_entity(m) for m in result.scalars().all()]
 
-
-_relation_store_instance: RelationStore | None = None
-
-
-def get_relation_store() -> RelationStore:
-    global _relation_store_instance
-    if _relation_store_instance is None:
-        _relation_store_instance = RelationStore()
-    return _relation_store_instance
+    async def delete_by_document(self, document_id: uuid.UUID) -> None:
+        stmt = delete(DocumentRelationModel).where(
+            (DocumentRelationModel.source_doc_id == document_id)
+            | (DocumentRelationModel.target_doc_id == document_id)
+        )
+        await self._session.execute(stmt)
+        await self._session.flush()

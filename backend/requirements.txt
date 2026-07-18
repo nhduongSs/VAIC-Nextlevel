@@ -1,9 +1,81 @@
-fastapi>=0.110
-uvicorn[standard]>=0.29
-pydantic>=2.6
-pydantic-settings>=2.2
-openai>=1.30
-supabase>=2.5
-sentence-transformers>=2.7
-python-dotenv>=1.0
-pytest>=8.0
+# ── Web Framework ────────────────────────────────────────────────────────────
+fastapi==0.139.2
+uvicorn[standard]==0.51.0
+starlette==1.3.1
+
+# ── Database ─────────────────────────────────────────────────────────────────
+sqlalchemy[asyncio]==2.0.51
+asyncpg==0.31.0
+alembic==1.18.5
+pgvector==0.5.0
+greenlet==3.5.3
+
+# ── Pydantic ──────────────────────────────────────────────────────────────────
+pydantic==2.13.4
+pydantic-settings==2.14.2
+pydantic-core==2.46.4
+annotated-types==0.7.0
+typing-inspection==0.4.2
+
+# ── Logging ──────────────────────────────────────────────────────────────────
+structlog==26.1.0
+Pygments==2.20.0
+
+# ── LLM (OpenAI-compatible client — used for DeepSeek) ───────────────────────
+openai>=1.30.0,<2.0.0
+
+# ── HTTP Client (AI service calls) ───────────────────────────────────────────
+httpx==0.28.1
+httpcore==1.0.9
+h11==0.16.0
+
+# ── Rate Limiting ─────────────────────────────────────────────────────────────
+slowapi==0.1.10
+limits==5.8.0
+Deprecated==1.3.1
+wrapt==2.2.2
+
+# ── Security ─────────────────────────────────────────────────────────────────
+python-jose[cryptography]==3.5.0
+passlib[bcrypt]==1.7.4
+bcrypt==5.0.0
+cryptography==49.0.0
+cffi==2.1.0
+pycparser==3.0
+pyasn1==0.6.4
+rsa==4.9.1
+ecdsa==0.19.2
+
+# ── File Upload & Document Parsing ───────────────────────────────────────────
+python-multipart==0.0.32
+python-docx==1.2.0
+pymupdf==1.28.0
+lxml==6.1.1
+
+# ── Async / Runtime ───────────────────────────────────────────────────────────
+anyio==4.14.2
+python-dotenv==1.2.2
+
+# ── Compression ───────────────────────────────────────────────────────────────
+brotli==1.2.0
+
+# ── Uvicorn extras ────────────────────────────────────────────────────────────
+httptools==0.8.0
+websockets==16.1
+watchfiles==1.2.0
+colorama==0.4.6
+pathspec==1.1.1
+
+# ── FastAPI transitive ────────────────────────────────────────────────────────
+annotated-doc==0.0.4
+
+# ── Misc ─────────────────────────────────────────────────────────────────────
+click==8.4.2
+Mako==1.3.12
+MarkupSafe==3.0.3
+typing_extensions==4.16.0
+certifi==2026.6.17
+idna==3.18
+six==1.17.0
+packaging==26.2
+PyYAML==6.0.3

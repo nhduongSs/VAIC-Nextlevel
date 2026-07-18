@@ -1,2 +1,21 @@
-ruff>=0.4
-pytest>=8.0
+# Includes all production dependencies
+-r requirements.txt
+
+# ── Linting & Formatting ──────────────────────────────────────────────────────
+ruff==0.15.22
+
+# ── Type Checking ─────────────────────────────────────────────────────────────
+mypy==2.3.0
+mypy-extensions==1.1.0
+ast_serialize==0.6.0
+librt==0.13.0
+types-passlib>=1.7.0
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest==9.1.1
+pytest-asyncio==1.4.0
+pytest-cov==7.1.0
+coverage==7.15.2
+aiosqlite==0.22.1
+iniconfig==2.3.0
+pluggy==1.6.0

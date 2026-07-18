@@ -1,0 +1,85 @@
+# ── Version Control ──────────────────────────────────────────────────────────
+.git
+.gitignore
+.gitattributes
+
+# ── Secrets ───────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info
+*.egg
+dist
+build
+.eggs
+
+# ── Virtual Environments ──────────────────────────────────────────────────────
+.venv
+venv
+env
+ENV
+
+# ── Testing & Coverage ────────────────────────────────────────────────────────
+.pytest_cache
+.coverage
+.coverage.*
+htmlcov
+coverage.xml
+nosetests.xml
+
+# ── Type Checking & Linting ───────────────────────────────────────────────────
+.mypy_cache
+.dmypy.json
+dmypy.json
+.pyright
+.ruff_cache
+
+# ── Node / Frontend (excluded from backend image) ─────────────────────────────
+node_modules
+frontend/node_modules
+frontend/dist
+frontend/build
+frontend/.next
+
+# ── IDE & OS ──────────────────────────────────────────────────────────────────
+.idea
+.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── AI Model Cache ────────────────────────────────────────────────────────────
+.cache
+*.bin
+*.safetensors
+*.gguf
+*.ggml
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+logs
+*.log
+
+# ── Architecture & Design Docs (not needed in image) ─────────────────────────
+.ai
+*.md
+!README.md
+
+# ── Dev tooling config (not needed at runtime) ────────────────────────────────
+.pre-commit-config.yaml
+.editorconfig
+Makefile
+
+# ── Data directory (ingested at runtime, not baked in) ───────────────────────
+data
+
+# ── Test suite (not shipped in production image) ─────────────────────────────
+tests
