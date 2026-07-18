@@ -1,0 +1,181 @@
+"""Dependency injection — from app/dependencies.py, updated to use new paths."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Annotated
+
+if TYPE_CHECKING:
+    from app.services.chat_service import ChatService
+
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.config import settings
+from app.core.database import AsyncSessionFactory, get_db_session
+
+# ── Storage ───────────────────────────────────────────────────────────────────
+from app.infrastructure.ingestion.chunkers.hierarchical_chunker import (
+    HierarchicalChunker,
+)
+from app.infrastructure.ingestion.chunkers.qa_pair_chunker import QAPairChunker
+from app.infrastructure.ingestion.chunkers.semantic_chunker import SemanticChunker
+from app.infrastructure.ingestion.document_classifier import DocumentClassifier
+from app.infrastructure.ingestion.metadata_extractor import MetadataExtractor
+from app.infrastructure.ingestion.ocr.null_ocr_provider import NullOCRProvider
+from app.infrastructure.ingestion.parsers.document_parser import DocumentParser
+from app.infrastructure.ingestion.parsers.docx_parser import DocxParser
+from app.infrastructure.ingestion.parsers.pdf_parser import PdfParser
+from app.infrastructure.ingestion.parsers.txt_parser import TxtParser
+from app.infrastructure.ingestion.relationship_extractor import RelationshipExtractor
+from app.infrastructure.storage.local_storage_provider import LocalStorageProvider
+from app.infrastructure.storage.storage_provider import StorageProvider
+from app.repositories.document_store import (
+    PgChunkRepository,
+    PgDocumentRepository,
+    PgEmbeddingJobRepository,
+    PgProcessingLogRepository,
+)
+from app.repositories.relation_store import PgDocumentRelationRepository
+from app.repositories.vector_store import EmbeddingClient
+from app.services.document_relation_service import DocumentRelationService
+from app.services.document_service import DocumentService
+from app.services.embedding_service import EmbeddingService
+from app.services.guardrail_service import GuardrailService
+from app.services.ingestion_service import IngestionPipelineService
+from app.services.llm_service import LLMService
+from app.services.rag_service import RAGService
+
+# ── Database ─────────────────────────────────────────────────────────────────
+
+DBSession = Annotated[AsyncSession, Depends(get_db_session)]
+
+# ── Singletons ────────────────────────────────────────────────────────────────
+
+_ocr = NullOCRProvider()
+_docx_parser = DocxParser(ocr=_ocr)
+_pdf_parser = PdfParser(ocr=_ocr)
+_txt_parser = TxtParser()
+
+_PARSER_REGISTRY: dict[str, DocumentParser] = {}
+for _parser in (_docx_parser, _pdf_parser, _txt_parser):
+    for _ct in _parser.supported_content_types:
+        _PARSER_REGISTRY[_ct] = _parser
+
+_metadata_extractor = MetadataExtractor()
+_classifier = DocumentClassifier()
+_relation_extractor = RelationshipExtractor()
+_hierarchical_chunker = HierarchicalChunker()
+_semantic_chunker = SemanticChunker()
+_qa_pair_chunker = QAPairChunker()
+
+_embedding_client = EmbeddingClient(
+    base_url=settings.EMBEDDING_SERVICE_URL,
+    timeout=settings.EMBEDDING_TIMEOUT,
+)
+_embedding_service = EmbeddingService(
+    session_factory=AsyncSessionFactory,
+    provider=_embedding_client,
+    batch_size=settings.EMBEDDING_BATCH_SIZE,
+    max_concurrency=settings.EMBEDDING_MAX_CONCURRENCY,
+    max_retries=settings.EMBEDDING_MAX_RETRIES,
+    retry_delay=settings.EMBEDDING_RETRY_DELAY,
+    batch_timeout=settings.EMBEDDING_BATCH_TIMEOUT,
+)
+
+
+# ── Provider functions ────────────────────────────────────────────────────────
+
+
+def get_storage_provider() -> StorageProvider:
+    return LocalStorageProvider(settings.UPLOAD_DIR)
+
+
+def get_embedding_service() -> EmbeddingService:
+    return _embedding_service
+
+
+def get_embedding_client() -> EmbeddingClient:
+    return _embedding_client
+
+
+def get_embedding_job_repository(session: DBSession) -> PgEmbeddingJobRepository:
+    return PgEmbeddingJobRepository(session)
+
+
+def get_document_repository(session: DBSession) -> PgDocumentRepository:
+    return PgDocumentRepository(session)
+
+
+def get_document_service(
+    repo: Annotated[PgDocumentRepository, Depends(get_document_repository)],
+    storage: Annotated[StorageProvider, Depends(get_storage_provider)],
+) -> DocumentService:
+    return DocumentService(repo, storage)
+
+
+def get_chunk_repository(session: DBSession) -> PgChunkRepository:
+    return PgChunkRepository(session)
+
+
+def get_relation_repository(session: DBSession) -> PgDocumentRelationRepository:
+    return PgDocumentRelationRepository(session)
+
+
+def get_processing_log_repository(session: DBSession) -> PgProcessingLogRepository:
+    return PgProcessingLogRepository(session)
+
+
+def get_rag_service(
+    session: DBSession,
+    client: Annotated[EmbeddingClient, Depends(get_embedding_client)],
+) -> RAGService:
+    return RAGService(session=session, embedding_client=client)
+
+
+def get_document_relation_service(session: DBSession) -> DocumentRelationService:
+    return DocumentRelationService(session=session)
+
+
+def get_guardrail_service() -> GuardrailService:
+    return GuardrailService()
+
+
+def get_llm_service() -> LLMService:
+    return LLMService()
+
+
+def get_chat_service(
+    rag: Annotated[RAGService, Depends(get_rag_service)],
+    relations: Annotated[
+        DocumentRelationService, Depends(get_document_relation_service)
+    ],
+    guardrail: Annotated[GuardrailService, Depends(get_guardrail_service)],
+    llm: Annotated[LLMService, Depends(get_llm_service)],
+) -> ChatService:
+    from app.services.chat_service import ChatService
+
+    return ChatService(rag=rag, relations=relations, guardrail=guardrail, llm=llm)
+
+
+def get_ingestion_pipeline_service() -> IngestionPipelineService:
+    return IngestionPipelineService(
+        session_factory=AsyncSessionFactory,
+        storage=get_storage_provider(),
+        parser_registry=_PARSER_REGISTRY,
+        metadata_extractor=_metadata_extractor,
+        classifier=_classifier,
+        relation_extractor=_relation_extractor,
+        hierarchical_chunker=_hierarchical_chunker,
+        semantic_chunker=_semantic_chunker,
+        qa_pair_chunker=_qa_pair_chunker,
+        embedding_service=_embedding_service,
+    )
+
+
+# SearchService alias for backward compat in routers
+def get_search_service(session: DBSession) -> RAGService:
+    return RAGService(session=session, embedding_client=_embedding_client)
+
+
+def get_knowledge_service(session: DBSession) -> DocumentRelationService:
+    return DocumentRelationService(session=session)
