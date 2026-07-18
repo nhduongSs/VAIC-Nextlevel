@@ -19,12 +19,15 @@ settings = get_settings()
 
 
 def main():
-    clauses = load_documents(settings.data_dir)
+    clauses = load_documents(settings.DATA_DIR)
     if not clauses:
-        print(f"Không tìm thấy văn bản nào trong {settings.data_dir}. Kiểm tra lại đường dẫn/định dạng.")
+        print(
+            f"Không tìm thấy văn bản nào trong {settings.DATA_DIR}. "
+            "Kiểm tra lại đường dẫn/định dạng."
+        )
         return
 
-    embedder = SentenceTransformer(settings.embedding_model)
+    embedder = SentenceTransformer(settings.EMBEDDING_MODEL)
     embeddings = embedder.encode([c.content for c in clauses]).tolist()
 
     store = get_vector_store()
