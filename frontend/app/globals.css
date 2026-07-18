@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 14% 96%;
+    --foreground: 216 8% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 216 8% 12%;
+    --border: 220 14% 90%;
+    --muted: 40 10% 94%;
+    --muted-foreground: 220 9% 40%;
+    --accent: 22 90% 54%;
+    --accent-foreground: 0 0% 100%;
+    --primary: 22 90% 54%;
+    --primary-foreground: 0 0% 100%;
+    --destructive: 6 63% 46%;
+    --destructive-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 20 14% 10%;
+    --success: 141 57% 43%;
+    --success-foreground: 0 0% 100%;
+    --radius: 1rem;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .surface-card {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+  }
+}
