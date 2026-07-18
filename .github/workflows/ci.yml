@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ci-cd_phuongvd]
   pull_request:
     branches: [main, develop]
 
@@ -64,19 +64,8 @@ jobs:
           pip install -r requirements-dev.txt
 
       # Không cần secret thật: Settings đều có default, tests không gọi mạng
-      - name: Run tests with coverage
-        run: |
-          pytest tests/ -v --tb=short \
-            --cov=app --cov-report=xml --cov-report=term-missing
-
-      # Lưu coverage report để xem sau, kể cả khi test fail
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        if: always()
-        continue-on-error: true
-        with:
-          name: coverage-report
-          path: backend/coverage.xml
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
 
   # ─────────────────────────────────────────────
   # Job 3: Docker Build — verify Dockerfile không broken
