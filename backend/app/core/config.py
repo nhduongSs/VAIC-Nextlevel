@@ -32,6 +32,9 @@ class Settings(BaseSettings):
     log_blocked_requests: bool = True
     log_dir: str = "./logs"
 
+    # --- CORS ---
+    cors_origins: list[str] = ["http://localhost:3000"]
+
     # --- App ---
     app_name: str = "RAG Tien Gui SHB"
     debug: bool = False
