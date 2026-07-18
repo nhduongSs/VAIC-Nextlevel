@@ -9,10 +9,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    # --- LLM (DeepSeek V4) ---
-    deepseek_api_key: str = ""
-    deepseek_base_url: str = "https://api.deepseek.com"
-    llm_model: str = "deepseek-chat"
+    # --- LLM (DeepSeek V4 qua OpenRouter) ---
+    openrouter_api_key: str = ""
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+    llm_model: str = "deepseek/deepseek-chat"
     llm_max_tokens: int = 1024
     llm_temperature: float = 0.2  # thấp để giảm bịa đặt (hallucination)
 

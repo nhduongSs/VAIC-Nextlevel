@@ -25,7 +25,7 @@ QUY TẮC BẮT BUỘC:
 
 class LLMService:
     def __init__(self):
-        self._client = OpenAI(api_key=settings.deepseek_api_key, base_url=settings.deepseek_base_url)
+        self._client = OpenAI(api_key=settings.openrouter_api_key, base_url=settings.openrouter_base_url)
 
     def generate_answer(self, question: str, context_block: str, conflict_block: str = "") -> str:
         user_content = (

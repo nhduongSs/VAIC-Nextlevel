@@ -4,6 +4,8 @@ pydantic>=2.6
 pydantic-settings>=2.2
 openai>=1.30
 supabase>=2.5
-sentence-transformers>=2.7
+numpy<2
+transformers==4.46.3
+sentence-transformers==3.0.1
 python-dotenv>=1.0
 pytest>=8.0
