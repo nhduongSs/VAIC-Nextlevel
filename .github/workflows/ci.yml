@@ -59,7 +59,7 @@ jobs:
       # Docker build ở Job 3 vẫn cài đủ toàn bộ requirements.txt.
       - name: Install dependencies
         run: |
-          grep -v "sentence-transformers" requirements.txt | pip install -r /dev/stdin
+          pip install -r requirements.txt
           pip install -r requirements-dev.txt
 
       # Không cần secret thật: Settings đều có default, tests không gọi mạng
