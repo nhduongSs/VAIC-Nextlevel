@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [develop]
+    branches: [dev]
   pull_request:
-    branches: [main, develop]
+    branches: [main, dev]
 
 # Push mới lên cùng branch/PR sẽ hủy run cũ đang chạy — tiết kiệm phút CI
 concurrency:
