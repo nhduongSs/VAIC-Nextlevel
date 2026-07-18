@@ -1,5 +1,6 @@
 "use client";
 
+import { RotateCcw, Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -24,7 +25,9 @@ export function MessageBubble({ message, isSelected, onSelect, onRetry, isSendin
   return (
     <div className={cn("flex gap-3", isUser && "flex-row-reverse")}>
       <Avatar>
-        <AvatarFallback>{isUser ? "B" : "AI"}</AvatarFallback>
+        <AvatarFallback>
+          {isUser ? <User className="h-4 w-4" aria-hidden="true" /> : <Sparkles className="h-4 w-4" aria-hidden="true" />}
+        </AvatarFallback>
       </Avatar>
       <div className={cn("flex max-w-[75%] flex-col gap-1", isUser && "items-end")}>
         <button
@@ -49,6 +52,7 @@ export function MessageBubble({ message, isSelected, onSelect, onRetry, isSendin
         </button>
         {isError && (
           <Button size="sm" variant="outline" onClick={onRetry} disabled={isSending}>
+            <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
             Thử lại
           </Button>
         )}
