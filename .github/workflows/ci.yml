@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ci-cd_phuongvd]
+    branches: [develop]
   pull_request:
     branches: [main, develop]
 
