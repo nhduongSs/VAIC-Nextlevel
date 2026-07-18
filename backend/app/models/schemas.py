@@ -515,13 +515,25 @@ class RetrieveHealthResponse(BaseModel):
 # ── Chat ──────────────────────────────────────────────────────────────────────
 
 
+class BankRateItem(BaseModel):
+    term: str = Field(description="Kỳ hạn, ví dụ: '12 tháng', 'Không kỳ hạn'")
+    rate_value: float = Field(description="Lãi suất %/năm")
+    currency: str = Field(description="Đơn vị tiền tệ, ví dụ: VND")
+    customer_segment: str = Field(description="ca_nhan hoặc doanh_nghiep")
+    effective_date: date | None = Field(None, description="Ngày hiệu lực (nếu có)")
+    source_url: str | None = Field(None, description="Nguồn công bố lãi suất")
+
+
 class RateBankResult(BaseModel):
     bank: str = Field(description="Tên ngân hàng")
-    chunks: list[SearchResultItem] = Field(description="Các đoạn văn bản lãi suất liên quan")
+    rates: list[BankRateItem] = Field(
+        description="Số liệu lãi suất thật từ bank_products (SQL, không phải LLM ước lượng)"
+    )
 
 
 class RateComparisonResponse(BaseModel):
-    term: str | None = Field(None, description="Kỳ hạn tra cứu, ví dụ: 12m, 6m")
+    term: str | None = Field(None, description="Kỳ hạn tra cứu, ví dụ: 12 tháng")
+    customer_segment: str = Field(description="ca_nhan hoặc doanh_nghiep")
     banks: list[RateBankResult] = Field(description="Kết quả nhóm theo ngân hàng")
 
 

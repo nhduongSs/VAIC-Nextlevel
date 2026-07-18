@@ -13,6 +13,7 @@ from sqlalchemy import (
     ForeignKey,
     Index,
     Integer,
+    Numeric,
     String,
     Text,
     Uuid,
@@ -264,4 +265,43 @@ class ProcessingLogModel(Base):
         Index("idx_processing_logs_document_id", "document_id"),
         Index("idx_processing_logs_status", "status"),
         Index("idx_processing_logs_created_at", "created_at"),
+    )
+
+
+class BankProductModel(Base):
+    """Lớp C — số liệu lãi suất tiền gửi ngân hàng, tra cứu SQL chính xác
+    (không semantic search, không LLM tự so sánh số)."""
+
+    __tablename__ = "bank_products"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    bank: Mapped[str] = mapped_column(Text, nullable=False)
+    product_category: Mapped[str] = mapped_column(Text, nullable=False)
+    term: Mapped[str] = mapped_column(Text, nullable=False)
+    term_months: Mapped[float | None] = mapped_column(Numeric, nullable=True)
+    customer_segment: Mapped[str] = mapped_column(
+        Text, nullable=False, default="ca_nhan"
+    )
+    currency: Mapped[str] = mapped_column(Text, nullable=False, default="VND")
+    rate_value: Mapped[float] = mapped_column(Numeric(6, 3), nullable=False)
+    effective_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    source_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        server_default=func.now(),
+    )
+
+    __table_args__ = (
+        Index(
+            "idx_bank_products_lookup",
+            "product_category",
+            "term",
+            "customer_segment",
+        ),
     )

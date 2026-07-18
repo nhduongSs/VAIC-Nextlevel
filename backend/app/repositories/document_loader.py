@@ -12,6 +12,7 @@ bảo hiểm tiền gửi) đã được chuẩn hóa (Huy bàn giao) và chia n
 """
 import os
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 
 HEADER_RE = re.compile(
@@ -68,3 +69,79 @@ def _parse_document(text: str) -> list[Clause]:
             )
         )
     return clauses
+
+
+# ── Khoản/Điểm splitter ────────────────────────────────────────────────────────
+#
+# Nội dung 1 Điều là 1 đoạn văn bản phẳng, Khoản ("1. ...2. ...") và Điểm
+# ("a) ...b) ...") nằm lẫn trong câu. Để tránh tách nhầm số cuối câu (vd
+# "...trong 30 ngày. Tổ chức...") hoặc tham chiếu chéo (vd "khỏan 1, 2, 3 và 4
+# Điều này"), chỉ chấp nhận tách khi tìm được ÍT NHẤT 2 mốc tạo thành dãy tăng
+# dần liên tục bắt đầu từ 1 (Khoản) / 'a' (Điểm). Nếu không, giữ nguyên văn bản
+# làm 1 chunk — an toàn, tương thích ngược với hành vi hiện tại.
+
+_KHOAN_CANDIDATE_RE = re.compile(r"(?:^|(?<=\s))(\d{1,2})\.\s+")
+_DIEM_CANDIDATE_RE = re.compile(r"(?:^|(?<=\s))([a-z])\)\s+")
+
+
+def _find_sequential_boundaries(
+    text: str, pattern: re.Pattern[str], first: str, next_label: Callable[[str], str]
+) -> list[tuple[int, str]]:
+    """Return [(start_offset, label), ...] for markers forming a strict
+    increasing sequence starting at `first`; empty if fewer than 2 found."""
+    accepted: list[tuple[int, str]] = []
+    expected = first
+    for m in pattern.finditer(text):
+        if m.group(1) == expected:
+            accepted.append((m.start(), expected))
+            expected = next_label(expected)
+    return accepted if len(accepted) >= 2 else []
+
+
+def _next_number(label: str) -> str:
+    return str(int(label) + 1)
+
+
+def _next_letter(label: str) -> str:
+    return chr(ord(label) + 1)
+
+
+def _split_by_boundaries(text: str, boundaries: list[tuple[int, str]]) -> list[tuple[str, str]]:
+    """Slice `text` at boundary offsets; merge any preamble before the first
+    boundary into the first segment so no content is dropped."""
+    segments: list[tuple[str, str]] = []
+    for i, (start, label) in enumerate(boundaries):
+        end = boundaries[i + 1][0] if i + 1 < len(boundaries) else len(text)
+        segment = text[start:end].strip()
+        if i == 0:
+            preamble = text[:start].strip()
+            if preamble:
+                segment = f"{preamble} {segment}"
+        if segment:
+            segments.append((label, segment))
+    return segments
+
+
+def split_khoan_diem(content: str) -> list[tuple[str | None, str | None, str]]:
+    """Split Điều content into (khoan, diem, text) tuples.
+
+    Falls back to a single `(None, None, content)` tuple when no reliable
+    Khoản structure is found — callers should treat that as "keep as 1 chunk".
+    """
+    khoan_boundaries = _find_sequential_boundaries(
+        content, _KHOAN_CANDIDATE_RE, "1", _next_number
+    )
+    if not khoan_boundaries:
+        return [(None, None, content)]
+
+    results: list[tuple[str | None, str | None, str]] = []
+    for khoan_num, khoan_text in _split_by_boundaries(content, khoan_boundaries):
+        diem_boundaries = _find_sequential_boundaries(
+            khoan_text, _DIEM_CANDIDATE_RE, "a", _next_letter
+        )
+        if not diem_boundaries:
+            results.append((khoan_num, None, khoan_text))
+            continue
+        for diem_letter, diem_text in _split_by_boundaries(khoan_text, diem_boundaries):
+            results.append((khoan_num, diem_letter, diem_text))
+    return results
