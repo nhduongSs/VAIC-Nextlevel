@@ -1,0 +1,56 @@
+{
+  "doc_number": "111/2025/QH15",
+  "item_id": "186600",
+  "title": "Luật Bảo hiểm tiền gửi số 111/2025/QH15",
+  "eff_from": "2026-05-01T00:00:00",
+  "eff_to": null,
+  "eff_status": "Còn hiệu lực",
+  "source": "vbpl-bientap-gateway.moj.gov.vn API (references field) — NOT the full Luoc do tab, incoming-direction relations (duoc_huong_dan, bi_thay_the, sua_doi_bo_sung, bi_dinh_chinh) are not available via this API and are omitted",
+  "source_url": "https://vbpl.vn/van-ban/chi-tiet/luat-bao-hiem-tien-gui-so-111-2025-qh15--186600?tabs=luoc-do",
+  "api_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/186600",
+  "relations": {
+    "duoc_can_cu": {
+      "label_vi": "Căn cứ ban hành (văn bản làm căn cứ pháp lý ban hành văn bản này)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "203/2025/QH15",
+          "title": "Nghị quyết số 203/2025/QH15 Sửa đổi, bổ sung một số điều của Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam"
+        },
+        {
+          "doc_number": "Không số",
+          "title": "Hiến pháp năm 2013"
+        }
+      ]
+    },
+    "huong_dan": {
+      "label_vi": "Văn bản được quy định chi tiết, hướng dẫn thi hành (văn bản này hướng dẫn thi hành các văn bản khác)",
+      "direction": "outgoing",
+      "documents": []
+    },
+    "thay_the": {
+      "label_vi": "Văn bản được thay thế (văn bản này thay thế các văn bản khác)",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "06/2012/QH13",
+          "title": "Luật Bảo hiểm tiền gửi số 06/2012/QH13"
+        }
+      ]
+    },
+    "khac_chua_phan_loai": {
+      "label_vi": "Quan hệ khác chưa phân loại rõ từ API (referenceType ngoài {3,9,12}) — cần đối chiếu thủ công với tab Lược đồ trên vbpl.vn",
+      "direction": "outgoing",
+      "documents": [
+        {
+          "doc_number": "46/2010/QH12",
+          "title": "Luật Ngân hàng Nhà nước Việt Nam số 46/2010/QH12"
+        },
+        {
+          "doc_number": "06/2012/QH13",
+          "title": "Luật Bảo hiểm tiền gửi số 06/2012/QH13"
+        }
+      ]
+    }
+  }
+}

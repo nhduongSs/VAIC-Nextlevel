@@ -1,0 +1,807 @@
+{
+  "nodes": [
+    {
+      "id": "06/2012/QH13",
+      "title": "Luật Bảo hiểm tiền gửi số 06/2012/QH13",
+      "type": "Luat",
+      "crawled": true,
+      "eff_status": "Hết hiệu lực toàn bộ",
+      "eff_from": "2013-01-01T00:00:00"
+    },
+    {
+      "id": "111/2025/QH15",
+      "title": "Luật Bảo hiểm tiền gửi số 111/2025/QH15",
+      "type": "Luat",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2026-05-01T00:00:00"
+    },
+    {
+      "id": "203/2025/QH15",
+      "title": "Nghị quyết số 203/2025/QH15 Sửa đổi, bổ sung một số điều của Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "46/2010/QH12",
+      "title": "Luật Ngân hàng Nhà nước Việt Nam số 46/2010/QH12",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "32/2024/QH15",
+      "title": "Luật Các tổ chức tín dụng số 32/2024/QH15",
+      "type": "Luat",
+      "crawled": true,
+      "eff_status": "Hết hiệu lực một phần",
+      "eff_from": "2024-07-01T00:00:00"
+    },
+    {
+      "id": "12/2025/TT-NHNN",
+      "title": "Thông tư số 12/2025/TT-NHNN Sửa đổi, bổ sung một số điều của các Thông tư quy định hồ sơ, thủ tục cấp Giấy phép lần đầu của ngân hàng thương mại, chi nhánh ngân hàng nước ngoài, văn phòng đại diện nước ngoài, tổ chức tín dụng phi ngân hàng",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "96/2025/QH15",
+      "title": "Luật Sửa đổi, bổ sung một số điều của Luật Các tổ chức tín dụng số 96/2025/QH15",
+      "type": "Luat",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2025-10-15T00:00:00"
+    },
+    {
+      "id": "68/2013/NĐ-CP",
+      "title": "Nghị định số 68/2013/NĐ-CP Quy định chi tiết và hướng dẫn thi hành Luật Bảo hiểm tiền gửi",
+      "type": "NghiDinh",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2013-08-19T00:00:00"
+    },
+    {
+      "id": "32/2001/QH10",
+      "title": "Luật Tổ chức Chính phủ số 32/2001/QH10",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "109/2005/NĐ-CP",
+      "title": "Nghị định số 109/2005/NĐ-CP Về việc sửa đổi, bổ sung một số điều của Nghị định số 89/1999/NĐ-CP ngày 01 tháng 9 năm 1999 của Chính phủ về bảo hiểm tiền gửi",
+      "type": "NghiDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "89/1999/NĐ-CP",
+      "title": "Nghị định số 89/1999/NĐ-CP Về bảo hiểm tiền gửi",
+      "type": "NghiDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "70/2014/NĐ-CP",
+      "title": "Nghị định số 70/2014/NĐ-CP Quy định chi tiết thi hành một số điều của Pháp lệnh Ngoại hối và Pháp lệnh sửa đổi, bổ sung một số điều của Pháp lệnh Ngoại hối",
+      "type": "NghiDinh",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2014-09-05T00:00:00"
+    },
+    {
+      "id": "28/2005/PL-UBTVQH11",
+      "title": "Pháp lệnh số 28/2005/PL-UBTVQH11 Ngoại hối",
+      "type": "PhapLenh",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2006-06-01T00:00:00"
+    },
+    {
+      "id": "06/2013/UBTVQH13",
+      "title": "Pháp lệnh số 06/2013/UBTVQH13 Sửa đổi, bổ sung một số điều của Pháp lệnh Ngoại hối",
+      "type": "Khac",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "47/2010/QH12",
+      "title": "Luật Các tổ chức tín dụng số 47/2010/QH12",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "160/2006/NĐ-CP",
+      "title": "Nghị định số 160/2006/NĐ-CP Quy định chi tiết thi hành Pháp lệnh Ngoại hối",
+      "type": "NghiDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "42/2005/QH11",
+      "title": "Luật Sửa đổi, bổ sung một số điều của Luật Hải quan số 42/2005/QH11",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "32/2021/QĐ-TTg",
+      "title": "QUYẾT ĐỊNH SỐ 32/2021/QĐ-TTg VỀ HẠN MỨC TRẢ TIỀN BẢO HIỂM",
+      "type": "QuyetDinh",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2021-12-12T00:00:00"
+    },
+    {
+      "id": "47/2019/QH14",
+      "title": "Luật sửa đổi, bổ sung một số điều của Luật Tổ chức Chính phủ và Luật Tổ chức chính quyền địa phương số 47/2019/QH14",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "76/2015/QH13",
+      "title": "Luật Tổ chức Chính phủ số 76/2015/QH13",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "21/2017/QĐ-TTg",
+      "title": "Quyết định số 21/2017/QĐ-TTg Về hạn mức trả bào hiểm",
+      "type": "QuyetDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "04/2022/TT-NHNN",
+      "title": "Thông tư số 04/2022/TT-NHNN Quy định về việc áp dụng lãi suất rút trước hạn tiền gửi \ntại tổ chức tín dụng, chi nhánh ngân hàng nước ngoài",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Hết hiệu lực một phần",
+      "eff_from": "2022-08-01T00:00:00"
+    },
+    {
+      "id": "17/2017/QH14",
+      "title": "Luật sửa đổi, bổ sung một số điều của Luật các tổ chức tín dụng số 17/2017/QH14",
+      "type": "Luat",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "16/2017/NĐ-CP",
+      "title": "Nghị định số 16/2017/NĐ-CP Quy định chức năng, nhiệm vụ, quyền hạn và \ncơ cấu tổ chức của Ngân hàng Nhà nước Việt Nam",
+      "type": "NghiDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "04/2011/TT-NHNN",
+      "title": "Thông tư số 04/2011/TT-NHNN Quy định áp dụng lãi suất trong trường hợp tổ chức, cá nhân rút tiền gửi trước hạn tại tổ chức tín dụng",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "04/2026/TT-NHNN",
+      "title": "Thông tư số 04/2026/TT-NHNN Hướng dẫn một số nội dung về hoạt động bảo hiểm tiền gửi",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2026-05-01T00:00:00"
+    },
+    {
+      "id": "24/2014/TT-NHNN",
+      "title": "Thông tư số 24/2014/TT-NHNN Hướng dẫn một số nội dung về hoạt động bảo hiểm tiền gửi",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Hết hiệu lực toàn bộ",
+      "eff_from": "2014-10-24T00:00:00"
+    },
+    {
+      "id": "156/2013/NĐ-CP",
+      "title": "Nghị định số 156/2013/NĐ-CP Quy định chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức của Ngân hàng Nhà nước Việt Nam",
+      "type": "NghiDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "03/2006/TT-NHNN",
+      "title": "Thông tư số 03/2006/TT-NHNN Về việc hướng dẫn một số nội dung tại Nghị định số 89/1999/NĐ-CP ngày 01/9/1999 của Chính phủ về bảo hiểm tiền gửi và Nghị định số 109/2005/NĐ-CP ngày 24/8/2005 của Chính phủ về việc sửa đổi, bổ sung một số điều của Nghị định số 89/1999/NĐ-CP",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "48/2014/TT-NHNN",
+      "title": "Thông tư số 48/2014/TT-NHNN Quy định việc phát ngôn và cung cấp thông tin của Ngân hàng Nhà nước Việt Nam",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Hết hiệu lực toàn bộ",
+      "eff_from": null
+    },
+    {
+      "id": "26/2020/TT-NHNN",
+      "title": "Thông tư số 26/2020/TT-NHNN Quy định việc phát ngôn và cung cấp thông tin của Ngân hàng Nhà nước Việt Nam",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "25/2013/QĐ-TTg",
+      "title": "Quyết định số 25/2013/QĐ-TTg Ban hành Quy chế phát ngôn và cung cấp thông tin cho báo chí",
+      "type": "QuyetDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "18/2012/TT-NHNN",
+      "title": "Thông tư số 18/2012/TT-NHNN Sửa đổi thời hạn công bố một số thông tin quy định tại Thông tư số 35/2011/TT-NHNN ngày 11/11/2011 của Ngân hàng Nhà nước quy định việc công bố và cung cấp thông tin của Ngân hàng Nhà nước",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "35/2011/TT-NHNN",
+      "title": "Thông tư số 35/2011/TT-NHNN Quy định việc công bố và cung cấp thông tin của Ngân hàng Nhà nước",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "48/2018/TT-NHNN",
+      "title": "Thông tư số 48/2018/TT-NHNN Quy định về tiền gửi tiết kiệm",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": null
+    },
+    {
+      "id": "1160/2004/QĐ-NHNN",
+      "title": "Quyết định số 1160/2004/QĐ-NHNN Về việc ban hành Quy chế về tiền gửi tiết kiệm",
+      "type": "Khac",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "47/2006/QĐ-NHNN",
+      "title": "Quyết định số 47/2006/QĐ-NHNN Về việc sửa đổi, bổ sung một số điều của quy chế về tiền gửi tiết kiệm ban hành kèm theo Quyết định số 1160/2004/QĐ-NHNN ngày 13/9/2004 của Thống đốc Ngân hàng Nhà nước",
+      "type": "Khac",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "48/2024/TT-NHNN",
+      "title": "Thông tư số 48/2024/TT-NHNN Quy định về việc áp dụng lãi suất đối với tiền gửi bằng đồng Việt Nam của tổ chức, cá nhân tại tổ chức tín dụng, chi nhánh ngân hàng nước ngoài",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": null
+    },
+    {
+      "id": "102/2022/NĐ-CP",
+      "title": "Nghị định số 102/2022/NĐ-CP quy định chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức của Ngân hàng Nhà nước Việt Nam",
+      "type": "NghiDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "07/2014/TT-NHNN",
+      "title": "Thông tư số 07/2014/TT-NHNN Quy định lãi suất đối với tiền gửi bằng đồng Việt Nam của tổ chức, cá nhân tại tổ chức tín dụng",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "48/2025/TT-NHNN",
+      "title": "Thông tư số 48/2025/TT-NHNN Sửa đổi, bổ sung một số điều của một số Thông tư của Thống đốc Ngân hàng Nhà nước Việt Nam trong lĩnh vực quản lý, giám sát ngân hàng",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": null
+    },
+    {
+      "id": "38/2014/TT-NHNN",
+      "title": "Thông tư số 38/2014/TT-NHNN Quy định về hồ sơ, trình tự, thủ tục chấp thuận việc nhà đầu tư nước ngoài mua cổ phần của tổ chức tín dụng Việt Nam",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "63/2024/TT-NHNN",
+      "title": "Thông tư số 63/2024/TT-NHNN Quy định về hồ sơ, thủ tục thu hồi Giấy phép và thanh lý tài sản của tổ chức tín dụng, chi nhánh ngân hàng nước ngoài; hồ sơ, thủ tục thu hồi Giấy phép văn phòng đại diện tại Việt Nam của tổ chức tín dụng nước ngoài, tổ chức nước ngoài khác có hoạt động ngân hàng",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "20/2025/TT-NHNN",
+      "title": "Thông tư số 20/2025/TT-NHNN Hướng dẫn về hồ sơ, thủ tục chấp thuận danh sách dự kiến nhân sự của ngân hàng thương mại, chi nhánh ngân hàng nước ngoài và tổ chức tín dụng phi ngân hàng",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "26/2025/NĐ-CP",
+      "title": "Nghị định số 26/2025/NĐ-CP Quy định chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức của Ngân hàng Nhà nước Việt Nam",
+      "type": "NghiDinh",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    },
+    {
+      "id": "49/2018/TT-NHNN",
+      "title": "Thông tư số 49/2018/TT-NHNN Quy định về tiền gửi có kỳ hạn",
+      "type": "ThongTu",
+      "crawled": true,
+      "eff_status": "Còn hiệu lực",
+      "eff_from": "2019-07-05T00:00:00"
+    },
+    {
+      "id": "16/2014/TT-NHNN",
+      "title": "Thông tư số 16/2014/TT-NHNN Hướng dẫn sử dụng tài khoản ngoại tệ, tài khoản đồng Việt Nam của người cư trú, \nngười không cư trú tại ngân hàng được phép",
+      "type": "ThongTu",
+      "crawled": false,
+      "eff_status": null,
+      "eff_from": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "111/2025/QH15",
+      "target": "203/2025/QH15",
+      "rel": "can_cu"
+    },
+    {
+      "source": "111/2025/QH15",
+      "target": "06/2012/QH13",
+      "rel": "thay_the"
+    },
+    {
+      "source": "111/2025/QH15",
+      "target": "46/2010/QH12",
+      "rel": "khac"
+    },
+    {
+      "source": "111/2025/QH15",
+      "target": "06/2012/QH13",
+      "rel": "khac"
+    },
+    {
+      "source": "32/2024/QH15",
+      "target": "12/2025/TT-NHNN",
+      "rel": "khac"
+    },
+    {
+      "source": "96/2025/QH15",
+      "target": "32/2024/QH15",
+      "rel": "can_cu"
+    },
+    {
+      "source": "96/2025/QH15",
+      "target": "203/2025/QH15",
+      "rel": "can_cu"
+    },
+    {
+      "source": "96/2025/QH15",
+      "target": "32/2024/QH15",
+      "rel": "khac"
+    },
+    {
+      "source": "68/2013/NĐ-CP",
+      "target": "32/2001/QH10",
+      "rel": "can_cu"
+    },
+    {
+      "source": "68/2013/NĐ-CP",
+      "target": "06/2012/QH13",
+      "rel": "can_cu"
+    },
+    {
+      "source": "68/2013/NĐ-CP",
+      "target": "06/2012/QH13",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "68/2013/NĐ-CP",
+      "target": "109/2005/NĐ-CP",
+      "rel": "thay_the"
+    },
+    {
+      "source": "68/2013/NĐ-CP",
+      "target": "89/1999/NĐ-CP",
+      "rel": "thay_the"
+    },
+    {
+      "source": "68/2013/NĐ-CP",
+      "target": "89/1999/NĐ-CP",
+      "rel": "khac"
+    },
+    {
+      "source": "68/2013/NĐ-CP",
+      "target": "109/2005/NĐ-CP",
+      "rel": "khac"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "28/2005/PL-UBTVQH11",
+      "rel": "can_cu"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "06/2013/UBTVQH13",
+      "rel": "can_cu"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "47/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "32/2001/QH10",
+      "rel": "can_cu"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "46/2010/QH12",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "47/2010/QH12",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "28/2005/PL-UBTVQH11",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "06/2013/UBTVQH13",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "70/2014/NĐ-CP",
+      "target": "160/2006/NĐ-CP",
+      "rel": "thay_the"
+    },
+    {
+      "source": "28/2005/PL-UBTVQH11",
+      "target": "42/2005/QH11",
+      "rel": "can_cu"
+    },
+    {
+      "source": "32/2021/QĐ-TTg",
+      "target": "06/2012/QH13",
+      "rel": "can_cu"
+    },
+    {
+      "source": "32/2021/QĐ-TTg",
+      "target": "68/2013/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "32/2021/QĐ-TTg",
+      "target": "47/2019/QH14",
+      "rel": "can_cu"
+    },
+    {
+      "source": "32/2021/QĐ-TTg",
+      "target": "76/2015/QH13",
+      "rel": "can_cu"
+    },
+    {
+      "source": "32/2021/QĐ-TTg",
+      "target": "21/2017/QĐ-TTg",
+      "rel": "thay_the"
+    },
+    {
+      "source": "04/2022/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "04/2022/TT-NHNN",
+      "target": "17/2017/QH14",
+      "rel": "can_cu"
+    },
+    {
+      "source": "04/2022/TT-NHNN",
+      "target": "16/2017/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "04/2022/TT-NHNN",
+      "target": "47/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "04/2022/TT-NHNN",
+      "target": "04/2011/TT-NHNN",
+      "rel": "thay_the"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "47/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "156/2013/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "68/2013/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "06/2012/QH13",
+      "rel": "can_cu"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "47/2010/QH12",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "06/2012/QH13",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "68/2013/NĐ-CP",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "06/2012/QH13",
+      "rel": "khac"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "03/2006/TT-NHNN",
+      "rel": "khac"
+    },
+    {
+      "source": "24/2014/TT-NHNN",
+      "target": "68/2013/NĐ-CP",
+      "rel": "khac"
+    },
+    {
+      "source": "26/2020/TT-NHNN",
+      "target": "48/2014/TT-NHNN",
+      "rel": "thay_the"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "25/2013/QĐ-TTg",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "47/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "25/2013/QĐ-TTg",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "47/2010/QH12",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "huong_dan"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "18/2012/TT-NHNN",
+      "rel": "thay_the"
+    },
+    {
+      "source": "48/2014/TT-NHNN",
+      "target": "35/2011/TT-NHNN",
+      "rel": "thay_the"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "47/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "06/2013/UBTVQH13",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "17/2017/QH14",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "70/2014/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "16/2017/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "28/2005/PL-UBTVQH11",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "1160/2004/QĐ-NHNN",
+      "rel": "thay_the"
+    },
+    {
+      "source": "48/2018/TT-NHNN",
+      "target": "47/2006/QĐ-NHNN",
+      "rel": "thay_the"
+    },
+    {
+      "source": "48/2024/TT-NHNN",
+      "target": "102/2022/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2024/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2024/TT-NHNN",
+      "target": "32/2024/QH15",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2024/TT-NHNN",
+      "target": "07/2014/TT-NHNN",
+      "rel": "thay_the"
+    },
+    {
+      "source": "48/2025/TT-NHNN",
+      "target": "38/2014/TT-NHNN",
+      "rel": "sua_doi"
+    },
+    {
+      "source": "48/2025/TT-NHNN",
+      "target": "63/2024/TT-NHNN",
+      "rel": "sua_doi"
+    },
+    {
+      "source": "48/2025/TT-NHNN",
+      "target": "20/2025/TT-NHNN",
+      "rel": "sua_doi"
+    },
+    {
+      "source": "48/2025/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2025/TT-NHNN",
+      "target": "26/2025/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2025/TT-NHNN",
+      "target": "32/2024/QH15",
+      "rel": "can_cu"
+    },
+    {
+      "source": "48/2025/TT-NHNN",
+      "target": "96/2025/QH15",
+      "rel": "can_cu"
+    },
+    {
+      "source": "49/2018/TT-NHNN",
+      "target": "16/2017/NĐ-CP",
+      "rel": "can_cu"
+    },
+    {
+      "source": "49/2018/TT-NHNN",
+      "target": "28/2005/PL-UBTVQH11",
+      "rel": "can_cu"
+    },
+    {
+      "source": "49/2018/TT-NHNN",
+      "target": "06/2013/UBTVQH13",
+      "rel": "can_cu"
+    },
+    {
+      "source": "49/2018/TT-NHNN",
+      "target": "17/2017/QH14",
+      "rel": "can_cu"
+    },
+    {
+      "source": "49/2018/TT-NHNN",
+      "target": "47/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "49/2018/TT-NHNN",
+      "target": "46/2010/QH12",
+      "rel": "can_cu"
+    },
+    {
+      "source": "49/2018/TT-NHNN",
+      "target": "16/2014/TT-NHNN",
+      "rel": "khac"
+    },
+    {
+      "source": "04/2026/TT-NHNN",
+      "target": "111/2025/QH15",
+      "rel": "huong_dan_suy_luan"
+    }
+  ]
+}

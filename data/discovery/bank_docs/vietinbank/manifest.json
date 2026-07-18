@@ -1,0 +1,54 @@
+[
+  {
+    "bank": "VietinBank",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "ca_nhan",
+    "title": "Lãi suất tiền gửi cá nhân theo kỳ hạn (VND/USD/EUR), 20 mức kỳ hạn",
+    "source_url": "https://www.vietinbank.vn/lai-suat-khcn",
+    "file_type": "json",
+    "local_path": "pages/lai_suat_ca_nhan_live.json",
+    "crawl_date": "2026-07-18",
+    "notes": "Trang là Next.js App Router (RSC streaming) — dữ liệu không nằm trong <table> HTML thường mà nằm trong payload self.__next_f.push(...) nhúng sẵn trong HTML tĩnh (CMS Directus, mỗi dòng có date_created riêng, mới nhất 2026-04-12). Đã trích xuất và parse thành JSON sạch. Số liệu trùng khớp với BIDV (2.1/2.4/3.5/5.9/6.0%) — xác nhận đây là đặc điểm thật của nhóm ngân hàng quốc doanh (Big 4) đồng bộ lãi suất, không phải lỗi trùng lặp như nghi ngờ ban đầu."
+  },
+  {
+    "bank": "VietinBank",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "Sản phẩm Tiết kiệm có kỳ hạn thông thường — số tiền tối thiểu, kỳ hạn, hồ sơ, đặc điểm",
+    "source_url": "https://www.vietinbank.vn/ca-nhan/san-pham-dich-vu/tien-gui/tiet-kiem-co-ky-han-thong-thuong-30-html",
+    "file_type": "markdown_summary",
+    "local_path": "pages/san_pham_tiet_kiem_ky_han_thong_thuong.md",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "VietinBank",
+    "category": "bieu_phi",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu phí dịch vụ tài khoản thanh toán (không có mục riêng cho tiết kiệm)",
+    "source_url": "https://www.vietinbank.vn/ca-nhan/cong-cu-tien-ich/bieu-phi-va-bieu-mau/dich-vu-tai-khoan-thanh-toan-40-html",
+    "file_type": "markdown_summary",
+    "local_path": "pages/bieu_phi_tai_khoan_thanh_toan.md",
+    "crawl_date": "2026-07-18",
+    "notes": "Không tìm thấy biểu phí riêng cho sổ tiết kiệm (mở/tất toán/rút trước hạn) — có thể VietinBank không thu phí các khoản này."
+  },
+  {
+    "bank": "VietinBank",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "Điều kiện, điều khoản mở và sử dụng tài khoản thanh toán",
+    "source_url": "https://www.vietinbank.vn/assets/6a56cd0e-063b-41f5-92ce-7d089a9abd46",
+    "file_type": "pdf",
+    "local_path": "pdfs/dieu_khoan_dieu_kien_tk_thanh_toan_ca_nhan.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "VietinBank",
+    "category": "thu_tuc_mo_so",
+    "customer_segment": "ca_nhan",
+    "title": "Hồ sơ, giấy tờ mở sổ tiết kiệm (CMND/Hộ chiếu/CCCD)",
+    "source_url": "https://www.vietinbank.vn/ca-nhan/san-pham-dich-vu/tien-gui/tiet-kiem-co-ky-han-thong-thuong-30-html",
+    "file_type": "markdown_summary",
+    "local_path": "pages/san_pham_tiet_kiem_ky_han_thong_thuong.md",
+    "crawl_date": "2026-07-18"
+  }
+]
