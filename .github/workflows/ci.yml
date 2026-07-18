@@ -84,6 +84,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: backend
+          # Dockerfile chuẩn nằm ở docker/ (file: tính từ gốc repo, context vẫn là backend)
+          file: docker/backend.Dockerfile
           push: false
           tags: vaic-backend:${{ github.sha }}
           cache-from: type=gha
