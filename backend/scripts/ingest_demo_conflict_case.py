@@ -18,7 +18,15 @@ tiền gửi" (xem lịch sử), nên demo query sẽ trigger được.
 
 Chạy: cd backend && python -m scripts.ingest_demo_conflict_case
 Idempotent: xóa relation cũ cùng metadata_extra["import_source"] trước khi
-nạp lại.
+nạp lại. Cần chạy LẠI sau mỗi lần `scripts.ingest` re-ingest corpus (document
++ chunk id đổi mới mỗi lần — xem docstring `scripts/ingest.py`).
+
+Gắn `source_chunk_id`/`target_chunk_id` cụ thể (không chỉ document_id) vào
+metadata_extra: `ConflictDetectionProcessor` dùng 2 field này để chỉ flag
+conflict khi CHÍNH 2 Khoản liên quan thật sự nằm trong context đang trả lời
+— tránh việc 48/2018 và 04/2022 tình cờ cùng được retrieve cho một câu hỏi
+không liên quan (vd hỏi về độ tuổi người gửi tiền) rồi vẫn hiện cảnh báo mâu
+thuẫn về rút trước hạn, không ăn nhập gì với câu hỏi.
 """
 
 from __future__ import annotations
@@ -34,13 +42,18 @@ from app.core.database import AsyncSessionFactory
 from app.core.logging import configure_logging
 from app.models.entities import DocumentRelation
 from app.models.enums import RelationType
-from app.models.orm import DocumentModel, DocumentRelationModel
+from app.models.orm import ChunkModel, DocumentModel, DocumentRelationModel
 from app.repositories.relation_store import PgDocumentRelationRepository
 
 _IMPORT_TAG = "manual_demo_case"
 
 _SOURCE_DOC_NUMBER = "48/2018/TT-NHNN"
+_SOURCE_SECTION_TITLE = "Điều 17."
+_SOURCE_SECTION_NUMBER = "Khoản 1"
+
 _TARGET_DOC_NUMBER = "04/2022/TT-NHNN"
+_TARGET_SECTION_TITLE = "Điều 5. Lãi suất rút trước hạn tiền gửi"
+_TARGET_SECTION_NUMBER = "Khoản 1"
 _DESCRIPTION = (
     "TT 48/2018/TT-NHNN Điều 17 Khoản 1 quy định rút trước hạn tiền gửi tiết "
     "kiệm 'theo thỏa thuận giữa tổ chức tín dụng và người gửi tiền', dễ hiểu "
@@ -49,6 +62,19 @@ _DESCRIPTION = (
     "không kỳ hạn thấp nhất của tổ chức tín dụng tại thời điểm rút trước "
     "hạn) — cần đọc kết hợp cả hai văn bản để tránh áp dụng sai."
 )
+
+
+async def _find_chunk_id(
+    session, document_id: uuid.UUID, section_title: str, section_number: str
+) -> uuid.UUID | None:
+    result = await session.execute(
+        select(ChunkModel.id).where(
+            ChunkModel.document_id == document_id,
+            ChunkModel.section_title == section_title,
+            ChunkModel.section_number == section_number,
+        )
+    )
+    return result.scalar_one_or_none()
 
 
 async def main() -> None:
@@ -70,6 +96,20 @@ async def main() -> None:
             print(f"Không tìm thấy document cho doc_number: {missing}. Bỏ qua.")
             return
 
+        source_chunk_id = await _find_chunk_id(
+            session, doc_map[_SOURCE_DOC_NUMBER], _SOURCE_SECTION_TITLE, _SOURCE_SECTION_NUMBER
+        )
+        target_chunk_id = await _find_chunk_id(
+            session, doc_map[_TARGET_DOC_NUMBER], _TARGET_SECTION_TITLE, _TARGET_SECTION_NUMBER
+        )
+        if source_chunk_id is None or target_chunk_id is None:
+            print(
+                "Không tìm thấy chunk cụ thể cho case demo "
+                f"(source={source_chunk_id}, target={target_chunk_id}). Bỏ qua — "
+                "kiểm tra lại section_title/section_number có đổi sau re-ingest không."
+            )
+            return
+
         await session.execute(
             delete(DocumentRelationModel).where(
                 DocumentRelationModel.metadata_extra["import_source"].astext
@@ -86,13 +126,20 @@ async def main() -> None:
             description=_DESCRIPTION,
             metadata_extra={
                 "import_source": _IMPORT_TAG,
+                # Bắt buộc để ConflictDetectionProcessor chỉ flag đúng lúc —
+                # xem docstring class đó trong document_relation_service.py.
+                "source_chunk_id": str(source_chunk_id),
+                "target_chunk_id": str(target_chunk_id),
                 "note": (
                     "Case demo được curate thủ công — không phải mâu thuẫn "
                     "pháp lý tuyệt đối, mà là nuance dễ hiểu nhầm nếu chỉ đọc "
                     "1 trong 2 văn bản. Dùng để trình diễn tính năng Conflict "
                     "Detection khi corpus không có case mâu thuẫn thật nào "
                     "giữa 2 văn bản cùng hiệu lực (đã rà soát, xem "
-                    "conversation history / doc review)."
+                    "conversation history / doc review). Chỉ trigger khi cả "
+                    "2 chunk cụ thể (source_chunk_id/target_chunk_id) nằm "
+                    "trong context đang trả lời, không phải chỉ cần 2 văn "
+                    "bản cùng được retrieve."
                 ),
             },
         )

@@ -335,6 +335,25 @@ class VersionResolutionProcessor:
 
 
 class ConflictDetectionProcessor:
+    """Flags explicit CONFLICTS_WITH document_relations rows that are actually
+    relevant to the current answer.
+
+    A conflict is almost always about 2 SPECIFIC clauses, not 2 whole
+    documents (vd Điều 17 Khoản 1 TT 48/2018 vs Điều 5 Khoản 1 TT 04/2022) —
+    2 văn bản dài có thể cùng được retrieve cho rất nhiều câu hỏi không liên
+    quan gì tới nhau. Nếu relation có `source_chunk_id`/`target_chunk_id`
+    trong metadata_extra (gắn lúc curate quan hệ), CHỈ flag khi ÍT NHẤT MỘT
+    trong 2 chunk cụ thể đó nằm trong context đang trả lời (cùng semantic OR
+    như bản document-level cũ, chỉ thu hẹp phạm vi xuống đúng chunk) — tránh
+    cảnh báo mâu thuẫn "dính" vào mọi câu hỏi chỉ vì 2 văn bản đó tình cờ
+    cùng được retrieve. Dùng OR chứ không phải AND: cảnh báo có giá trị nhất
+    chính lúc chunk "dễ hiểu nhầm" (vd Điều 17 Khoản 1) xuất hiện trong
+    context — dù chunk còn lại (vd Điều 5 Khoản 1) có được retrieve cùng lúc
+    hay không (top-k retrieval không đảm bảo luôn kéo cả 2 cùng lúc dù cùng
+    chủ đề). Không có chunk_id cụ thể (quan hệ mức-văn-bản thật) thì fallback
+    về so khớp theo document_id như cũ.
+    """
+
     def __init__(self, enabled: bool = True) -> None:
         self._enabled = enabled
 
@@ -342,17 +361,28 @@ class ConflictDetectionProcessor:
         if not self._enabled:
             context.statistics["conflict_count"] = 0
             return
-        retrieved_ids = {c.document_id for c in context.ranked_chunks}
+        retrieved_doc_ids = {c.document_id for c in context.ranked_chunks}
+        retrieved_chunk_ids = {c.chunk_id for c in context.ranked_chunks}
         conflicts: list[ConflictInfo] = []
 
         for rel in context.relationships:
             if rel.relation_type != RelationType.CONFLICTS_WITH:
                 continue
-            if (
-                rel.source_doc_id not in retrieved_ids
-                and rel.target_doc_id not in retrieved_ids
+
+            source_chunk_id = rel.metadata_extra.get("source_chunk_id")
+            target_chunk_id = rel.metadata_extra.get("target_chunk_id")
+            if source_chunk_id and target_chunk_id:
+                if (
+                    UUID(source_chunk_id) not in retrieved_chunk_ids
+                    and UUID(target_chunk_id) not in retrieved_chunk_ids
+                ):
+                    continue
+            elif (
+                rel.source_doc_id not in retrieved_doc_ids
+                and rel.target_doc_id not in retrieved_doc_ids
             ):
                 continue
+
             src_doc = context.document_map.get(rel.source_doc_id)
             tgt_doc = context.document_map.get(rel.target_doc_id)
             conflicts.append(
