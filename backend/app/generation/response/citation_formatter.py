@@ -44,6 +44,7 @@ class CitationFormatter:
             str(citation.effective_date) if citation.effective_date else None
         )
         bank = chunk.bank if chunk is not None else None
+        doc_class = chunk.metadata.get("doc_class") if chunk is not None else None
 
         # Build clause string
         clause_parts: list[str] = []
@@ -59,4 +60,5 @@ class CitationFormatter:
             clause=clause,
             effective_date=effective_date,
             bank=bank,
+            doc_class=doc_class,
         )

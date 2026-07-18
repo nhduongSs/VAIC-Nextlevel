@@ -536,6 +536,7 @@ class Source(BaseModel):
     clause: str
     effective_date: str | None = None
     bank: str | None = None
+    doc_class: str | None = None
 
 
 class ConflictInfo(BaseModel):
