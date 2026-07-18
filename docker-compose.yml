@@ -6,8 +6,8 @@ services:
     env_file:
       - .env
     healthcheck:
-      # python:slim không có curl; endpoint health nằm dưới prefix /api/v1
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      # endpoint health nằm dưới prefix /api/v1 (curl được cài trong backend/Dockerfile)
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
       interval: 10s
       timeout: 5s
       retries: 5
