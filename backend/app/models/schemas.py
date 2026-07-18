@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, date, datetime
 from typing import Any, Generic, TypeVar
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -526,7 +526,7 @@ class RateComparisonResponse(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    session_id: str
+    session_id: str = Field(default_factory=lambda: str(uuid4()))
     message: str = Field(..., max_length=4000)
 
 
@@ -550,3 +550,49 @@ class ChatResponse(BaseModel):
     conflicts: list[ConflictInfo] = []
     blocked: bool = False
     block_reason: str = "none"
+
+
+# ── Wave 4 — AI Generation schemas ───────────────────────────────────────────
+
+
+class ChatStreamEvent(BaseModel):
+    event: str  # "token" | "done" | "error"
+    data: str
+
+
+class AnswerUsage(BaseModel):
+    prompt_tokens: int
+    completion_tokens: int
+    total_tokens: int
+    estimated_cost_usd: float
+    provider: str
+    model: str
+
+
+class ChatResponseV2(ChatResponse):
+    usage: AnswerUsage | None = None
+    confidence_score: float | None = None
+    latency_ms: float | None = None
+    prompt_type: str | None = None
+
+
+class PromptBuildRequest(BaseModel):
+    question: str = Field(..., min_length=1, max_length=4000)
+    prompt_type: str = Field(default="qa")
+    max_chunks: int = Field(default=10, ge=1, le=20)
+
+
+class PromptBuildResponse(BaseModel):
+    prompt_type: str
+    system_prompt: str
+    user_prompt: str
+    estimated_prompt_tokens: int
+    estimated_completion_tokens: int
+    estimated_total_tokens: int
+    context_chunks_used: int
+    was_truncated: bool
+
+
+class PromptPreviewResponse(PromptBuildResponse):
+    config: dict[str, Any]
+    optimization_applied: bool

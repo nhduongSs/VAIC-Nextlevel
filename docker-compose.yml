@@ -45,6 +45,8 @@ services:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       EMBEDDING_SERVICE_URL: http://embedding-service:8001
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      LLM_MODEL: ${LLM_MODEL:-deepseek-chat}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       ENV: production
       LOG_LEVEL: INFO

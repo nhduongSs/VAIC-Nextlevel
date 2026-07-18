@@ -7,18 +7,20 @@ from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-load_dotenv()  # load backend/.env into os.environ before settings reads it
+load_dotenv()  # loads backend/.env when run from backend/ directory
 
 from alembic import context
-from app.config import settings
-from app.infrastructure.database.base import Base
+from app.core.config import settings
+from app.core.database import Base
 
 # Import all models so Alembic autogenerate picks them up.
-from app.infrastructure.database.models.chunk_model import ChunkModel  # noqa: F401
-from app.infrastructure.database.models.document_model import DocumentModel  # noqa: F401
-from app.infrastructure.database.models.embedding_job_model import EmbeddingJobModel  # noqa: F401
-from app.infrastructure.database.models.processing_log_model import ProcessingLogModel  # noqa: F401
-from app.infrastructure.database.models.relation_model import DocumentRelationModel  # noqa: F401
+from app.models.orm import (  # noqa: F401
+    ChunkModel,
+    DocumentModel,
+    DocumentRelationModel,
+    EmbeddingJobModel,
+    ProcessingLogModel,
+)
 
 config = context.config
 

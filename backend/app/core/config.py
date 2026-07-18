@@ -36,6 +36,13 @@ class Settings(BaseSettings):
     LLM_MAX_TOKENS: int = 1024
     LLM_TEMPERATURE: float = 0.2
 
+    # ── LLM Generation (Wave 4) ───────────────────────────────────────────
+    LLM_RETRY_COUNT: int = 2
+    LLM_TIMEOUT: float = 60.0
+    LLM_TOP_P: float = 0.9
+    LLM_MAX_PROMPT_TOKENS: int = 6000
+    LLM_STREAMING_ENABLED: bool = True
+
     # ── Security ───────────────────────────────────────────────────────────
     JWT_SECRET_KEY: str = "dev-secret-key-change-in-production"
     JWT_ALGORITHM: str = "HS256"

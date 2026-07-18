@@ -19,6 +19,10 @@ dependencies = [
     "structlog>=24.0.0",
     # HTTP client (AI service calls)
     "httpx>=0.27.0",
+    # LLM client (DeepSeek / OpenAI-compatible)
+    "openai>=1.40.0",
+    # Env file loading
+    "python-dotenv>=1.0.0",
     # Rate limiting
     "slowapi>=0.1.9",
     # Security

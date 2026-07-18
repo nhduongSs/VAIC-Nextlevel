@@ -40,9 +40,13 @@ from app.repositories.vector_store import EmbeddingClient
 from app.services.document_relation_service import DocumentRelationService
 from app.services.document_service import DocumentService
 from app.services.embedding_service import EmbeddingService
+from app.generation.llm.deepseek_client import DeepSeekClient
+from app.generation.llm.deepseek_service import DeepSeekService
+from app.generation.prompt.builder import PromptBuilder
+from app.generation.prompt.config import PromptConfig
+from app.generation.response.formatter import ResponseFormatter
 from app.services.guardrail_service import GuardrailService
 from app.services.ingestion_service import IngestionPipelineService
-from app.services.llm_service import LLMService
 from app.services.rag_service import RAGService
 
 # ── Database ─────────────────────────────────────────────────────────────────
@@ -140,8 +144,34 @@ def get_guardrail_service() -> GuardrailService:
     return GuardrailService()
 
 
-def get_llm_service() -> LLMService:
-    return LLMService()
+def get_prompt_builder() -> PromptBuilder:
+    config = PromptConfig(
+        max_prompt_tokens=settings.LLM_MAX_PROMPT_TOKENS,
+        max_completion_tokens=settings.LLM_MAX_TOKENS,
+        max_context_chunks=settings.KI_MAX_CONTEXT_CHUNKS,
+        max_citations=settings.KI_MAX_CITATIONS,
+    )
+    return PromptBuilder(config=config)
+
+
+def get_deepseek_service() -> DeepSeekService:
+    client = DeepSeekClient(
+        api_key=settings.DEEPSEEK_API_KEY,
+        base_url=settings.DEEPSEEK_BASE_URL,
+        model=settings.LLM_MODEL,
+        timeout=settings.LLM_TIMEOUT,
+        retry_count=settings.LLM_RETRY_COUNT,
+    )
+    return DeepSeekService(
+        client=client,
+        model=settings.LLM_MODEL,
+        temperature=settings.LLM_TEMPERATURE,
+        top_p=settings.LLM_TOP_P,
+    )
+
+
+def get_response_formatter() -> ResponseFormatter:
+    return ResponseFormatter()
 
 
 def get_chat_service(
@@ -150,11 +180,17 @@ def get_chat_service(
         DocumentRelationService, Depends(get_document_relation_service)
     ],
     guardrail: Annotated[GuardrailService, Depends(get_guardrail_service)],
-    llm: Annotated[LLMService, Depends(get_llm_service)],
-) -> ChatService:
+) -> "ChatService":
     from app.services.chat_service import ChatService
 
-    return ChatService(rag=rag, relations=relations, guardrail=guardrail, llm=llm)
+    return ChatService(
+        rag=rag,
+        relations=relations,
+        guardrail=guardrail,
+        prompt_builder=get_prompt_builder(),
+        deepseek_service=get_deepseek_service(),
+        response_formatter=get_response_formatter(),
+    )
 
 
 def get_ingestion_pipeline_service() -> IngestionPipelineService:

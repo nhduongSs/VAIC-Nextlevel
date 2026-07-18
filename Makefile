@@ -4,6 +4,7 @@
         clean
 
 BACKEND_DIR = backend
+COMPOSE     = $(COMPOSE) --env-file ./backend/.env
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -53,25 +54,25 @@ test-cov: ## Run tests with coverage report
 # ── Docker ────────────────────────────────────────────────────────────────────
 
 docker-up: ## Start all services
-	docker compose up -d
+	$(COMPOSE) up -d
 
 docker-dev: ## Start services in dev mode with hot-reload
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+	$(COMPOSE) -f docker-compose.yml -f docker-compose.dev.yml up
 
 docker-down: ## Stop all services
-	docker compose down
+	$(COMPOSE) down
 
 docker-logs: ## Follow backend logs
-	docker compose logs -f backend
+	$(COMPOSE) logs -f backend
 
 docker-reset: ## Full reset (removes volumes — DELETES ALL DATA)
-	docker compose down -v
+	$(COMPOSE) down -v
 
 docker-migrate: ## Run migrations inside running backend container
-	docker compose exec backend alembic upgrade head
+	$(COMPOSE) exec backend alembic upgrade head
 
 docker-ps: ## Show service status
-	docker compose ps
+	$(COMPOSE) ps
 
 # ── Utility ───────────────────────────────────────────────────────────────────
 

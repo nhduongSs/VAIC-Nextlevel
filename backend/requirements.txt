@@ -21,6 +21,9 @@ typing-inspection==0.4.2
 structlog==26.1.0
 Pygments==2.20.0
 
+# ── LLM (OpenAI-compatible client — used for DeepSeek) ───────────────────────
+openai>=1.30.0,<2.0.0
+
 # ── HTTP Client (AI service calls) ───────────────────────────────────────────
 httpx==0.28.1
 httpcore==1.0.9

@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from app.api import chat, documents, embeddings, health, ingestion, retrieval, search
+from app.api import chat, documents, embeddings, health, ingestion, prompt, retrieval, search
 
 router = APIRouter()
 
@@ -24,5 +24,8 @@ router.include_router(search.router)
 # Retrieval + Knowledge Intelligence
 router.include_router(retrieval.router)
 
-# Chat
+# Chat (Wave 4)
 router.include_router(chat.router)
+
+# Prompt building / debugging (Wave 4)
+router.include_router(prompt.router)
