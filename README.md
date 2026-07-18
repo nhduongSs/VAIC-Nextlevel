@@ -48,6 +48,10 @@ cd backend
 pip install -r requirements.txt
 cp ../.env.example .env   # điền DEEPSEEK_API_KEY, SUPABASE_URL, SUPABASE_KEY
 
+# 0. Tạo schema trên Supabase (SQL editor hoặc supabase CLI)
+#    chạy migrations/0001_init.sql — tạo bảng document_chunks, document_relations,
+#    function match_document_chunks (bật sẵn extension pgvector)
+
 # 1. Đưa văn bản vào ../data/raw/<loai>/*.md (định dạng xem app/repositories/document_loader.py)
 # 2. Nạp vào vector store
 python -m scripts.ingest
