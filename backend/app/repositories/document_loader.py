@@ -17,7 +17,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 HEADER_RE = re.compile(
-    r"^#\s+(?P<title>.+?)\s*\|\s*doc_id=(?P<doc_id>\S+)\s*\|\s*effective_date=(?P<effective_date>\S+)\s*\|\s*status=(?P<status>\S+)",
+    r"^#\s+(?P<title>.+?)\s*\|\s*doc_id=(?P<doc_id>\S+)\s*\|\s*effective_date=(?P<effective_date>\S+)\s*\|\s*status=(?P<status>\S+)"
+    r"(?:\s*\|\s*bank=(?P<bank>\S+))?"
+    r"(?:\s*\|\s*category=(?P<category>\S+))?",
     re.MULTILINE,
 )
 CLAUSE_RE = re.compile(
@@ -34,6 +36,8 @@ class Clause:
     status: str
     clause: str
     content: str
+    bank: str | None = None
+    category: str | None = None
     related_doc_ids: list[str] = field(default_factory=list)
 
 
@@ -59,6 +63,8 @@ def _parse_document(text: str) -> list[Clause]:
     title = header.group("title")
     effective_date = header.group("effective_date")
     status = header.group("status")
+    bank = header.group("bank")
+    category = header.group("category")
 
     clauses = []
     for m in CLAUSE_RE.finditer(text):
@@ -70,6 +76,8 @@ def _parse_document(text: str) -> list[Clause]:
                 status=status,
                 clause=m.group("clause").strip(),
                 content=m.group("body").strip(),
+                bank=bank,
+                category=category,
             )
         )
     return clauses

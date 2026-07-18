@@ -118,6 +118,8 @@ def _to_search_dto(body: RetrieveRequest) -> SearchRequestDTO:
             effective_date_to=f.effective_date_to,
             tags=list(f.tags),
             document_ids=list(f.document_ids),
+            bank=f.bank,
+            category=f.category,
         )
     return SearchRequestDTO(
         query=body.query,
@@ -143,6 +145,8 @@ def _package_to_response(pkg: Any) -> RetrieveContextResponse:
                 section_title=r.section_title,
                 section_number=r.section_number,
                 page_number=r.page_number,
+                bank=r.bank,
+                category=r.category,
                 metadata=r.metadata,
             )
             for r in pkg.ranked_chunks

@@ -69,6 +69,7 @@ class ChatService:
                     effective_date=str(cit.effective_date)
                     if cit.effective_date
                     else None,
+                    bank=c.bank,
                 )
                 for cit in context_package.citations[:5]
                 for c in [

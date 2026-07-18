@@ -91,4 +91,6 @@ class SearchResult:
     section_title: str | None = None
     section_number: str | None = None
     page_number: int | None = None
+    bank: str | None = None
+    category: str | None = None
     metadata: dict[str, Any] = field(default_factory=dict)

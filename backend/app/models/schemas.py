@@ -279,6 +279,14 @@ class SearchFiltersRequest(BaseModel):
     document_ids: list[UUID] = Field(
         default_factory=list, description="Giới hạn tìm kiếm trong danh sách tài liệu"
     )
+    bank: str | None = Field(
+        None, max_length=100, description="Lọc theo ngân hàng (SHB, BIDV, VCB, ...)"
+    )
+    category: str | None = Field(
+        None,
+        max_length=50,
+        description="Lọc theo danh mục: lai_suat | bieu_phi | dieu_khoan | thu_tuc",
+    )
 
 
 class SearchRequest(BaseModel):
@@ -338,6 +346,10 @@ class SearchResultItem(BaseModel):
     section_title: str | None = Field(None, description="Tiêu đề mục chứa chunk")
     section_number: str | None = Field(None, description="Số mục")
     page_number: int | None = Field(None, description="Số trang")
+    bank: str | None = Field(None, description="Ngân hàng sở hữu tài liệu")
+    category: str | None = Field(
+        None, description="Danh mục: lai_suat | bieu_phi | dieu_khoan | thu_tuc"
+    )
     metadata: dict[str, Any] = Field(
         default_factory=dict, description="Metadata bổ sung"
     )
@@ -467,6 +479,8 @@ class ContextChunk(BaseModel):
     section_title: str | None
     section_number: str | None
     page_number: int | None
+    bank: str | None = None
+    category: str | None = None
     metadata: dict[str, Any]
 
 
@@ -501,6 +515,16 @@ class RetrieveHealthResponse(BaseModel):
 # ── Chat ──────────────────────────────────────────────────────────────────────
 
 
+class RateBankResult(BaseModel):
+    bank: str = Field(description="Tên ngân hàng")
+    chunks: list[SearchResultItem] = Field(description="Các đoạn văn bản lãi suất liên quan")
+
+
+class RateComparisonResponse(BaseModel):
+    term: str | None = Field(None, description="Kỳ hạn tra cứu, ví dụ: 12m, 6m")
+    banks: list[RateBankResult] = Field(description="Kết quả nhóm theo ngân hàng")
+
+
 class ChatRequest(BaseModel):
     session_id: str
     message: str = Field(..., max_length=4000)
@@ -511,6 +535,7 @@ class Source(BaseModel):
     title: str
     clause: str
     effective_date: str | None = None
+    bank: str | None = None
 
 
 class ConflictInfo(BaseModel):

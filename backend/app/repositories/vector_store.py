@@ -118,6 +118,8 @@ class SearchFilters:
     effective_date_to: date | None = None
     tags: list[str] = field(default_factory=list)
     document_ids: list[UUID] = field(default_factory=list)
+    bank: str | None = None
+    category: str | None = None
 
 
 @dataclass
@@ -175,6 +177,16 @@ class MetadataFilter:
 
         if filters.document_ids:
             conditions.append(ChunkModel.document_id.in_(filters.document_ids))
+
+        if filters.bank:
+            conditions.append(
+                DocumentModel.metadata_extra["bank"].astext == filters.bank
+            )
+
+        if filters.category:
+            conditions.append(
+                DocumentModel.metadata_extra["category"].astext == filters.category
+            )
 
         return conditions
 
@@ -239,7 +251,7 @@ class VectorRetriever:
         vector_score = (1 - cosine_dist).label("vector_score")
 
         stmt = (
-            select(ChunkModel, vector_score)
+            select(ChunkModel, DocumentModel.metadata_extra, vector_score)
             .join(DocumentModel, ChunkModel.document_id == DocumentModel.id)
             .where(*conditions)
             .order_by(vector_score.desc())
@@ -252,9 +264,12 @@ class VectorRetriever:
         results: list[SearchResult] = []
         for row in rows:
             chunk: ChunkModel = row[0]
-            score: float = float(row[1])
+            doc_meta: dict[str, Any] = dict(row[1]) if row[1] else {}
+            score: float = float(row[2])
             if score < self._score_threshold:
                 continue
+            chunk_meta = dict(chunk.metadata_extra) if chunk.metadata_extra else {}
+            merged = {**doc_meta, **chunk_meta}
             results.append(
                 SearchResult(
                     chunk_id=UUID(str(chunk.id)),
@@ -268,7 +283,9 @@ class VectorRetriever:
                     section_title=chunk.section_title,
                     section_number=chunk.section_number,
                     page_number=chunk.page_number,
-                    metadata=dict(chunk.metadata_extra) if chunk.metadata_extra else {},
+                    bank=merged.get("bank"),
+                    category=merged.get("category"),
+                    metadata=merged,
                 )
             )
 
@@ -310,7 +327,7 @@ class BM25Retriever:
         conditions.append(ChunkModel.search_vector.op("@@")(tsquery))
 
         stmt = (
-            select(ChunkModel, bm25_score)
+            select(ChunkModel, DocumentModel.metadata_extra, bm25_score)
             .join(DocumentModel, ChunkModel.document_id == DocumentModel.id)
             .where(*conditions)
             .order_by(bm25_score.desc())
@@ -323,9 +340,12 @@ class BM25Retriever:
         results: list[SearchResult] = []
         for row in rows:
             chunk: ChunkModel = row[0]
-            score: float = float(row[1])
+            doc_meta: dict[str, Any] = dict(row[1]) if row[1] else {}
+            score: float = float(row[2])
             if score < self._score_threshold:
                 continue
+            chunk_meta = dict(chunk.metadata_extra) if chunk.metadata_extra else {}
+            merged = {**doc_meta, **chunk_meta}
             results.append(
                 SearchResult(
                     chunk_id=UUID(str(chunk.id)),
@@ -339,7 +359,9 @@ class BM25Retriever:
                     section_title=chunk.section_title,
                     section_number=chunk.section_number,
                     page_number=chunk.page_number,
-                    metadata=dict(chunk.metadata_extra) if chunk.metadata_extra else {},
+                    bank=merged.get("bank"),
+                    category=merged.get("category"),
+                    metadata=merged,
                 )
             )
 
@@ -401,6 +423,8 @@ class HybridRetriever:
                 section_title=res.section_title,
                 section_number=res.section_number,
                 page_number=res.page_number,
+                bank=res.bank,
+                category=res.category,
                 metadata=res.metadata,
             )
 
@@ -423,6 +447,8 @@ class HybridRetriever:
                     section_title=res.section_title,
                     section_number=res.section_number,
                     page_number=res.page_number,
+                    bank=res.bank,
+                    category=res.category,
                     metadata=res.metadata,
                 )
 
