@@ -1,7 +1,7 @@
 """Chat endpoints — POST /chat, POST /chat/stream, GET /chat/health."""
 from __future__ import annotations
 
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse

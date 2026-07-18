@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass, field
-from typing import AsyncGenerator
+from dataclasses import dataclass
+from collections.abc import AsyncGenerator
 
 import structlog
 

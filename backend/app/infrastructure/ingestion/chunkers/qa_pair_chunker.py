@@ -1,4 +1,4 @@
-"""QAPairChunker — splits FAQ-style documents into Q&A pairs."""
+"""QAPairChunker - splits FAQ-style documents into Q&A pairs."""
 from __future__ import annotations
 
 import re
@@ -13,7 +13,11 @@ from app.models.enums import ChunkType
 if TYPE_CHECKING:
     from app.infrastructure.ingestion.parsed_document import ParsedDocument
 
-_QA_RE = re.compile(r"(Câu hỏi\s*\d*[:.]|Q\s*\d*[:.])(.+?)(?=Câu hỏi\s*\d*[:.:]|Q\s*\d*[:.:]|$)", re.DOTALL | re.IGNORECASE)
+_QA_RE = re.compile(
+    r"(C\u00e2u h\u1ecfi\s*\d*[:.]|Q\s*\d*[:.])(.+?)"
+    r"(?=C\u00e2u h\u1ecfi\s*\d*[:.:]|Q\s*\d*[:.:]|$)",
+    re.DOTALL | re.IGNORECASE,
+)
 
 
 class QAPairChunker:
