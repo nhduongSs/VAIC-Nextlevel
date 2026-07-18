@@ -57,6 +57,7 @@ class AnswerPackage:
     answer: str
     sources: list  # list[Source] — typed loosely to avoid circular imports
     conflicts: list  # list[ConflictInfo] (schema version)
+    timeline: list  # list[TimelineEntryResponse] (schema version)
     usage: UsageStatistics
     prompt_type: PromptType
     confidence_score: float

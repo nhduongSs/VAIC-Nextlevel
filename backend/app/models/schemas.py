@@ -561,6 +561,10 @@ class ChatResponse(BaseModel):
     answer: str
     sources: list[Source] = []
     conflicts: list[ConflictInfo] = []
+    timeline: list[TimelineEntryResponse] = Field(
+        default_factory=list,
+        description="Lịch sử phiên bản văn bản liên quan tới câu trả lời (KI Timeline Builder)",
+    )
     blocked: bool = False
     block_reason: str = "none"
 
