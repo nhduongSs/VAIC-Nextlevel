@@ -1,11 +1,10 @@
 """PromptRenderer — assembles context string and fills prompt templates."""
 from __future__ import annotations
 
-from app.generation.prompt.config import PromptConfig, PromptType
-from app.generation.prompt.optimizer import OptimizedContext
+from app.generation.prompt.config import PromptConfig
 from app.generation.prompt.template import PromptTemplate
 from app.models.enums import SearchResult
-from app.services.document_relation_service import ConflictInfo, ContextPackage, TimelineEntry
+from app.services.document_relation_service import ConflictInfo, TimelineEntry
 
 _CHUNK_SEPARATOR = "\n\n---\n\n"
 

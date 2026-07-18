@@ -1,7 +1,8 @@
 """LLMClient Protocol — defines the interface every LLM client must satisfy."""
 from __future__ import annotations
 
-from typing import AsyncGenerator, Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable
+from collections.abc import AsyncGenerator
 
 
 @runtime_checkable

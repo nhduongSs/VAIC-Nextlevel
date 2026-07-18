@@ -3,9 +3,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import date
-from unittest.mock import MagicMock
 
-import pytest
 
 from app.generation.llm.deepseek_service import GenerationResult
 from app.generation.prompt.config import PromptConfig, PromptType

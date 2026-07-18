@@ -2,9 +2,7 @@
 from __future__ import annotations
 
 import uuid
-from unittest.mock import MagicMock, patch
 
-import pytest
 
 from app.generation.prompt.builder import PromptBuilder
 from app.generation.prompt.config import PromptConfig, PromptType
@@ -14,7 +12,6 @@ from app.models.enums import SearchResult
 from app.services.document_relation_service import (
     Citation,
     ContextPackage,
-    ConflictInfo,
 )
 
 

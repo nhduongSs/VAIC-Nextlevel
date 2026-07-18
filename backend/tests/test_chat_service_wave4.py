@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import uuid
-from typing import AsyncGenerator
-from unittest.mock import AsyncMock, MagicMock, patch
+from collections.abc import AsyncGenerator
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -12,7 +12,7 @@ from app.generation.prompt.config import PromptConfig, PromptType
 from app.generation.prompt.package import PromptPackage
 from app.generation.response.package import AnswerPackage, UsageStatistics
 from app.models.enums import SearchResult
-from app.models.schemas import ChatResponse, ConflictInfo, Source
+from app.models.schemas import ChatResponse
 from app.services.chat_service import ChatService
 from app.services.document_relation_service import ContextPackage
 from app.services.guardrail_service import GuardrailResult
