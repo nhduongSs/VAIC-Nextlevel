@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import time
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
 import structlog
 
@@ -10,7 +10,7 @@ from app.generation.llm.deepseek_service import DeepSeekService
 from app.generation.prompt.builder import PromptBuilder
 from app.generation.prompt.config import PromptType
 from app.generation.response.formatter import ResponseFormatter
-from app.models.schemas import ChatResponse, ConflictInfo, Source
+from app.models.schemas import ChatResponse
 from app.services.document_relation_service import DocumentRelationService
 from app.services.guardrail_service import GuardrailService
 from app.services.rag_service import RAGService

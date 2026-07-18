@@ -1,8 +1,8 @@
 """Tests for DeepSeekClient — mocks AsyncOpenAI to avoid real API calls."""
 from __future__ import annotations
 
-import asyncio
-from typing import Any, AsyncGenerator
+from typing import Any
+from collections.abc import AsyncGenerator
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import openai
