@@ -1,5 +1,8 @@
 FROM python:3.11-slim
 
+# curl phục vụ healthcheck trong docker-compose (image slim không có sẵn)
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY requirements.txt .

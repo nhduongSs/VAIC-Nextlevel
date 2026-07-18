@@ -1,0 +1,58 @@
+[
+  {
+    "bank": "Vietcombank",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "ca_nhan",
+    "title": "Lãi suất tiền gửi cá nhân theo kỳ hạn (Savings, VND/USD/EUR, 90 dòng)",
+    "source_url": "https://www.vietcombank.com.vn/en/Personal/Cong-cu-Tien-ich/KHCN---Lai-suat",
+    "api_url": "https://www.vietcombank.com.vn/en/api/interestrates?accountType=Personal",
+    "file_type": "json",
+    "local_path": "pages/lai_suat_ca_nhan_live.json",
+    "crawl_date": "2026-07-18",
+    "notes": "Đúng endpoint tìm được bằng cách đọc bundle JS tới đoạn code build fetch URL từ thuộc tính data-properties trên DOM (endpoint=en/api/interestrates, accountType=Personal). API trả UpdatedDate thật theo giờ crawl (2026-07-18T10:01:05+07:00)."
+  },
+  {
+    "bank": "Vietcombank",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "doanh_nghiep",
+    "title": "Lãi suất tiền gửi doanh nghiệp/tổ chức theo kỳ hạn (33 dòng)",
+    "source_url": "https://www.vietcombank.com.vn/en/To-Chuc/Doanh-Nghiệp/KHTC---Lai-suat",
+    "api_url": "https://www.vietcombank.com.vn/en/api/interestrates?accountType=Corporate",
+    "file_type": "json",
+    "local_path": "pages/lai_suat_doanh_nghiep_live.json",
+    "crawl_date": "2026-07-18",
+    "notes": "Cùng API như trên, đổi accountType=Corporate. UpdatedDate 2026-07-18T10:01:06+07:00."
+  },
+  {
+    "bank": "Vietcombank",
+    "category": "bieu_phi",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu phí dịch vụ tài khoản",
+    "source_url": "https://www.vietcombank.com.vn/en/Personal/Cong-cu-Tien-ich/KHCN---Bieu-mau-va-bieu-phi",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_phi_dich_vu_tai_khoan.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "Vietcombank",
+    "category": "bieu_phi",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu phí dịch vụ tài khoản tiền gửi tiết kiệm, giấy tờ có giá — không tải được (tên file portal.vietcombank.com.vn dùng ký tự Unicode tổ hợp gây lỗi khi tải trực tiếp; trả về trang SharePoint lỗi thay vì PDF)",
+    "source_url": "https://portal.vietcombank.com.vn/content/personal/BieuPhi/",
+    "file_type": "none",
+    "local_path": null,
+    "crawl_date": "2026-07-18",
+    "notes": "Đã thử tải trực tiếp, nhận về HTML SharePoint thay vì PDF. Dùng file bieu_phi_dich_vu_tai_khoan.pdf (nguồn khác, domain chính) làm phương án thay thế tạm thời."
+  },
+  {
+    "bank": "Vietcombank",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "Sản phẩm tiết kiệm (trả lãi sau, tự động, cho con) — kỳ hạn, số tiền tối thiểu, hồ sơ",
+    "source_url": "https://www.vietcombank.com.vn/en/Personal/SPDV/Tiet-kiem",
+    "file_type": "markdown_summary",
+    "local_path": "pages/san_pham_tiet_kiem.md",
+    "crawl_date": "2026-07-18",
+    "notes": "Trang sản phẩm cũng là SPA giống trang lãi suất — nội dung lấy qua kết quả tìm kiếm đã index sẵn, không phải snapshot trực tiếp. Độ tin cậy thấp hơn các mục PDF, nên đối chiếu lại khi có điều kiện."
+  }
+]

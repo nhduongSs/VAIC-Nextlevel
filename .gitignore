@@ -1,28 +1,108 @@
-# Python
+# ── Secrets ──────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Python ───────────────────────────────────────────────────────────────────
 __pycache__/
-*.pyc
-.pytest_cache/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
 *.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+pip-wheel-metadata/
+MANIFEST
+
+# ── Virtual Environments ──────────────────────────────────────────────────────
 .venv/
 venv/
+env/
+ENV/
 
-# Env
-.env
-backend/.env
-frontend/.env
-frontend/.env.local
+# ── Testing & Coverage ────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+nosetests.xml
+test-results/
 
-# Node / Next.js
+# ── Type Checking ─────────────────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyright/
+
+# ── Linting ───────────────────────────────────────────────────────────────────
+.ruff_cache/
+
+# ── Alembic ───────────────────────────────────────────────────────────────────
+# Keep migration files but ignore generated temp files
+alembic/versions/__pycache__/
+
+# ── Node / Frontend ───────────────────────────────────────────────────────────
 node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/.nuxt/
 .next/
 *.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Logs
+# ── Docker ────────────────────────────────────────────────────────────────────
+# Do NOT ignore docker-compose files — they are source
+# Ignore local override files
+docker-compose.override.yml
+docker-compose.local.yml
+
+# ── Database ──────────────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── IDE & OS ──────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── AI Model Cache ────────────────────────────────────────────────────────────
+# HuggingFace models are large — managed via Docker volume
+.cache/huggingface/
+*.bin
+*.safetensors
+*.gguf
+*.ggml
+
+# ── Data ─────────────────────────────────────────────────────────────────────
+# Source documents stay in repo; ignore large processed outputs
+data/processed/
+data/embeddings/
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
 logs/
 *.log
 
-# OS
-.DS_Store
+# ── Uploads ───────────────────────────────────────────────────────────────────
+backend/uploads/
 
-# Superpowers scratch
+# ── Claude Code ───────────────────────────────────────────────────────────────
+.claude/worktrees/
+
+# ── Superpowers scratch ────────────────────────────────────────────────────────
 .superpowers/

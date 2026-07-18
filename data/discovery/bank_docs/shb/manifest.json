@@ -1,0 +1,131 @@
+[
+  {
+    "bank": "SHB",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu lãi suất huy động VND cho khách hàng cá nhân — 8 nhóm sản phẩm (bậc thang/HĐTG, ưu đãi trả lãi trước, Trọn Lộc, online, thông thường/CCTG Phát Lộc, Tình yêu cho con, gửi góp, TK thanh toán)",
+    "source_url": "https://www.shb.com.vn/lai-suat/",
+    "file_type": "pdf",
+    "local_path": "pdfs/lai_suat_vnd_ca_nhan.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "PDF chính thức, hiệu lực từ 11/4/2026 (theo QĐ 1220-1223/2026/QĐ-TGĐ nêu trong văn bản) — mới nhất tìm được. Rất chi tiết: phân theo mức tiền (<2 tỷ / >=2 tỷ) và phương thức trả lãi (cuối kỳ/trả trước/định kỳ tháng-quý-năm)."
+  },
+  {
+    "bank": "SHB",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu lãi suất huy động ngoại tệ (USD/EUR) cho khách hàng cá nhân — hiện tại 0.00%/năm mọi kỳ hạn",
+    "source_url": "https://www.shb.com.vn/lai-suat/",
+    "file_type": "pdf",
+    "local_path": "pdfs/lai_suat_ngoai_te_ca_nhan.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Hiệu lực từ 23/5/2023, chưa cập nhật gần đây hơn nhưng lãi suất 0% ngoại tệ là chính sách phổ biến toàn ngành (trần lãi suất USD 0% theo NHNN) nên số liệu vẫn hợp lệ."
+  },
+  {
+    "bank": "SHB",
+    "category": "lai_suat_co_so",
+    "customer_segment": "ca_nhan",
+    "title": "Lãi suất cơ sở VND cá nhân (dùng cho vay/tín dụng, KHÔNG phải lãi suất tiền gửi — giữ lại để tham chiếu nội bộ)",
+    "source_url": "https://www.shb.com.vn/lai-suat/",
+    "file_type": "pdf",
+    "local_path": "pdfs/lai_suat_co_so_vnd_ca_nhan.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Hiệu lực từ 04/06/2026. Đây là lãi suất tham chiếu cho vay, không liên quan trực tiếp tiền gửi — không dùng để trả lời câu hỏi khách hàng về lãi suất gửi tiền."
+  },
+  {
+    "bank": "SHB",
+    "category": "lai_suat_co_so",
+    "customer_segment": "doanh_nghiep",
+    "title": "Lãi suất cơ sở VND doanh nghiệp (dùng cho vay/tín dụng, KHÔNG phải lãi suất tiền gửi)",
+    "source_url": "https://www.shb.com.vn/lai-suat/",
+    "file_type": "pdf",
+    "local_path": "pdfs/lai_suat_co_so_vnd_doanh_nghiep.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Tương tự bản cá nhân, hiệu lực 04/06/2026, không phải lãi suất huy động tiền gửi."
+  },
+  {
+    "bank": "SHB",
+    "category": "bieu_phi",
+    "customer_segment": "ca_nhan",
+    "title": "Biểu phí sản phẩm dịch vụ tài khoản thanh toán và tiền gửi KHCN",
+    "source_url": "https://www.shb.com.vn/category/lien-ket-nhanh/bieu-phi-shb/bieu-phi-dich-vu-ngan-hang-danh-cho-khach-hang-ca-nhan/",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_phi_tk_thanh_toan_va_tien_gui_khcn.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "SHB",
+    "category": "bieu_phi",
+    "customer_segment": "doanh_nghiep",
+    "title": "Biểu phí A — sản phẩm dịch vụ tài khoản và ngân quỹ KHDN",
+    "source_url": "https://www.shb.com.vn/wp-content/uploads/2024/07/Bieu-phi-A-Tai-khoan-va-Ngan-quy-KHDN.pdf",
+    "file_type": "pdf",
+    "local_path": "pdfs/bieu_phi_tk_va_ngan_quy_khdn.pdf",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "SHB",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "Quy định về tiền gửi có kỳ hạn dành cho KHCN — đối tượng, loại tiền, công thức tính lãi, xử lý ngày đáo hạn trùng nghỉ lễ, phí, thủ tục",
+    "source_url": "https://www.shb.com.vn/wp-content/uploads/2025/03/",
+    "file_type": "pdf",
+    "local_path": "pdfs/quy_dinh_tien_gui_co_ky_han_khcn.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Tài liệu T&C chính thức 5 trang — chất lượng/độ chi tiết tương đương BIDV, tốt hơn Vietcombank/VietinBank (vốn chỉ có T&C tài khoản thanh toán chung, không có T&C tiết kiệm riêng)."
+  },
+  {
+    "bank": "SHB",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "ca_nhan",
+    "title": "Sản phẩm Tiết kiệm Online — số tiền tối thiểu, kỳ hạn, phương thức đáo hạn, cầm cố vay, thủ tục",
+    "source_url": "https://www.shb.com.vn/tiet-kiem-online/",
+    "file_type": "markdown_summary",
+    "local_path": "pages/san_pham_tiet_kiem_online.md",
+    "crawl_date": "2026-07-18"
+  },
+  {
+    "bank": "SHB",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "doanh_nghiep",
+    "title": "Quy định giao dịch chung về tiền gửi có kỳ hạn dành cho khách hàng tổ chức (KHTC) tại quầy — đối tượng, giải thích thuật ngữ, mở HĐTG, tính lãi, đáo hạn, mất/hỏng hợp đồng, quyền & nghĩa vụ (9 điều, đầy đủ)",
+    "source_url": "https://www.shb.com.vn/wp-content/uploads/2023/11/",
+    "file_type": "pdf",
+    "local_path": "pdfs/quy_dinh_tien_gui_co_ky_han_khtc.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Đã đọc toàn bộ 7 trang — không chứa số liệu lãi suất, chỉ quy định vận hành/pháp lý. Điều 2.4 xác nhận lãi suất công bố riêng tại quầy/trang thông tin."
+  },
+  {
+    "bank": "SHB",
+    "category": "dieu_khoan_san_pham",
+    "customer_segment": "doanh_nghiep",
+    "title": "Quy định giao dịch chung về tiền gửi có kỳ hạn dành cho KHTC qua kênh Ngân hàng điện tử (Internet Banking corp)",
+    "source_url": "https://www.shb.com.vn/wp-content/uploads/2023/11/",
+    "file_type": "pdf",
+    "local_path": "pdfs/quy_dinh_tien_gui_ky_han_khtc_ngan_hang_dien_tu.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Bản T&C cho kênh online (ibanking.shb.com.vn/corp), khác bản tại quầy. Điều 3.2 xác nhận lãi suất chỉ hiển thị trong hệ thống Internet Banking sau đăng nhập — giải thích rõ nguyên nhân không có PDF lãi suất KHDN công khai."
+  },
+  {
+    "bank": "SHB",
+    "category": "lai_suat_tien_gui",
+    "customer_segment": "doanh_nghiep",
+    "title": "GAP (đã xác định nguyên nhân cấu trúc) — không có bảng lãi suất huy động VND công khai cho khách hàng doanh nghiệp/tổ chức kinh tế",
+    "source_url": "https://www.shb.com.vn/lai-suat/",
+    "file_type": "none",
+    "local_path": null,
+    "crawl_date": "2026-07-18",
+    "notes": "Đã xác nhận qua 2 văn bản T&C chính thức (quy_dinh_tien_gui_co_ky_han_khtc.pdf Điều 2.4, và quy_dinh_tien_gui_ky_han_khtc_ngan_hang_dien_tu.pdf Điều 3.2): SHB KHÔNG công bố lãi suất tiền gửi KHDN dạng PDF/trang công khai — lãi suất được 'thiết lập hiển thị trên Ngân hàng điện tử' (ibanking.shb.com.vn/corp) chỉ xem được sau khi khách hàng doanh nghiệp đăng nhập, hoặc công bố tại quầy giao dịch. Đây là giới hạn cấu trúc thật của SHB (khác cá nhân — sản phẩm bán lẻ đại chúng được quảng bá công khai), không phải do tìm chưa đủ kỹ. RAG nên trả lời câu hỏi lãi suất KHDN bằng hướng dẫn liên hệ chi nhánh/đăng nhập Internet Banking doanh nghiệp thay vì đưa ra con số cụ thể."
+  },
+  {
+    "bank": "SHB",
+    "category": "thu_tuc_mo_so",
+    "customer_segment": "doanh_nghiep",
+    "title": "Mẫu số 02B-TC: Đề nghị kiêm hợp đồng đăng ký thông tin mở/sử dụng tài khoản và dịch vụ tài khoản dành cho KHTC (14 trang)",
+    "source_url": "https://www.shb.com.vn/wp-content/uploads/2020/12/",
+    "file_type": "pdf",
+    "local_path": "pdfs/mau_de_nghi_mo_tk_khtc.pdf",
+    "crawl_date": "2026-07-18",
+    "notes": "Đây là điểm SHB có mà cả 4 ngân hàng trước không có: mẫu hồ sơ mở tài khoản thực tế cho khách hàng tổ chức, không chỉ mô tả chung chung."
+  }
+]
