@@ -55,6 +55,11 @@ class ResponseFormatter:
                     str(cf.source_doc_id),
                     str(cf.target_doc_id),
                 ],
+                source_doc_id=str(cf.source_doc_id),
+                source_title=cf.source_title,
+                target_doc_id=str(cf.target_doc_id),
+                target_title=cf.target_title,
+                confidence=cf.confidence,
             )
             for cf in context_package.conflicts
         ]

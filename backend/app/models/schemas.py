@@ -558,7 +558,14 @@ class Source(BaseModel):
 
 class ConflictInfo(BaseModel):
     description: str
-    conflicting_sources: list[str]
+    conflicting_sources: list[str] = Field(
+        description="doc_id của 2 văn bản mâu thuẫn (giữ để tương thích ngược)"
+    )
+    source_doc_id: str = Field(description="doc_id văn bản thứ nhất")
+    source_title: str = Field(description="Tên văn bản thứ nhất — FE hiển thị trực tiếp")
+    target_doc_id: str = Field(description="doc_id văn bản thứ hai")
+    target_title: str = Field(description="Tên văn bản thứ hai — FE hiển thị trực tiếp")
+    confidence: float = Field(description="Độ tin cậy của cảnh báo mâu thuẫn (0-1)")
 
 
 class ChatResponse(BaseModel):

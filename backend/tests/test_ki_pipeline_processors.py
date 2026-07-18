@@ -79,13 +79,18 @@ def _document(
 
 
 def _relation(
-    source: UUID, target: UUID, relation_type: RelationType, rel_id: UUID | None = None
+    source: UUID,
+    target: UUID,
+    relation_type: RelationType,
+    rel_id: UUID | None = None,
+    metadata_extra: dict | None = None,
 ) -> DocumentRelation:
     return DocumentRelation(
         id=rel_id or uuid.uuid4(),
         source_doc_id=source,
         target_doc_id=target,
         relation_type=relation_type,
+        metadata_extra=metadata_extra or {},
     )
 
 
@@ -498,6 +503,91 @@ class TestConflictDetection:
         await ConflictDetectionProcessor().process(context)
 
         assert context.conflicts == []
+
+    @pytest.mark.asyncio
+    async def test_chunk_scoped_conflict_not_flagged_when_specific_chunks_absent(self):
+        """Quan hệ CONFLICTS_WITH có source_chunk_id/target_chunk_id (case demo
+        curate thủ công) KHÔNG được flag chỉ vì 2 văn bản tình cờ cùng được
+        retrieve — phải đúng chunk cụ thể đó có mặt (vd hỏi về 1 Điều khác
+        không liên quan trong cùng văn bản)."""
+        conflict_chunk_a = uuid.uuid4()
+        conflict_chunk_b = uuid.uuid4()
+        rel = _relation(
+            _DOC_A,
+            _DOC_B,
+            RelationType.CONFLICTS_WITH,
+            metadata_extra={
+                "source_chunk_id": str(conflict_chunk_a),
+                "target_chunk_id": str(conflict_chunk_b),
+            },
+        )
+        # Retrieved chunk thuộc đúng _DOC_A nhưng KHÔNG phải chunk_id liên quan
+        # tới quan hệ mâu thuẫn (câu hỏi khác, Điều khác trong cùng văn bản).
+        other_chunk = _chunk(_DOC_A, chunk_id=uuid.uuid4())
+        context = _context(
+            ranked_chunks=[other_chunk],
+            document_map={_DOC_A: _document(_DOC_A), _DOC_B: _document(_DOC_B)},
+            relationships=[rel],
+        )
+
+        await ConflictDetectionProcessor().process(context)
+
+        assert context.conflicts == []
+
+    @pytest.mark.asyncio
+    async def test_chunk_scoped_conflict_flagged_when_both_specific_chunks_present(self):
+        conflict_chunk_a = uuid.uuid4()
+        conflict_chunk_b = uuid.uuid4()
+        rel = _relation(
+            _DOC_A,
+            _DOC_B,
+            RelationType.CONFLICTS_WITH,
+            metadata_extra={
+                "source_chunk_id": str(conflict_chunk_a),
+                "target_chunk_id": str(conflict_chunk_b),
+            },
+        )
+        context = _context(
+            ranked_chunks=[
+                _chunk(_DOC_A, chunk_id=conflict_chunk_a),
+                _chunk(_DOC_B, chunk_id=conflict_chunk_b),
+            ],
+            document_map={_DOC_A: _document(_DOC_A), _DOC_B: _document(_DOC_B)},
+            relationships=[rel],
+        )
+
+        await ConflictDetectionProcessor().process(context)
+
+        assert len(context.conflicts) == 1
+
+    @pytest.mark.asyncio
+    async def test_chunk_scoped_conflict_flagged_when_only_one_side_present(self):
+        """OR chứ không phải AND: cảnh báo có giá trị nhất đúng lúc chunk 'dễ
+        hiểu nhầm' xuất hiện, dù chunk còn lại có được retrieve cùng lúc hay
+        không — top-k retrieval không đảm bảo luôn kéo cả 2 cùng lúc dù cùng
+        chủ đề (đã verify thực tế: câu hỏi on-topic nhưng đôi khi chỉ 1 trong
+        2 Khoản cụ thể lọt top-k)."""
+        conflict_chunk_a = uuid.uuid4()
+        conflict_chunk_b = uuid.uuid4()
+        rel = _relation(
+            _DOC_A,
+            _DOC_B,
+            RelationType.CONFLICTS_WITH,
+            metadata_extra={
+                "source_chunk_id": str(conflict_chunk_a),
+                "target_chunk_id": str(conflict_chunk_b),
+            },
+        )
+        # Chỉ chunk phía A khớp, chunk phía B không có trong context.
+        context = _context(
+            ranked_chunks=[_chunk(_DOC_A, chunk_id=conflict_chunk_a)],
+            document_map={_DOC_A: _document(_DOC_A), _DOC_B: _document(_DOC_B)},
+            relationships=[rel],
+        )
+
+        await ConflictDetectionProcessor().process(context)
+
+        assert len(context.conflicts) == 1
 
 
 # ===========================================================================
