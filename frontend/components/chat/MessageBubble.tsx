@@ -1,55 +1,69 @@
 "use client";
 
-import { RotateCcw, Sparkles, User } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BLOCK_REASON_LABELS } from "@/lib/blockReasons";
+import { SourcePill } from "./SourcePill";
+import { ConflictNotice } from "./ConflictNotice";
+import { RateTableCard } from "./RateTableCard";
+import { InterestCalculatorCard } from "./InterestCalculatorCard";
 import type { Message } from "@/types/chat";
 
 interface MessageBubbleProps {
   message: Message;
-  isSelected: boolean;
-  onSelect: (messageId: string) => void;
   onRetry: () => void;
   isSending: boolean;
 }
 
-export function MessageBubble({ message, isSelected, onSelect, onRetry, isSending }: MessageBubbleProps) {
+export function MessageBubble({ message, onRetry, isSending }: MessageBubbleProps) {
   const isUser = message.role === "user";
   const isBlocked = message.role === "blocked";
   const isError = message.role === "error";
-  const isAssistant = message.role === "assistant";
+  const isBotSide = !isUser;
 
   return (
     <div className={cn("flex gap-3", isUser && "flex-row-reverse")}>
-      <Avatar>
-        <AvatarFallback>
-          {isUser ? <User className="h-4 w-4" aria-hidden="true" /> : <Sparkles className="h-4 w-4" aria-hidden="true" />}
-        </AvatarFallback>
-      </Avatar>
-      <div className={cn("flex max-w-[75%] flex-col gap-1", isUser && "items-end")}>
-        <button
-          type="button"
-          disabled={!isAssistant}
-          onClick={() => isAssistant && onSelect(message.id)}
-          className={cn(
-            "rounded-lg px-4 py-2.5 text-left text-sm leading-relaxed",
-            isUser && "bg-synapse-gradient text-white",
-            isAssistant && "glass-card cursor-pointer text-foreground",
-            isAssistant && isSelected && "ring-1 ring-primary",
-            isBlocked && "border border-warning/40 bg-warning/10 text-warning-foreground",
-            isError && "border border-destructive/40 bg-destructive/10 text-destructive"
-          )}
-        >
-          {isBlocked && message.blockReason && (
-            <Badge variant="warning" className="mb-2">
-              {BLOCK_REASON_LABELS[message.blockReason]}
-            </Badge>
-          )}
-          <p>{message.content}</p>
-        </button>
+      {isBotSide && (
+        <Avatar className="mt-0.5 h-8 w-8 flex-shrink-0">
+          <AvatarFallback className="text-[11.5px]">TL</AvatarFallback>
+        </Avatar>
+      )}
+      <div className={cn("flex max-w-[70%] flex-col gap-2.5", isUser && "items-end")}>
+        {message.content && (
+          <div
+            className={cn(
+              "px-4 py-3 text-[14.5px] leading-relaxed",
+              isUser && "rounded-[16px_4px_16px_16px] bg-primary text-primary-foreground",
+              !isUser && !isBlocked && !isError && "surface-card rounded-[4px_16px_16px_16px] text-foreground",
+              isBlocked && "rounded-[4px_16px_16px_16px] border border-warning/40 bg-warning/10 text-warning-foreground",
+              isError && "rounded-[4px_16px_16px_16px] border border-destructive/30 bg-destructive/5 text-destructive"
+            )}
+          >
+            {isBlocked && message.blockReason && (
+              <Badge variant="warning" className="mb-2">
+                {BLOCK_REASON_LABELS[message.blockReason]}
+              </Badge>
+            )}
+            <p className="whitespace-pre-wrap">{message.content}</p>
+          </div>
+        )}
+
+        {message.kind === "rate_table" && <RateTableCard />}
+        {message.kind === "calculator" && <InterestCalculatorCard />}
+
+        {message.sources && message.sources.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {message.sources.map((source, index) => (
+              <SourcePill key={`${source.doc_id}-${index}`} source={source} />
+            ))}
+          </div>
+        )}
+
+        {message.conflicts && message.conflicts.length > 0 && <ConflictNotice conflicts={message.conflicts} />}
+
         {isError && (
           <Button size="sm" variant="outline" onClick={onRetry} disabled={isSending}>
             <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />

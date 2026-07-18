@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { ChatWindow } from "@/components/chat/ChatWindow";
-import { InsightsPanel } from "@/components/insights/InsightsPanel";
+import { LoginView } from "@/components/login/LoginView";
+import { AdminDashboardView } from "@/components/admin/AdminDashboardView";
 import { sendChatMessage, ChatApiError } from "@/lib/api";
 import {
   createSessionId,
@@ -13,7 +14,14 @@ import {
   upsertSession,
   type StoredSession,
 } from "@/lib/sessions";
-import type { Message } from "@/types/chat";
+import type { Message, MessageKind } from "@/types/chat";
+
+type View = "chat" | "login" | "dashboard";
+
+const TOOL_MESSAGE_INTRO: Record<Extract<MessageKind, "rate_table" | "calculator">, string> = {
+  rate_table: "Dạ, đây là biểu lãi suất tiền gửi tiết kiệm tham khảo theo từng kỳ hạn:",
+  calculator: "Anh/chị có thể dùng công cụ tính lãi nhanh bên dưới để ước tính số tiền lãi nhận được ạ.",
+};
 
 function lastMessageOfRole(session: StoredSession | undefined, role: Message["role"]) {
   if (!session) return null;
@@ -21,18 +29,16 @@ function lastMessageOfRole(session: StoredSession | undefined, role: Message["ro
 }
 
 export default function HomePage() {
+  const [view, setView] = useState<View>("chat");
+  const [adminEmail, setAdminEmail] = useState("");
   const [sessions, setSessions] = useState<StoredSession[]>([]);
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
-  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     const stored = loadSessions();
     setSessions(stored);
-    if (stored.length > 0) {
-      setActiveSessionId(stored[0].id);
-      setSelectedMessageId(lastMessageOfRole(stored[0], "assistant")?.id ?? null);
-    }
+    if (stored.length > 0) setActiveSessionId(stored[0].id);
   }, []);
 
   function updateSessions(updater: (prev: StoredSession[]) => StoredSession[]) {
@@ -44,17 +50,13 @@ export default function HomePage() {
   }
 
   const activeSession = sessions.find((s) => s.id === activeSessionId);
-  const selectedMessage = activeSession?.messages.find((m) => m.id === selectedMessageId) ?? null;
 
   function handleNewChat() {
     setActiveSessionId(createSessionId());
-    setSelectedMessageId(null);
   }
 
   function handleSelectSession(sessionId: string) {
     setActiveSessionId(sessionId);
-    const session = sessions.find((s) => s.id === sessionId);
-    setSelectedMessageId(lastMessageOfRole(session, "assistant")?.id ?? null);
   }
 
   function appendMessage(sessionId: string, message: Message, seedTitle: string) {
@@ -88,7 +90,6 @@ export default function HomePage() {
             conflicts: response.conflicts,
           };
       appendMessage(sessionId, replyMessage, text);
-      if (!response.blocked) setSelectedMessageId(replyMessage.id);
     } catch (error) {
       const errorMessage: Message = {
         id: crypto.randomUUID(),
@@ -124,6 +125,44 @@ export default function HomePage() {
     await callApiAndAppend(activeSession.id, lastUserMessage.content);
   }
 
+  function handleInsertTool(kind: Extract<MessageKind, "rate_table" | "calculator">) {
+    const sessionId = activeSessionId ?? createSessionId();
+    setActiveSessionId(sessionId);
+    const toolMessage: Message = {
+      id: crypto.randomUUID(),
+      role: "assistant",
+      kind,
+      content: TOOL_MESSAGE_INTRO[kind],
+      createdAt: new Date().toISOString(),
+    };
+    appendMessage(sessionId, toolMessage, TOOL_MESSAGE_INTRO[kind]);
+  }
+
+  if (view === "login") {
+    return (
+      <LoginView
+        onLoginSuccess={(email) => {
+          setAdminEmail(email);
+          setView("dashboard");
+        }}
+        onBackToChat={() => setView("chat")}
+      />
+    );
+  }
+
+  if (view === "dashboard") {
+    return (
+      <AdminDashboardView
+        adminEmail={adminEmail}
+        onLogout={() => {
+          setAdminEmail("");
+          setView("chat");
+        }}
+        onGoToChat={() => setView("chat")}
+      />
+    );
+  }
+
   return (
     <main className="flex h-screen overflow-hidden">
       <Sidebar
@@ -135,12 +174,11 @@ export default function HomePage() {
       <ChatWindow
         messages={activeSession?.messages ?? []}
         isSending={isSending}
-        selectedMessageId={selectedMessageId}
-        onSelectMessage={setSelectedMessageId}
         onSend={handleSend}
         onRetry={handleRetry}
+        onInsertTool={handleInsertTool}
+        onGoToLogin={() => setView("login")}
       />
-      <InsightsPanel selectedMessage={selectedMessage} />
     </main>
   );
 }

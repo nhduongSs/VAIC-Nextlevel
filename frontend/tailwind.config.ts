@@ -21,14 +21,13 @@ const config: Config = {
         "destructive-foreground": "hsl(var(--destructive-foreground))",
         warning: "hsl(var(--warning))",
         "warning-foreground": "hsl(var(--warning-foreground))",
+        success: "hsl(var(--success))",
+        "success-foreground": "hsl(var(--success-foreground))",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
-      backgroundImage: {
-        "synapse-gradient": "linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(226 71% 40%) 100%)",
       },
     },
   },
