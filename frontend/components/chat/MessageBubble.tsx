@@ -12,9 +12,10 @@ interface MessageBubbleProps {
   isSelected: boolean;
   onSelect: (messageId: string) => void;
   onRetry: () => void;
+  isSending: boolean;
 }
 
-export function MessageBubble({ message, isSelected, onSelect, onRetry }: MessageBubbleProps) {
+export function MessageBubble({ message, isSelected, onSelect, onRetry, isSending }: MessageBubbleProps) {
   const isUser = message.role === "user";
   const isBlocked = message.role === "blocked";
   const isError = message.role === "error";
@@ -47,7 +48,7 @@ export function MessageBubble({ message, isSelected, onSelect, onRetry }: Messag
           <p>{message.content}</p>
         </button>
         {isError && (
-          <Button size="sm" variant="outline" onClick={onRetry}>
+          <Button size="sm" variant="outline" onClick={onRetry} disabled={isSending}>
             Thử lại
           </Button>
         )}
