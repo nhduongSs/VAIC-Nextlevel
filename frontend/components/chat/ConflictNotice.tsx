@@ -19,7 +19,9 @@ export function ConflictNotice({ conflicts }: ConflictNoticeProps) {
       {conflicts.map((conflict, index) => (
         <div key={index} className="text-xs text-foreground">
           <p>{conflict.description}</p>
-          <p className="mt-0.5 text-muted-foreground">Nguồn xung đột: {conflict.conflicting_sources.join(", ")}</p>
+          <p className="mt-0.5 text-muted-foreground">
+            Nguồn xung đột: {conflict.source_title} ⟷ {conflict.target_title}
+          </p>
         </div>
       ))}
     </Card>

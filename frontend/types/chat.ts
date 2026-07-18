@@ -17,6 +17,11 @@ export interface Source {
 export interface Conflict {
   description: string;
   conflicting_sources: string[];
+  source_doc_id: string;
+  source_title: string;
+  target_doc_id: string;
+  target_title: string;
+  confidence: number;
 }
 
 export interface ChatApiResponse {
