@@ -19,8 +19,12 @@ class DocumentResponse(BaseModel):
     content_type: str = Field(description="MIME type của file (application/pdf, ...)")
     file_size: int = Field(description="Kích thước file tính bằng byte")
     file_path: str = Field(description="Đường dẫn file trên server")
-    content_hash: str = Field(description="SHA-256 nội dung file — dùng để phát hiện file trùng lặp")
-    status: DocumentStatus = Field(description="Trạng thái xử lý: PENDING / PROCESSING / READY / ERROR")
+    content_hash: str = Field(
+        description="SHA-256 nội dung file — dùng để phát hiện file trùng lặp"
+    )
+    status: DocumentStatus = Field(
+        description="Trạng thái xử lý: PENDING / PROCESSING / READY / ERROR"
+    )
     version: int = Field(description="Phiên bản tài liệu — tăng mỗi lần cập nhật metadata")
     doc_type: DocumentType = Field(
         description=(
@@ -48,15 +52,21 @@ class DocumentResponse(BaseModel):
         )
     )
     doc_number: str | None = Field(description="Số hiệu văn bản, ví dụ: 36/2014/TT-NHNN")
-    issuing_body: str | None = Field(description="Cơ quan ban hành, ví dụ: Ngân hàng Nhà nước Việt Nam")
+    issuing_body: str | None = Field(
+        description="Cơ quan ban hành, ví dụ: Ngân hàng Nhà nước Việt Nam"
+    )
     issued_date: date | None = Field(description="Ngày ban hành văn bản")
     effective_date: date | None = Field(description="Ngày văn bản có hiệu lực")
-    expired_date: date | None = Field(description="Ngày văn bản hết hiệu lực (null nếu chưa hết hạn)")
+    expired_date: date | None = Field(
+        description="Ngày văn bản hết hiệu lực (null nếu chưa hết hạn)"
+    )
     tags: list[str] = Field(description="Danh sách nhãn phân loại tự do")
     metadata_extra: dict[str, Any] = Field(description="Metadata bổ sung tuỳ chỉnh dưới dạng JSON")
     created_at: datetime = Field(description="Thời điểm tạo bản ghi (UTC)")
     updated_at: datetime = Field(description="Thời điểm cập nhật lần cuối (UTC)")
-    deleted_at: datetime | None = Field(description="Thời điểm xoá mềm — null nếu tài liệu chưa bị xoá")
+    deleted_at: datetime | None = Field(
+        description="Thời điểm xoá mềm — null nếu tài liệu chưa bị xoá"
+    )
 
 
 class DocumentUpdateRequest(BaseModel):
@@ -96,5 +106,9 @@ class DocumentUpdateRequest(BaseModel):
     effective_date: date | None = Field(None, description="Ngày hiệu lực mới")
     expired_date: date | None = Field(None, description="Ngày hết hiệu lực mới")
     status: DocumentStatus | None = Field(None, description="Trạng thái mới")
-    tags: list[str] | None = Field(None, description="Danh sách nhãn mới — thay thế hoàn toàn danh sách cũ")
-    metadata_extra: dict[str, Any] | None = Field(None, description="Metadata bổ sung mới — thay thế hoàn toàn")
+    tags: list[str] | None = Field(
+        None, description="Danh sách nhãn mới — thay thế hoàn toàn danh sách cũ"
+    )
+    metadata_extra: dict[str, Any] | None = Field(
+        None, description="Metadata bổ sung mới — thay thế hoàn toàn"
+    )

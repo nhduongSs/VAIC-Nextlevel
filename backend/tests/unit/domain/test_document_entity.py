@@ -59,6 +59,12 @@ def test_transition_failed_to_uploaded() -> None:
     assert doc.status == DocumentStatus.UPLOADED
 
 
+def test_transition_failed_to_processing_for_retry() -> None:
+    doc = _make_document(DocumentStatus.FAILED)
+    doc.transition_to(DocumentStatus.PROCESSING)
+    assert doc.status == DocumentStatus.PROCESSING
+
+
 def test_transition_ready_to_archived() -> None:
     doc = _make_document(DocumentStatus.READY)
     doc.transition_to(DocumentStatus.ARCHIVED)

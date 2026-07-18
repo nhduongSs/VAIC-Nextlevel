@@ -88,7 +88,10 @@ async def trigger_processing(
     "/{document_id}/processing-status",
     response_model=ProcessingStatusResponse,
     summary="Trạng thái pipeline ingestion mới nhất",
-    description="Lấy log xử lý gần nhất của tài liệu. Trả về 404 nếu tài liệu chưa được gửi vào pipeline lần nào.",
+    description=(
+        "Lấy log xử lý gần nhất của tài liệu."
+        " Trả về 404 nếu tài liệu chưa được gửi vào pipeline lần nào."
+    ),
 )
 async def get_processing_status(
     document_id: UUID,
@@ -108,14 +111,24 @@ async def get_processing_status(
     "/{document_id}/chunks",
     response_model=PaginatedResponse[ChunkResponse],
     summary="Danh sách chunks của tài liệu (có phân trang)",
-    description="Lấy danh sách các chunk văn bản đã được tách từ tài liệu. Cần chạy pipeline ingestion trước.",
+    description=(
+        "Lấy danh sách các chunk văn bản đã được tách từ tài liệu."
+        " Cần chạy pipeline ingestion trước."
+    ),
 )
 async def list_chunks(
     document_id: UUID,
     doc_service: DocumentServiceDep,
     chunk_repo: ChunkRepoDep,
     offset: Annotated[int, Query(ge=0, description="Số chunk bỏ qua (dùng cho phân trang)")] = 0,
-    limit: Annotated[int, Query(ge=1, le=MAX_PAGE_SIZE, description=f"Số chunk trả về mỗi trang (tối đa {MAX_PAGE_SIZE})")] = DEFAULT_PAGE_SIZE,
+    limit: Annotated[
+        int,
+        Query(
+            ge=1,
+            le=MAX_PAGE_SIZE,
+            description=f"Số chunk trả về mỗi trang (tối đa {MAX_PAGE_SIZE})",
+        ),
+    ] = DEFAULT_PAGE_SIZE,
 ) -> PaginatedResponse[ChunkResponse]:
     await doc_service.get_document(document_id)
 

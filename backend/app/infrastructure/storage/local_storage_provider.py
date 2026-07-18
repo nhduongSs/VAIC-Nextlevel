@@ -25,8 +25,10 @@ class LocalStorageProvider(StorageProvider):
     def get_absolute_path(self, path: str) -> str:
         resolved = (self._upload_dir / path).resolve()
         root = self._upload_dir.resolve()
-        if not str(resolved).startswith(str(root) + "/") and resolved != root:
-            raise ValueError(f"Path traversal detected: {path!r}")
+        try:
+            resolved.relative_to(root)
+        except ValueError:
+            raise ValueError(f"Path traversal detected: {path!r}") from None
         return str(resolved)
 
     # ── sync helpers (run inside to_thread) ──────────────────────────────────
@@ -39,7 +41,7 @@ class LocalStorageProvider(StorageProvider):
         dir_path.mkdir(parents=True, exist_ok=True)
         file_path = dir_path / unique_name
         file_path.write_bytes(content)
-        return str(Path(subdir) / unique_name)
+        return (Path(subdir) / unique_name).as_posix()
 
     def _sync_delete(self, path: str) -> None:
         abs_path = Path(self.get_absolute_path(path))

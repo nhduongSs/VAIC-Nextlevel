@@ -42,7 +42,9 @@ class Document:
         ),
         DocumentStatus.PROCESSING: frozenset({DocumentStatus.READY, DocumentStatus.FAILED}),
         DocumentStatus.READY: frozenset({DocumentStatus.ARCHIVED}),
-        DocumentStatus.FAILED: frozenset({DocumentStatus.UPLOADED, DocumentStatus.ARCHIVED}),
+        DocumentStatus.FAILED: frozenset(
+            {DocumentStatus.UPLOADED, DocumentStatus.PROCESSING, DocumentStatus.ARCHIVED}
+        ),
         DocumentStatus.ARCHIVED: frozenset(),
     }
 

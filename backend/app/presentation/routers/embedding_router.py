@@ -60,7 +60,9 @@ async def trigger_embedding(
     "/status",
     response_model=EmbeddingStatusResponse,
     summary="Trạng thái embedding job mới nhất",
-    description="Lấy trạng thái và tiến độ của embedding job gần nhất. Trả về 404 nếu chưa có job nào.",
+    description=(
+        "Lấy trạng thái và tiến độ của embedding job gần nhất. Trả về 404 nếu chưa có job nào."
+    ),
 )
 async def get_embedding_status(
     document_id: UUID,
@@ -87,7 +89,10 @@ async def get_embedding_status(
     "",
     response_model=list[EmbeddingJobResponse],
     summary="Lịch sử tất cả embedding jobs của tài liệu",
-    description="Lấy toàn bộ lịch sử embedding jobs theo thứ tự mới nhất trước. Hữu ích để kiểm tra các lần retry.",
+    description=(
+        "Lấy toàn bộ lịch sử embedding jobs theo thứ tự mới nhất trước."
+        " Hữu ích để kiểm tra các lần retry."
+    ),
 )
 async def list_embedding_jobs(
     document_id: UUID,
@@ -120,7 +125,8 @@ async def list_embedding_jobs(
     summary="Huỷ embedding job đang chạy",
     description=(
         "Huỷ một embedding job ở trạng thái PENDING hoặc RUNNING. "
-        "Trả về 404 nếu job không tồn tại, không thuộc tài liệu này, hoặc đã ở trạng thái terminal (COMPLETED/FAILED/CANCELLED)."
+        "Trả về 404 nếu job không tồn tại, không thuộc tài liệu này,"
+        " hoặc đã ở trạng thái terminal (COMPLETED/FAILED/CANCELLED)."
     ),
 )
 async def cancel_embedding_job(

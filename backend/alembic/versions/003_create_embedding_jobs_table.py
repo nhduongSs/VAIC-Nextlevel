@@ -41,7 +41,10 @@ def upgrade() -> None:
     )
     op.execute("CREATE INDEX idx_embedding_jobs_document_id ON embedding_jobs(document_id);")
     op.execute("CREATE INDEX idx_embedding_jobs_status ON embedding_jobs(status);")
-    op.execute("CREATE INDEX idx_embedding_jobs_document_created ON embedding_jobs(document_id, created_at);")
+    op.execute(
+        "CREATE INDEX idx_embedding_jobs_document_created"
+        " ON embedding_jobs(document_id, created_at);"
+    )
 
 
 def downgrade() -> None:

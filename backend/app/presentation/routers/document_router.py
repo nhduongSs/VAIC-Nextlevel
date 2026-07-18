@@ -42,21 +42,40 @@ async def upload_document(
     service: DocumentServiceDep,
     file: Annotated[UploadFile, File(description="File tài liệu cần upload (PDF, DOCX, TXT)")],
     title: Annotated[str, Form(min_length=1, max_length=500, description="Tiêu đề văn bản")],
-    doc_type: Annotated[DocumentType, Form(description=(
-        "Loại văn bản: LAW=Luật | CIRCULAR=Thông tư | DECREE=Nghị định | "
-        "DECISION=Quyết định | POLICY=Chính sách nội bộ | SOP=Quy trình | "
-        "FAQ=Hỏi đáp | PRODUCT_DOC=Tài liệu sản phẩm | MANUAL=Sổ tay"
-    ))],
-    authority_level: Annotated[AuthorityLevel, Form(description=(
-        "Cấp thẩm quyền: NATIONAL_LAW=Luật QH | NHNN_CIRCULAR=Thông tư NHNN | "
-        "NHNN_DECISION=Quyết định NHNN | INTERNAL_POLICY=Chính sách nội bộ | "
-        "DEPARTMENT_SOP=Quy trình phòng ban | FAQ=Hỏi đáp"
-    ))],
-    doc_number: Annotated[str | None, Form(max_length=100, description="Số hiệu văn bản, ví dụ: 36/2014/TT-NHNN")] = None,
-    issuing_body: Annotated[str | None, Form(max_length=200, description="Cơ quan ban hành, ví dụ: Ngân hàng Nhà nước Việt Nam")] = None,
+    doc_type: Annotated[
+        DocumentType,
+        Form(
+            description=(
+                "Loại văn bản: LAW=Luật | CIRCULAR=Thông tư | DECREE=Nghị định | "
+                "DECISION=Quyết định | POLICY=Chính sách nội bộ | SOP=Quy trình | "
+                "FAQ=Hỏi đáp | PRODUCT_DOC=Tài liệu sản phẩm | MANUAL=Sổ tay"
+            )
+        ),
+    ],
+    authority_level: Annotated[
+        AuthorityLevel,
+        Form(
+            description=(
+                "Cấp thẩm quyền: NATIONAL_LAW=Luật QH | NHNN_CIRCULAR=Thông tư NHNN | "
+                "NHNN_DECISION=Quyết định NHNN | INTERNAL_POLICY=Chính sách nội bộ | "
+                "DEPARTMENT_SOP=Quy trình phòng ban | FAQ=Hỏi đáp"
+            )
+        ),
+    ],
+    doc_number: Annotated[
+        str | None, Form(max_length=100, description="Số hiệu văn bản, ví dụ: 36/2014/TT-NHNN")
+    ] = None,
+    issuing_body: Annotated[
+        str | None,
+        Form(max_length=200, description="Cơ quan ban hành, ví dụ: Ngân hàng Nhà nước Việt Nam"),
+    ] = None,
     issued_date: Annotated[date | None, Form(description="Ngày ban hành (YYYY-MM-DD)")] = None,
-    effective_date: Annotated[date | None, Form(description="Ngày có hiệu lực (YYYY-MM-DD)")] = None,
-    expired_date: Annotated[date | None, Form(description="Ngày hết hiệu lực (YYYY-MM-DD) — bỏ trống nếu chưa biết")] = None,
+    effective_date: Annotated[
+        date | None, Form(description="Ngày có hiệu lực (YYYY-MM-DD)")
+    ] = None,
+    expired_date: Annotated[
+        date | None, Form(description="Ngày hết hiệu lực (YYYY-MM-DD) — bỏ trống nếu chưa biết")
+    ] = None,
 ) -> DocumentResponse:
     dto = CreateDocumentDTO(
         title=title,
@@ -87,15 +106,29 @@ async def upload_document(
     "",
     response_model=PaginatedResponse[DocumentResponse],
     summary="Danh sách tài liệu (có phân trang và lọc)",
-    description="Lấy danh sách tài liệu với phân trang. Có thể lọc theo trạng thái, loại văn bản và tìm kiếm full-text.",
+    description=(
+        "Lấy danh sách tài liệu với phân trang."
+        " Có thể lọc theo trạng thái, loại văn bản và tìm kiếm full-text."
+    ),
 )
 async def list_documents(
     service: DocumentServiceDep,
     offset: Annotated[int, Query(ge=0, description="Số bản ghi bỏ qua (dùng cho phân trang)")] = 0,
-    limit: Annotated[int, Query(ge=1, le=MAX_PAGE_SIZE, description=f"Số bản ghi trả về mỗi trang (tối đa {MAX_PAGE_SIZE})")] = DEFAULT_PAGE_SIZE,
-    doc_status: Annotated[DocumentStatus | None, Query(alias="status", description="Lọc theo trạng thái xử lý")] = None,
+    limit: Annotated[
+        int,
+        Query(
+            ge=1,
+            le=MAX_PAGE_SIZE,
+            description=f"Số bản ghi trả về mỗi trang (tối đa {MAX_PAGE_SIZE})",
+        ),
+    ] = DEFAULT_PAGE_SIZE,
+    doc_status: Annotated[
+        DocumentStatus | None, Query(alias="status", description="Lọc theo trạng thái xử lý")
+    ] = None,
     doc_type: Annotated[DocumentType | None, Query(description="Lọc theo loại văn bản")] = None,
-    search: Annotated[str | None, Query(max_length=200, description="Tìm kiếm full-text theo tiêu đề và nội dung")] = None,
+    search: Annotated[
+        str | None, Query(max_length=200, description="Tìm kiếm full-text theo tiêu đề và nội dung")
+    ] = None,
 ) -> PaginatedResponse[DocumentResponse]:
     documents, total = await service.list_documents(
         offset=offset,
@@ -121,7 +154,9 @@ async def list_documents(
     "/{document_id}",
     response_model=DocumentResponse,
     summary="Chi tiết tài liệu theo ID",
-    description="Lấy toàn bộ thông tin của một tài liệu. Trả về 404 nếu không tìm thấy hoặc đã xoá.",
+    description=(
+        "Lấy toàn bộ thông tin của một tài liệu. Trả về 404 nếu không tìm thấy hoặc đã xoá."
+    ),
 )
 async def get_document(
     document_id: UUID,
@@ -135,7 +170,10 @@ async def get_document(
     "/{document_id}",
     response_model=DocumentResponse,
     summary="Cập nhật metadata tài liệu",
-    description="Cập nhật một phần metadata (tiêu đề, số hiệu, ngày tháng, trạng thái...). Chỉ các field có giá trị mới được cập nhật.",
+    description=(
+        "Cập nhật một phần metadata (tiêu đề, số hiệu, ngày tháng, trạng thái...)."
+        " Chỉ các field có giá trị mới được cập nhật."
+    ),
 )
 async def update_document(
     document_id: UUID,
@@ -163,7 +201,10 @@ async def update_document(
     "/{document_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Xoá tài liệu (soft delete)",
-    description="Đánh dấu tài liệu là đã xoá (điền deleted_at). Dữ liệu vật lý vẫn còn trong database và storage.",
+    description=(
+        "Đánh dấu tài liệu là đã xoá (điền deleted_at)."
+        " Dữ liệu vật lý vẫn còn trong database và storage."
+    ),
 )
 async def delete_document(
     document_id: UUID,

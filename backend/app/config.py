@@ -11,7 +11,9 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # ── Database ───────────────────────────────────────────────────────────
-    DATABASE_URL: str = "postgresql+asyncpg://vaic_nextlevel:12345678@localhost:5434/vaic_nextlevel_db"
+    DATABASE_URL: str = (
+        "postgresql+asyncpg://vaic_nextlevel:12345678@localhost:5434/vaic_nextlevel_db"
+    )
     DB_POOL_SIZE: int = 10
     DB_MAX_OVERFLOW: int = 20
     DB_POOL_TIMEOUT: int = 30
@@ -48,6 +50,26 @@ class Settings(BaseSettings):
         "application/msword",
         "text/plain",
     ]
+
+    # ── Search / Retrieval ────────────────────────────────────────────────────
+    SEARCH_DEFAULT_TOP_K: int = 10
+    SEARCH_MAX_TOP_K: int = 50
+    SEARCH_BM25_TOP_K: int = 20
+    SEARCH_BM25_THRESHOLD: float = 0.0
+    SEARCH_VECTOR_TOP_K: int = 20
+    SEARCH_VECTOR_THRESHOLD: float = 0.0
+    SEARCH_HYBRID_ALPHA: float = 0.7  # vector weight
+    SEARCH_HYBRID_BETA: float = 0.3  # bm25 weight
+
+    # ── Knowledge Intelligence ─────────────────────────────────────────────────
+    KI_EXPANSION_DEPTH: int = 2
+    KI_MAX_RELATIONS: int = 20
+    KI_MAX_CITATIONS: int = 10
+    KI_MAX_CONTEXT_CHUNKS: int = 15
+    KI_TIMELINE_ENABLED: bool = True
+    KI_CITATION_ENABLED: bool = True
+    KI_CONFLICT_DETECTION_ENABLED: bool = True
+    KI_AUTHORITY_WEIGHT: float = 0.2
 
     # ── Rate Limiting ──────────────────────────────────────────────────────
     RATE_LIMIT_QUERY: str = "10/minute"

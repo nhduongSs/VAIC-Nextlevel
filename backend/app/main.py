@@ -7,11 +7,11 @@ from typing import Any
 
 import structlog
 from fastapi import FastAPI, Request, status
-from fastapi.openapi.utils import get_openapi
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -21,8 +21,10 @@ from app.dependencies import (
     get_document_service,
     get_embedding_service,
     get_ingestion_pipeline_service,
+    get_knowledge_service,
     get_processing_log_repository,
     get_relation_repository,
+    get_search_service,
 )
 from app.infrastructure.database.base import engine
 from app.presentation.exceptions import AppException
@@ -43,6 +45,13 @@ from app.presentation.routers.ingestion_router import (
 from app.presentation.routers.ingestion_router import (
     router as ingestion_router,
 )
+from app.presentation.routers.retrieve_router import _get_ki_service
+from app.presentation.routers.retrieve_router import (
+    _get_search_service as _retrieve_get_search_service,
+)
+from app.presentation.routers.retrieve_router import router as retrieve_router
+from app.presentation.routers.search_router import _get_search_service
+from app.presentation.routers.search_router import router as search_router
 from app.presentation.schemas.common_schema import ErrorDetail, ErrorResponse
 
 START_TIME = time.time()
@@ -159,11 +168,20 @@ def create_app() -> FastAPI:
     # Embedding router dependency overrides
     app.dependency_overrides[_get_embedding_service] = get_embedding_service
 
+    # Search router dependency overrides
+    app.dependency_overrides[_get_search_service] = get_search_service
+
+    # Retrieve router dependency overrides
+    app.dependency_overrides[_retrieve_get_search_service] = get_search_service
+    app.dependency_overrides[_get_ki_service] = get_knowledge_service
+
     # ── Routers ───────────────────────────────────────────────────────────
     app.include_router(health_router.router)
     app.include_router(document_router.router)
     app.include_router(ingestion_router)
     app.include_router(embedding_router)
+    app.include_router(search_router)
+    app.include_router(retrieve_router)
     app.add_api_route("/metrics", _metrics, include_in_schema=False)
 
     # ── OpenAPI enum descriptions (Pydantic v2 drops field descriptions on $ref) ──
@@ -200,8 +218,6 @@ _ENUM_DESCRIPTIONS: dict[str, str] = {
 
 
 def _patch_openapi(app: FastAPI) -> None:
-    original_openapi = app.openapi
-
     def patched_openapi() -> dict[str, Any]:
         if app.openapi_schema:
             return app.openapi_schema

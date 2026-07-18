@@ -8,16 +8,28 @@ T = TypeVar("T")
 
 
 class ErrorDetail(BaseModel):
-    field: str | None = Field(None, description="Tên field gây lỗi (null nếu lỗi không gắn với field cụ thể)")
+    field: str | None = Field(
+        None, description="Tên field gây lỗi (null nếu lỗi không gắn với field cụ thể)"
+    )
     message: str = Field(description="Mô tả lỗi")
 
 
 class ErrorResponse(BaseModel):
-    error: str = Field(description="Mã lỗi dạng SCREAMING_SNAKE_CASE, ví dụ: NOT_FOUND, VALIDATION_ERROR")
+    error: str = Field(
+        description="Mã lỗi dạng SCREAMING_SNAKE_CASE, ví dụ: NOT_FOUND, VALIDATION_ERROR"
+    )
     message: str = Field(description="Thông báo lỗi dạng đọc được")
-    request_id: str | None = Field(None, description="ID request để tra cứu log (lấy từ header X-Request-ID)")
-    details: list[ErrorDetail] = Field(default_factory=list, description="Danh sách lỗi chi tiết theo từng field (chủ yếu cho lỗi validation)")
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(tz=UTC), description="Thời điểm xảy ra lỗi (UTC ISO-8601)")
+    request_id: str | None = Field(
+        None, description="ID request để tra cứu log (lấy từ header X-Request-ID)"
+    )
+    details: list[ErrorDetail] = Field(
+        default_factory=list,
+        description="Danh sách lỗi chi tiết theo từng field (chủ yếu cho lỗi validation)",
+    )
+    timestamp: datetime = Field(
+        default_factory=lambda: datetime.now(tz=UTC),
+        description="Thời điểm xảy ra lỗi (UTC ISO-8601)",
+    )
 
 
 class HealthResponse(BaseModel):

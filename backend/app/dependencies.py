@@ -6,6 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.application.commands.ingest_document import IngestionPipelineService
 from app.application.services.document_service import DocumentService
 from app.application.services.embedding_service import EmbeddingService
+from app.application.services.knowledge_service import KnowledgeIntelligenceService
+from app.application.services.search_service import SearchService
 from app.config import settings
 from app.infrastructure.ai.embedding.bge_m3_client import BgeM3Client
 from app.infrastructure.database.base import AsyncSessionFactory, get_db_session
@@ -109,6 +111,14 @@ def get_relation_repository(session: DBSession) -> PgDocumentRelationRepository:
 
 def get_processing_log_repository(session: DBSession) -> PgProcessingLogRepository:
     return PgProcessingLogRepository(session)
+
+
+def get_search_service(session: DBSession) -> SearchService:
+    return SearchService(session=session, provider=_bge_m3_client)
+
+
+def get_knowledge_service(session: DBSession) -> KnowledgeIntelligenceService:
+    return KnowledgeIntelligenceService(session=session)
 
 
 def get_ingestion_pipeline_service() -> IngestionPipelineService:

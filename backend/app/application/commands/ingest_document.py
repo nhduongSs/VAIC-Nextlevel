@@ -127,7 +127,7 @@ class IngestionPipelineService:
             proc_log = await log_repo.create(proc_log)
 
             # ── Transition to PROCESSING ──────────────────────────────────
-            if document.status == DocumentStatus.UPLOADED:
+            if document.status in (DocumentStatus.UPLOADED, DocumentStatus.FAILED):
                 document.transition_to(DocumentStatus.PROCESSING)
                 await doc_repo.update(document)
             await session.commit()
