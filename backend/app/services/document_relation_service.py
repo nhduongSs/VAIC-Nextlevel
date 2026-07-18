@@ -2,7 +2,6 @@
 RAG core — Việc 5-8 (brief mục 3), phần ăn điểm nhất của đề bài:
 amendment, partial supersession, cross-reference, conflict detection.
 """
-
 from itertools import combinations
 
 from app.models.schemas import ConflictInfo, DocStatus, RetrievedChunk

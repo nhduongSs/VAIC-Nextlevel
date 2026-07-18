@@ -6,3 +6,4 @@ openai>=1.30
 supabase>=2.5
 sentence-transformers>=2.7
 python-dotenv>=1.0
+pytest>=8.0

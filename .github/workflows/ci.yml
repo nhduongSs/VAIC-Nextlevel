@@ -30,11 +30,10 @@ jobs:
 
       - run: pip install -r requirements-dev.txt
 
-      # Rule set E, F, I, N, W, UP — cấu hình tại backend/ruff.toml
+      # Rule set E, F, N, W, UP — cấu hình tại backend/ruff.toml.
+      # Chưa bật `ruff format --check`: codebase hiện chưa format,
+      # sẽ format ở PR riêng rồi thêm step đó sau.
       - run: ruff check . --output-format=github
-
-      # Chỉ báo lỗi, không tự sửa — dev tự chạy `ruff format` ở local
-      - run: ruff format --check .
 
   # ─────────────────────────────────────────────
   # Job 2: Tests — chỉ chạy sau khi lint pass

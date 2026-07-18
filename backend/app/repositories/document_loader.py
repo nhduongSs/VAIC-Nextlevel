@@ -10,7 +10,6 @@ bảo hiểm tiền gửi) đã được chuẩn hóa (Huy bàn giao) và chia n
   ## Điều 2. ...
   nội dung...
 """
-
 import os
 import re
 from dataclasses import dataclass, field

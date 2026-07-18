@@ -5,7 +5,6 @@ Kiến trúc 2 lớp:
 1. Input guard  : chặn trước khi gọi LLM (rẻ, nhanh, rule-based)
 2. Output guard : kiểm tra sau khi LLM trả lời, trước khi gửi cho user
 """
-
 from app.core.config import get_settings
 from app.core.logging import log_conversation
 from app.guardrails import rules
@@ -46,22 +45,16 @@ class GuardrailService:
         text = message.strip()
 
         if len(text) > settings.max_input_length:
-            return self._blocked(
-                session_id, message, BlockReason.INPUT_TOO_LONG, "Câu hỏi quá dài, bạn vui lòng rút gọn giúp tôi."
-            )
+            return self._blocked(session_id, message, BlockReason.INPUT_TOO_LONG,
+                                  "Câu hỏi quá dài, bạn vui lòng rút gọn giúp tôi.")
 
         if rules.matches_any(text, rules.INJECTION_PATTERNS):
-            return self._blocked(
-                session_id,
-                message,
-                BlockReason.PROMPT_INJECTION,
-                "Tôi không thể thực hiện yêu cầu thay đổi vai trò/hướng dẫn hệ thống.",
-            )
+            return self._blocked(session_id, message, BlockReason.PROMPT_INJECTION,
+                                  "Tôi không thể thực hiện yêu cầu thay đổi vai trò/hướng dẫn hệ thống.")
 
         if rules.matches_any(text, rules.UNSAFE_PATTERNS):
-            return self._blocked(
-                session_id, message, BlockReason.UNSAFE_ADVICE_REQUEST, "Tôi không thể hỗ trợ nội dung này."
-            )
+            return self._blocked(session_id, message, BlockReason.UNSAFE_ADVICE_REQUEST,
+                                  "Tôi không thể hỗ trợ nội dung này.")
 
         pii_found = rules.contains_pii(text)
         if pii_found:
