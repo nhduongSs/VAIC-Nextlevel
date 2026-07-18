@@ -7,22 +7,34 @@ import { DOC_CATEGORIES, type DocumentFormValues } from "@/lib/adminDocuments";
 
 interface DocumentFormModalProps {
   title: string;
+  isEditing: boolean;
   values: DocumentFormValues;
+  isSaving: boolean;
   onChange: (values: DocumentFormValues) => void;
   onSave: () => void;
   onClose: () => void;
 }
 
-export function DocumentFormModal({ title, values, onChange, onSave, onClose }: DocumentFormModalProps) {
+export function DocumentFormModal({
+  title,
+  isEditing,
+  values,
+  isSaving,
+  onChange,
+  onSave,
+  onClose,
+}: DocumentFormModalProps) {
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
     onChange({
       ...values,
-      fileName: file.name,
+      file,
       name: values.name || file.name.replace(/\.[^/.]+$/, ""),
     });
   }
+
+  const canSave = values.name.trim().length > 0 && (isEditing || values.file !== null) && !isSaving;
 
   return (
     <div
@@ -37,15 +49,26 @@ export function DocumentFormModal({ title, values, onChange, onSave, onClose }: 
 
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-muted-foreground">Tệp tài liệu</label>
-          <label className="flex cursor-pointer items-center gap-2.5 rounded-[9px] border border-dashed border-border bg-muted p-3.5">
-            <input type="file" onChange={handleFileChange} className="hidden" />
-            <span className="flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] bg-primary text-primary-foreground">
-              <Upload className="h-4 w-4" aria-hidden="true" />
-            </span>
-            <span className="text-[13px] text-muted-foreground">
-              {values.fileName || "Chọn tệp (PDF, DOCX...) để tải lên"}
-            </span>
-          </label>
+          {isEditing ? (
+            <div className="flex items-center gap-2.5 rounded-[9px] border border-dashed border-border bg-muted p-3.5">
+              <span className="flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] bg-muted-foreground/20 text-muted-foreground">
+                <Upload className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <span className="text-[13px] text-muted-foreground">
+                {values.existingFileName || "Chưa đính kèm tệp"} (không thể thay tệp, chỉ sửa tên/danh mục)
+              </span>
+            </div>
+          ) : (
+            <label className="flex cursor-pointer items-center gap-2.5 rounded-[9px] border border-dashed border-border bg-muted p-3.5">
+              <input type="file" onChange={handleFileChange} className="hidden" />
+              <span className="flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] bg-primary text-primary-foreground">
+                <Upload className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <span className="text-[13px] text-muted-foreground">
+                {values.file?.name || "Chọn tệp (PDF, DOCX...) để tải lên"}
+              </span>
+            </label>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-3.5">
@@ -75,8 +98,10 @@ export function DocumentFormModal({ title, values, onChange, onSave, onClose }: 
         </div>
 
         <div className="flex gap-2.5 pt-1">
-          <Button onClick={onSave}>Lưu</Button>
-          <Button variant="outline" onClick={onClose}>
+          <Button onClick={onSave} disabled={!canSave}>
+            {isSaving ? "Đang lưu..." : "Lưu"}
+          </Button>
+          <Button variant="outline" onClick={onClose} disabled={isSaving}>
             Hủy
           </Button>
         </div>

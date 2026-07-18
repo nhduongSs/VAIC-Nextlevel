@@ -64,11 +64,9 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: ../docker/frontend.Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      REACT_APP_API_URL: http://localhost/api
     depends_on:
       - backend
 

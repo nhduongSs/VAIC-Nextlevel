@@ -5,7 +5,7 @@ import type { AdminDocument } from "@/lib/adminDocuments";
 interface DocumentTableProps {
   documents: AdminDocument[];
   onEdit: (doc: AdminDocument) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 export function DocumentTable({ documents, onEdit, onDelete }: DocumentTableProps) {
