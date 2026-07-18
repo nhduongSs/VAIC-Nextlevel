@@ -120,6 +120,7 @@ def _make_answer_package(session_id: str = "sess-001") -> AnswerPackage:
         answer="Đây là câu trả lời.",
         sources=[],
         conflicts=[],
+        timeline=[],
         usage=UsageStatistics.from_tokens(
             prompt_tokens=100,
             completion_tokens=40,

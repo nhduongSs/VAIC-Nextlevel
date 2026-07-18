@@ -1,5 +1,7 @@
-"""PdfParser — parses PDF files (stub: extracts raw bytes as text)."""
+"""PdfParser — parses PDF files via pymupdf (fitz)."""
 from __future__ import annotations
+
+import fitz  # pymupdf
 
 from app.infrastructure.ingestion.parsed_document import ParsedDocument, ParsedSection
 
@@ -11,14 +13,9 @@ class PdfParser:
         self._ocr = ocr
 
     async def parse(self, content: bytes, filename: str) -> ParsedDocument:
+        doc = fitz.open(stream=content, filetype="pdf")
         try:
-            import pypdf  # type: ignore[import-untyped]
-            import io
-
-            reader = pypdf.PdfReader(io.BytesIO(content))
-            pages: list[str] = []
-            for page in reader.pages:
-                pages.append(page.extract_text() or "")
+            pages = [page.get_text() for page in doc]
             raw_text = "\n\n".join(pages)
             sections = [
                 ParsedSection(number=None, title=f"Trang {i + 1}", content=p)
@@ -28,12 +25,7 @@ class PdfParser:
             return ParsedDocument(
                 raw_text=raw_text,
                 sections=sections or [ParsedSection(number=None, title=None, content=raw_text)],
-                page_count=len(reader.pages),
+                page_count=doc.page_count,
             )
-        except ImportError:
-            raw_text = content.decode("utf-8", errors="replace")
-            return ParsedDocument(
-                raw_text=raw_text,
-                sections=[ParsedSection(number=None, title=None, content=raw_text)],
-                page_count=1,
-            )
+        finally:
+            doc.close()

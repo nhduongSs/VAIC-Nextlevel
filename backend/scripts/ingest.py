@@ -11,8 +11,11 @@ legal_status, category, doi_tuong_ap_dung) được lưu trong metadata_extra JS
 không có cột SQL mới, không dùng RPC Supabase (xem
 doc/Corpus_Ingestion_Ontology_Plan.md).
 
-Idempotent: nếu content_hash đã tồn tại (rerun), xóa document cũ (cascade chunks)
-rồi nạp lại.
+Idempotent theo `doc_number` (= doc_id, ổn định qua các lần chạy) — không dùng
+content_hash: nội dung file trên đĩa không đổi giữa các lần chạy, nhưng git
+checkout trên Windows có thể đổi line-ending (CRLF/LF) giữa các lần, khiến
+sha256 khác đi và làm content_hash-based lookup bỏ lỡ document cũ, tạo trùng.
+Mỗi lần chạy: xóa mọi document có cùng doc_number (cascade chunks) rồi nạp lại.
 """
 
 from __future__ import annotations
@@ -26,7 +29,7 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 
 import structlog
-from sqlalchemy import delete
+from sqlalchemy import delete, select
 
 from app.core.config import settings
 from app.core.database import AsyncSessionFactory
@@ -173,20 +176,33 @@ def build_document_and_chunks(doc: LoadedDoc) -> tuple[Document, list[Chunk]]:
         metadata_extra=dict(metadata_extra),
     )
 
-    chunks = [
-        Chunk(
-            id=uuid.uuid4(),
-            document_id=document_id,
-            content=clause.content,
-            chunk_index=idx,
-            chunk_type=ChunkType.ARTICLE,
-            section_title=clause.clause,
-            token_count=len(clause.content) // 4,
-            metadata_extra=dict(metadata_extra),
-            created_at=now,
-        )
-        for idx, clause in enumerate(doc.clauses)
-    ]
+    chunks: list[Chunk] = []
+    for clause in doc.clauses:
+        for khoan, diem, text in document_loader.split_khoan_diem(clause.content):
+            if khoan is None:
+                chunk_type = ChunkType.ARTICLE
+                section_number = None
+            elif diem is None:
+                chunk_type = ChunkType.CLAUSE
+                section_number = f"Khoản {khoan}"
+            else:
+                chunk_type = ChunkType.PARAGRAPH
+                section_number = f"Khoản {khoan} Điểm {diem}"
+
+            chunks.append(
+                Chunk(
+                    id=uuid.uuid4(),
+                    document_id=document_id,
+                    content=text,
+                    chunk_index=len(chunks),
+                    chunk_type=chunk_type,
+                    section_title=clause.clause,
+                    section_number=section_number,
+                    token_count=len(text) // 4,
+                    metadata_extra=dict(metadata_extra),
+                    created_at=now,
+                )
+            )
     return document, chunks
 
 
@@ -199,15 +215,21 @@ async def _ingest_one(
         doc_repo = PgDocumentRepository(session)
         chunk_repo = PgChunkRepository(session)
 
-        existing = await doc_repo.get_by_checksum(document.content_hash)
-        if existing is not None:
+        existing_ids = (
             await session.execute(
-                delete(DocumentModel).where(DocumentModel.id == existing.id)
+                select(DocumentModel.id).where(
+                    DocumentModel.doc_number == document.doc_number
+                )
+            )
+        ).scalars().all()
+        if existing_ids:
+            await session.execute(
+                delete(DocumentModel).where(DocumentModel.id.in_(existing_ids))
             )
             log.info(
                 "ingest_replacing_existing",
                 doc_id=doc.doc_id,
-                old_document_id=str(existing.id),
+                old_document_ids=[str(i) for i in existing_ids],
             )
 
         await doc_repo.create(document)
@@ -218,7 +240,8 @@ async def _ingest_one(
 
     return {
         "doc_id": doc.doc_id,
-        "clauses": len(chunks),
+        "dieu": len(doc.clauses),
+        "chunks": len(chunks),
         "legal_status": doc.legal_status,
         "doc_class": document.metadata_extra["doc_class"],
     }
@@ -253,12 +276,13 @@ async def main() -> None:
         result = await _ingest_one(doc, embedding_service)
         report.append(result)
         print(
-            f"  {result['doc_id']:<25} {result['clauses']:>3} Điều  "
+            f"  {result['doc_id']:<25} {result['dieu']:>3} Điều  {result['chunks']:>4} chunks  "
             f"legal_status={result['legal_status']:<22} doc_class={result['doc_class']}"
         )
 
-    total_clauses = sum(int(r["clauses"]) for r in report)
-    print(f"\nĐã nạp {len(report)} văn bản, {total_clauses} Điều.")
+    total_dieu = sum(int(r["dieu"]) for r in report)
+    total_chunks = sum(int(r["chunks"]) for r in report)
+    print(f"\nĐã nạp {len(report)} văn bản, {total_dieu} Điều, {total_chunks} chunks.")
 
 
 if __name__ == "__main__":

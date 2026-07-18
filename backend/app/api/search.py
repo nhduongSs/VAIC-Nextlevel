@@ -7,8 +7,9 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query, status
 
 from app.core.config import settings
-from app.core.dependencies import get_search_service
+from app.core.dependencies import get_bank_product_repository, get_search_service
 from app.models.schemas import (
+    BankRateItem,
     RateBankResult,
     RateComparisonResponse,
     SearchFiltersRequest,
@@ -19,6 +20,7 @@ from app.models.schemas import (
     SearchResultItem,
     SearchResultItemDebug,
 )
+from app.repositories.bank_product_store import PgBankProductRepository
 from app.repositories.vector_store import SearchFilters as SearchFiltersDTO
 from app.repositories.vector_store import SearchRequest as SearchRequestDTO
 from app.services.rag_service import RAGService
@@ -27,6 +29,9 @@ from app.utils.constants import API_V1_PREFIX
 router = APIRouter(prefix=f"{API_V1_PREFIX}/search", tags=["Search"])
 
 SearchServiceDep = Annotated[RAGService, Depends(get_search_service)]
+BankProductRepoDep = Annotated[
+    PgBankProductRepository, Depends(get_bank_product_repository)
+]
 
 
 @router.post(
@@ -123,57 +128,48 @@ async def search_preview(
     status_code=status.HTTP_200_OK,
     summary="So sánh lãi suất giữa các ngân hàng theo kỳ hạn",
     description=(
-        "Tìm kiếm tất cả chunks có category=lai_suat, nhóm kết quả theo ngân hàng. "
-        "Dùng để so sánh lãi suất tiền gửi kỳ hạn X giữa nhiều ngân hàng (FAQ 2)."
+        "Tra cứu bảng bank_products (Lớp C) bằng SQL chính xác, nhóm kết quả theo "
+        "ngân hàng. Số liệu thật (BIDV, Vietcombank, VietinBank, SHB), KHÔNG để LLM "
+        "tự so sánh số. Dùng để so sánh lãi suất tiền gửi kỳ hạn X giữa nhiều ngân "
+        "hàng (FAQ 2)."
     ),
 )
 async def compare_rates(
-    svc: SearchServiceDep,
+    repo: BankProductRepoDep,
     term: Annotated[
         str | None,
-        Query(description="Kỳ hạn cần tra cứu, ví dụ: 12m, 6m, 3m, 24m"),
+        Query(description="Kỳ hạn cần tra cứu, ví dụ: '12 tháng', '6', '24'"),
     ] = None,
     bank: Annotated[
         str | None,
         Query(description="Giới hạn so sánh trong một ngân hàng cụ thể (tuỳ chọn)"),
     ] = None,
-    top_k: Annotated[int, Query(ge=1, le=50)] = 20,
+    customer_segment: Annotated[
+        str, Query(description="ca_nhan hoặc doanh_nghiep")
+    ] = "ca_nhan",
 ) -> RateComparisonResponse:
-    query = f"lãi suất tiền gửi kỳ hạn {term}" if term else "lãi suất tiền gửi"
-    from app.repositories.vector_store import SearchFilters as SearchFiltersDTO
-    from app.repositories.vector_store import SearchRequest as SearchRequestDTO
+    rows = await repo.compare(term=term, customer_segment=customer_segment, bank=bank)
 
-    request = SearchRequestDTO(
-        query=query,
-        top_k=top_k,
-        filters=SearchFiltersDTO(category="lai_suat", bank=bank),
-    )
-    results = await svc.search(request)
-
-    grouped: dict[str, list[SearchResultItem]] = {}
-    for r in results:
-        key = r.bank or "unknown"
-        grouped.setdefault(key, []).append(
-            SearchResultItem(
-                chunk_id=r.chunk_id,
-                document_id=r.document_id,
-                content=r.content,
-                score=round(r.score, 6),
-                retrieval_method=r.retrieval_method,
-                chunk_index=r.chunk_index,
-                chunk_type=r.chunk_type,
-                section_title=r.section_title,
-                section_number=r.section_number,
-                page_number=r.page_number,
-                bank=r.bank,
-                category=r.category,
-                metadata=r.metadata,
+    grouped: dict[str, list[BankRateItem]] = {}
+    for row in rows:
+        grouped.setdefault(row.bank, []).append(
+            BankRateItem(
+                term=row.term,
+                term_months=float(row.term_months) if row.term_months is not None else None,
+                rate_value=float(row.rate_value),
+                currency=row.currency,
+                customer_segment=row.customer_segment,
+                effective_date=row.effective_date,
+                source_url=row.source_url,
             )
         )
 
     return RateComparisonResponse(
         term=term,
-        banks=[RateBankResult(bank=b, chunks=chunks) for b, chunks in grouped.items()],
+        customer_segment=customer_segment,
+        banks=[
+            RateBankResult(bank=b, rates=rates) for b, rates in grouped.items()
+        ],
     )
 
 

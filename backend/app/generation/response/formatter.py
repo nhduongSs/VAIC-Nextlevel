@@ -7,7 +7,12 @@ from app.generation.llm.deepseek_service import GenerationResult
 from app.generation.prompt.package import PromptPackage
 from app.generation.response.citation_formatter import CitationFormatter
 from app.generation.response.package import AnswerPackage, UsageStatistics
-from app.models.schemas import ChatResponse, ConflictInfo as ConflictInfoSchema, Source
+from app.models.schemas import (
+    ChatResponse,
+    ConflictInfo as ConflictInfoSchema,
+    Source,
+    TimelineEntryResponse,
+)
 from app.services.document_relation_service import ContextPackage
 
 log: structlog.stdlib.BoundLogger = structlog.get_logger(__name__)
@@ -54,6 +59,21 @@ class ResponseFormatter:
             for cf in context_package.conflicts
         ]
 
+        # ── Timeline (KI Timeline Builder) ─────────────────────────────────
+        timeline: list[TimelineEntryResponse] = [
+            TimelineEntryResponse(
+                document_id=t.document_id,
+                document_title=t.document_title,
+                doc_number=t.doc_number,
+                version=t.version,
+                effective_date=t.effective_date,
+                issued_date=t.issued_date,
+                relation_type=t.relation_type,
+                is_current=t.is_current,
+            )
+            for t in context_package.timeline
+        ]
+
         # ── Usage statistics ───────────────────────────────────────────────
         usage = UsageStatistics.from_tokens(
             prompt_tokens=generation_result.prompt_tokens,
@@ -79,6 +99,7 @@ class ResponseFormatter:
             session_id=session_id,
             sources_count=len(sources),
             conflicts_count=len(conflicts),
+            timeline_count=len(timeline),
             confidence_score=round(confidence, 4),
             usage_total_tokens=usage.total_tokens,
             estimated_cost_usd=usage.estimated_cost_usd,
@@ -93,6 +114,7 @@ class ResponseFormatter:
             answer=generation_result.content,
             sources=sources,
             conflicts=conflicts,
+            timeline=timeline,
             usage=usage,
             prompt_type=prompt_package.prompt_type,
             confidence_score=round(confidence, 4),
@@ -108,6 +130,7 @@ class ResponseFormatter:
             answer=answer_package.answer,
             sources=answer_package.sources,
             conflicts=answer_package.conflicts,
+            timeline=answer_package.timeline,
             blocked=answer_package.blocked,
             block_reason=answer_package.block_reason,
         )

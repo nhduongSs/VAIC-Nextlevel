@@ -29,6 +29,7 @@ from app.infrastructure.ingestion.parsers.txt_parser import TxtParser
 from app.infrastructure.ingestion.relationship_extractor import RelationshipExtractor
 from app.infrastructure.storage.local_storage_provider import LocalStorageProvider
 from app.infrastructure.storage.storage_provider import StorageProvider
+from app.repositories.bank_product_store import PgBankProductRepository
 from app.repositories.document_store import (
     PgChunkRepository,
     PgDocumentRepository,
@@ -123,6 +124,10 @@ def get_chunk_repository(session: DBSession) -> PgChunkRepository:
 
 def get_relation_repository(session: DBSession) -> PgDocumentRelationRepository:
     return PgDocumentRelationRepository(session)
+
+
+def get_bank_product_repository(session: DBSession) -> PgBankProductRepository:
+    return PgBankProductRepository(session)
 
 
 def get_processing_log_repository(session: DBSession) -> PgProcessingLogRepository:
