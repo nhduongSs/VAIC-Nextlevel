@@ -1,0 +1,19 @@
+# FAQ nội bộ — Cơ sở pháp lý lãi suất tiền gửi và các câu hỏi thường gặp | doc_id=FAQ-LSTK-2026 | effective_date=2026-01-01 | status=hieu_luc
+
+## Điều 1. Cơ sở pháp lý xác định lãi suất tiền gửi
+Lãi suất tiền gửi bằng đồng Việt Nam của tổ chức, cá nhân tại tổ chức tín dụng được quy định tại Thông tư 48/2024/TT-NHNN. Theo Điều 3 Thông tư này: (1) lãi suất tiền gửi không kỳ hạn và có kỳ hạn dưới 6 tháng không được vượt quá mức trần do Thống đốc Ngân hàng Nhà nước quyết định trong từng thời kỳ; (2) lãi suất tiền gửi có kỳ hạn từ 6 tháng trở lên do từng tổ chức tín dụng tự quyết định trên cơ sở cung cầu vốn thị trường, không bị áp trần. Ngoài cơ sở pháp lý này, hệ thống có lưu bản chụp (snapshot) biểu lãi suất niêm yết của SHB, BIDV, VietinBank, Vietcombank, Techcombank thu thập ngày 18/7/2026 từ nguồn công bố chính thức — số liệu mang tính tham khảo tại thời điểm thu thập, không phải lãi suất thời gian thực.
+
+## Điều 2. Lãi suất kỳ hạn ngắn (dưới 6 tháng) có trần hay không
+Có. Lãi suất tiền gửi không kỳ hạn, kỳ hạn dưới 1 tháng, và kỳ hạn từ 1 tháng đến dưới 6 tháng bị giới hạn bởi mức trần do Thống đốc Ngân hàng Nhà nước công bố theo từng thời kỳ (Thông tư 48/2024/TT-NHNN, Điều 3 khoản 1). Mức trần cụ thể tại từng thời điểm không nằm trong phạm vi văn bản pháp luật này và cần tra cứu quyết định công bố lãi suất trần hiện hành của Ngân hàng Nhà nước.
+
+## Điều 3. So sánh lãi suất giữa các ngân hàng — phạm vi và giới hạn của hệ thống
+Kể từ kỳ hạn 6 tháng trở lên, mỗi tổ chức tín dụng tự quyết định lãi suất theo cung cầu thị trường và có nghĩa vụ niêm yết công khai tại địa điểm giao dịch và trang thông tin điện tử của mình (Thông tư 48/2024/TT-NHNN, Điều 3 khoản 4). Hệ thống có bảng so sánh lãi suất SHB với BIDV, VietinBank, Vietcombank, Techcombank dựa trên biểu niêm yết chính thức thu thập ngày 18/7/2026 (xem tài liệu so sánh lãi suất ngân hàng) — khi trả lời phải kèm ngày hiệu lực của số liệu. Vì lãi suất thay đổi theo từng ngân hàng và từng thời điểm, số liệu chính xác tại thời điểm giao dịch vẫn phải đối chiếu bảng niêm yết tại quầy hoặc website chính thức của ngân hàng.
+
+## Điều 4. Quy tắc tính lãi khi khách hàng rút tiền gửi trước hạn
+Việc áp dụng lãi suất khi rút trước hạn được quy định tại Thông tư 04/2022/TT-NHNN. Nguyên tắc chung: tổ chức tín dụng áp dụng mức lãi suất tối đa bằng lãi suất tiền gửi không kỳ hạn thấp nhất của tổ chức tín dụng đó theo đối tượng khách hàng và/hoặc theo loại đồng tiền gửi tại thời điểm rút trước hạn, đối với phần tiền gửi rút trước hạn. Số tiền gốc còn lại (nếu rút một phần) tiếp tục được hưởng lãi suất như đã thỏa thuận ban đầu.
+
+## Điều 5. Hạn mức chi trả bảo hiểm tiền gửi khi ngân hàng gặp sự cố
+Theo Quyết định 32/2021/QĐ-TTg, hạn mức trả tiền bảo hiểm tối đa cho một cá nhân tại một tổ chức tham gia bảo hiểm tiền gửi (bao gồm cả gốc và lãi) là 125.000.000 đồng, áp dụng khi phát sinh nghĩa vụ chi trả bảo hiểm tiền gửi theo quy định của Luật Bảo hiểm tiền gửi. Đây là số tiền chi trả tối đa, không phải mức bảo đảm cho toàn bộ số dư tiền gửi.
+
+## Điều 6. Câu hỏi thường gặp — góc nhìn khách hàng và giao dịch viên
+Hỏi: "Lãi suất kỳ hạn 6 tháng hiện nay là bao nhiêu?" — Đây là lãi suất thị trường do từng ngân hàng tự công bố (xem Điều 3); hệ thống có số liệu niêm yết tham khảo của SHB, BIDV, VietinBank, Vietcombank, Techcombank thu thập ngày 18/7/2026 (xem biểu lãi suất từng ngân hàng) — khi trả lời phải nêu rõ ngày số liệu và nhắc khách đối chiếu bảng niêm yết hiện hành. Hỏi: "Rút tiết kiệm trước hạn có mất hết lãi không?" — Không mất hết; áp dụng lãi suất không kỳ hạn thấp nhất theo Điều 4, phần lãi chênh lệch so với lãi suất đã thỏa thuận sẽ bị giảm. Hỏi: "Ngân hàng phá sản thì tiền gửi có được trả không?" — Được chi trả bảo hiểm tiền gửi tối đa 125 triệu đồng theo Điều 5, phần vượt hạn mức xử lý theo thứ tự thanh lý tài sản của tổ chức tín dụng theo Luật Các tổ chức tín dụng.
