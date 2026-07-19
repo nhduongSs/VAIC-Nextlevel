@@ -9,6 +9,7 @@ import { BLOCK_REASON_LABELS } from "@/lib/blockReasons";
 import { SourcePill } from "./SourcePill";
 import { ConflictNotice } from "./ConflictNotice";
 import { DocumentTimeline } from "./DocumentTimeline";
+import { AnswerText } from "./AnswerText";
 import { RateTableCard } from "./RateTableCard";
 import { InterestCalculatorCard } from "./InterestCalculatorCard";
 import type { Message } from "@/types/chat";
@@ -48,7 +49,11 @@ export function MessageBubble({ message, onRetry, isSending }: MessageBubbleProp
                 {BLOCK_REASON_LABELS[message.blockReason]}
               </Badge>
             )}
-            <p className="whitespace-pre-wrap">{message.content}</p>
+            {isBotSide && !isBlocked && !isError ? (
+              <AnswerText content={message.content} />
+            ) : (
+              <p className="whitespace-pre-wrap">{message.content}</p>
+            )}
           </div>
         )}
 
