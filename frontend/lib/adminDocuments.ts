@@ -58,7 +58,7 @@ export interface DocumentFormValues {
 
 export const EMPTY_DOC_FORM: DocumentFormValues = {
   name: "",
-  category: DOC_CATEGORIES[0],
+  category: "",
   file: null,
   existingFileName: "",
   docType: "PRODUCT_DOC",
@@ -74,7 +74,7 @@ export function toAdminDocument(doc: DocumentResponse): AdminDocument {
   return {
     id: doc.id,
     name: doc.title,
-    category: doc.tags[0] ?? DOC_CATEGORIES[0],
+    category: doc.tags[0] ?? "",
     updatedAt: new Date(doc.updated_at).toLocaleDateString("vi-VN"),
     fileName: doc.original_filename,
     docType: doc.doc_type,

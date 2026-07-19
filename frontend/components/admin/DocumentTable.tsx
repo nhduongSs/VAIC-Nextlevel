@@ -31,7 +31,7 @@ export function DocumentTable({ documents, canEdit, canDelete, onEdit, onDelete 
               {doc.fileName || "Chưa đính kèm tệp"}
             </span>
           </span>
-          <span className="text-muted-foreground">{doc.category}</span>
+          <span className="text-muted-foreground">{doc.category || "—"}</span>
           <span className="text-[12.5px] text-muted-foreground">{doc.updatedAt}</span>
           <span className="flex justify-end gap-3.5">
             {canEdit && (

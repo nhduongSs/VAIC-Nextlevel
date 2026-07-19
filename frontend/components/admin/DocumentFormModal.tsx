@@ -94,6 +94,7 @@ export function DocumentFormModal({
               onChange={(event) => onChange({ ...values, category: event.target.value })}
               className="rounded-[9px] border border-border bg-card px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
             >
+              <option value="">— Không chọn —</option>
               {DOC_CATEGORIES.map((category) => (
                 <option key={category} value={category}>
                   {category}

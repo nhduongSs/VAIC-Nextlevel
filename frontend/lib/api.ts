@@ -99,13 +99,13 @@ export async function createDocument(file: File, values: DocumentFormValues): Pr
   const created = (await response.json()) as DocumentResponse;
 
   // Category (nhóm sản phẩm nội bộ, không có cột riêng phía backend) lưu như một tag.
-  return patchDocument(created.id, { tags: [values.category] });
+  return patchDocument(created.id, { tags: values.category ? [values.category] : [] });
 }
 
 export async function updateDocument(id: string, values: DocumentFormValues): Promise<DocumentResponse> {
   return patchDocument(id, {
     title: values.name,
-    tags: [values.category],
+    tags: values.category ? [values.category] : [],
     doc_type: values.docType,
     authority_level: values.authorityLevel,
     doc_number: values.docNumber || null,
