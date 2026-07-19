@@ -13,6 +13,13 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+# NEXT_PUBLIC_* được Next.js nướng vào bundle lúc `next build`, nên phải có mặt
+# NGAY TRONG build. Railway truyền service-variable vào build qua build-arg;
+# khai báo ARG + ENV để `next build` nhìn thấy. Thiếu dòng này -> frontend luôn
+# gọi mặc định http://localhost:8000.
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+
 # Copy source rồi build ra .next (nên có frontend/.dockerignore loại node_modules/.next)
 COPY . .
 RUN npm run build
