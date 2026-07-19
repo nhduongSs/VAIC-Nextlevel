@@ -1,0 +1,25 @@
+# SHB — Quy định về tiền gửi có kỳ hạn dành cho khách hàng cá nhân | doc_id=SHB-QDTG-KHCN | effective_date=2026-07-18 | status=hieu_luc
+
+## Điều 1. Đối tượng gửi tiền và loại tiền nhận gửi
+Đối tượng gửi tiền gửi có kỳ hạn tại SHB: (a) cá nhân là người cư trú; (b) cá nhân là người không cư trú, gồm người nước ngoài được phép cư trú tại Việt Nam với thời hạn từ 06 tháng trở lên và công dân Việt Nam là người không cư trú. Loại tiền nhận gửi: Đồng Việt Nam (VND), Đô la Mỹ (USD), EURO (EUR) và các ngoại tệ tự do chuyển đổi khác được SHB công bố từng thời kỳ. Đối với khách hàng nước ngoài, thời hạn gửi tiền không được dài hơn thời hạn hiệu lực còn lại của thị thực hoặc giấy tờ xác định thời hạn được phép cư trú tại Việt Nam. Nguồn: Quy định về tiền gửi có kỳ hạn dành cho KHCN tại SHB (PDF chính thức trên shb.com.vn, thu thập 18/7/2026).
+
+## Điều 2. Cách tính và trả lãi tiền gửi có kỳ hạn tại SHB
+Lãi suất quy đổi theo tỷ lệ %/năm; 1 năm là 365 ngày, 1 tháng là 30 ngày, 1 tuần là 7 ngày. Hình thức trả lãi: trả lãi sau (cuối kỳ), trả lãi trước, trả lãi định kỳ. Công thức: số tiền lãi một ngày = (số dư thực tế × lãi suất tính lãi) / 365; số tiền lãi của kỳ = tổng lãi ngày của toàn bộ các ngày trong kỳ. Nếu ngày đến hạn trùng ngày nghỉ/lễ, ngày đến hạn là ngày làm việc liền kề sau đó; khách tất toán vào ngày làm việc liền kề sau ngày nghỉ vẫn hưởng mức lãi suất ghi trên sổ (sổ chưa tái tục) hoặc mức lãi suất tại kỳ tái tục gần nhất (khoản đã tái tục).
+
+## Điều 3. Thủ tục gửi tiền có kỳ hạn tại quầy SHB
+Khách hàng phải có tài khoản thanh toán (TKTT) mở tại SHB để thực hiện các giao dịch liên quan, bao gồm giao dịch gửi tiền. Khi gửi trực tiếp tại quầy, công dân Việt Nam xuất trình CMND/CCCD/Hộ chiếu còn hiệu lực hoặc Giấy khai sinh (với công dân chưa đủ 14 tuổi); công dân nước ngoài xuất trình Hộ chiếu và giấy tờ xác minh thời hạn cư trú. Có thể gửi thông qua người đại diện theo pháp luật hoặc người được ủy quyền (kèm văn bản ủy quyền sử dụng TKTT và giấy tờ tùy thân của cả hai bên). Sau khi hoàn tất thủ tục, SHB và khách hàng ký từng trang Hợp đồng tiền gửi (HĐTG) và SHB giao HĐTG cho khách. Cá nhân người cư trú và người không cư trú không được gửi tiền gửi chung có kỳ hạn; không nhận tiền gửi chung bằng ngoại tệ.
+
+## Điều 4. Rút tiền và rút trước hạn tại SHB
+Khi rút tiền, khách xuất trình HĐTG và giấy tờ tùy thân; chữ ký phải khớp chữ ký mẫu đã đăng ký. Rút trước hạn toàn bộ: hưởng lãi suất tiền gửi không kỳ hạn thấp nhất áp dụng với KHCN do SHB công bố tại thời điểm tất toán, tính trên số ngày thực gửi — không bị mất toàn bộ lãi. Rút trước hạn một phần (với sản phẩm cho phép): phần rút hưởng lãi suất không kỳ hạn thấp nhất, phần còn lại giữ nguyên mức lãi suất đang áp dụng. Với loại trả lãi trước hoặc trả lãi định kỳ, SHB thu lại phần lãi đã lĩnh nhiều hơn số lãi thực hưởng.
+
+## Điều 5. Xử lý Hợp đồng tiền gửi bị mất, rách, nhàu nát
+Chủ sở hữu đến điểm giao dịch SHB khai báo ngay khi phát hiện mất/rách HĐTG. SHB không chịu trách nhiệm với thiệt hại xảy ra trước hoặc trong vòng 8 giờ giao dịch kể từ khi nhận giấy báo mất. Nếu hợp pháp, hợp lệ và không có tranh chấp: SHB thanh toán hoặc cấp lại bản sao HĐTG sau tối thiểu 07 ngày kể từ ngày nhận giấy báo; bản sao cấp lại tại nơi phát hành bản gốc, có dấu treo, hiệu lực tương đương bản gốc.
+
+## Điều 6. Ủy quyền và chuyển quyền sở hữu tiền gửi
+Chủ sở hữu có thể ủy quyền cho cá nhân/tổ chức khác thực hiện các giao dịch: gửi, rút, dùng làm tài sản bảo đảm, xác nhận số dư, yêu cầu phong tỏa. Người được ủy quyền không được ủy quyền lại. HĐTG được chuyển quyền sở hữu theo yêu cầu của khách và quy định pháp luật; phải chuyển toàn bộ giá trị số dư cùng quyền và nghĩa vụ; thực hiện tại nơi phát hành HĐTG. Không được chuyển quyền sở hữu khi số dư đang bị phong tỏa theo yêu cầu cơ quan nhà nước hoặc đang có tranh chấp, khiếu nại, khiếu kiện.
+
+## Điều 7. Tái tục (chuyển tiếp kỳ hạn) khi đến hạn
+Vào ngày đến hạn, nếu khách không rút tiền và không có thỏa thuận khác, SHB tự động nhập lãi (nếu có) vào gốc và kéo dài thêm một kỳ hạn giống kỳ hạn ban đầu, áp dụng mức lãi suất hiệu lực tại thời điểm tái tục. Khách có thể tra cứu khoản tiền gửi qua: điểm giao dịch SHB, hotline *6688, kênh ngân hàng điện tử SHB Online / SHB Mobile.
+
+## Điều 8. Tiết kiệm Online SHB — điều kiện và đặc điểm
+Sản phẩm Tiết kiệm Online của SHB: loại tiền VND; mức gửi tối thiểu 1,000,000 VND; kỳ hạn 1-13 tháng, 18, 24, 36 tháng; trả lãi cuối kỳ hoặc khi tất toán trước hạn. Ba phương thức đáo hạn cho khách chọn: (1) lãi nhập gốc và tự động gia hạn theo kỳ hạn ban đầu với lãi suất tại thời điểm gia hạn; (2) lãi trả vào tài khoản thanh toán, gốc tự động gia hạn; (3) cả lãi và gốc trả vào tài khoản thanh toán, không gia hạn. Khách có thể tất toán trước hạn ngay trên Internet Banking không cần ra quầy, và được vay cầm cố bằng sổ tiết kiệm online tại SHB. Điều kiện: có tài khoản thanh toán và đăng ký dịch vụ ngân hàng điện tử SHB — không cần hồ sơ giấy riêng. Nguồn: trang sản phẩm shb.com.vn/tiet-kiem-online, thu thập 18/7/2026.
