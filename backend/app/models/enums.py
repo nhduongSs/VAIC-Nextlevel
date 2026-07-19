@@ -77,6 +77,11 @@ class RelationType(StrEnum):
     CONFLICTS_WITH = "CONFLICTS_WITH"
 
 
+class UserRole(StrEnum):
+    ADMIN = "ADMIN"
+    STAFF = "STAFF"
+
+
 @dataclass
 class SearchResult:
     chunk_id: UUID

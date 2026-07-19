@@ -2,16 +2,21 @@
 
 from __future__ import annotations
 
+from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, Annotated
+from uuid import UUID
 
 if TYPE_CHECKING:
     from app.services.chat_service import ChatService
 
 from fastapi import Depends
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
 from app.core.database import AsyncSessionFactory, get_db_session
+from app.core.exceptions import ForbiddenException, UnauthorizedException
+from app.core.security import decode_access_token
 
 # ── Storage ───────────────────────────────────────────────────────────────────
 from app.infrastructure.ingestion.chunkers.hierarchical_chunker import (
@@ -29,6 +34,7 @@ from app.infrastructure.ingestion.parsers.txt_parser import TxtParser
 from app.infrastructure.ingestion.relationship_extractor import RelationshipExtractor
 from app.infrastructure.storage.local_storage_provider import LocalStorageProvider
 from app.infrastructure.storage.storage_provider import StorageProvider
+from app.models.orm import UserModel
 from app.repositories.bank_product_store import PgBankProductRepository
 from app.repositories.document_store import (
     PgChunkRepository,
@@ -37,7 +43,9 @@ from app.repositories.document_store import (
     PgProcessingLogRepository,
 )
 from app.repositories.relation_store import PgDocumentRelationRepository
+from app.repositories.user_store import PgUserRepository
 from app.repositories.vector_store import EmbeddingClient
+from app.services.auth_service import AuthService
 from app.services.document_relation_service import DocumentRelationService
 from app.services.document_service import DocumentService
 from app.services.embedding_service import EmbeddingService
@@ -132,6 +140,54 @@ def get_bank_product_repository(session: DBSession) -> PgBankProductRepository:
 
 def get_processing_log_repository(session: DBSession) -> PgProcessingLogRepository:
     return PgProcessingLogRepository(session)
+
+
+def get_user_repository(session: DBSession) -> PgUserRepository:
+    return PgUserRepository(session)
+
+
+def get_auth_service(
+    repo: Annotated[PgUserRepository, Depends(get_user_repository)],
+) -> AuthService:
+    return AuthService(repo)
+
+
+AuthServiceDep = Annotated[AuthService, Depends(get_auth_service)]
+
+_bearer_scheme = HTTPBearer(auto_error=False)
+
+
+async def get_current_user(
+    credentials: Annotated[
+        HTTPAuthorizationCredentials | None, Depends(_bearer_scheme)
+    ],
+    repo: Annotated[PgUserRepository, Depends(get_user_repository)],
+) -> UserModel:
+    if credentials is None:
+        raise UnauthorizedException("Thiếu access token")
+    try:
+        payload = decode_access_token(credentials.credentials)
+    except ValueError as exc:
+        raise UnauthorizedException(str(exc)) from exc
+
+    user = await repo.get_by_id(UUID(payload["sub"]))
+    if user is None or not user.is_active:
+        raise UnauthorizedException("Người dùng không tồn tại hoặc đã bị khoá")
+    return user
+
+
+CurrentUserDep = Annotated[UserModel, Depends(get_current_user)]
+
+
+def require_permission(permission: str) -> Callable[[UserModel], Awaitable[UserModel]]:
+    """Dependency factory — 403s unless the current user's permissions include `permission`."""
+
+    async def _check(current_user: CurrentUserDep) -> UserModel:
+        if permission not in current_user.permissions:
+            raise ForbiddenException(f"Tài khoản không có quyền '{permission}'")
+        return current_user
+
+    return _check
 
 
 def get_rag_service(

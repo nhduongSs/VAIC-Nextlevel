@@ -2,12 +2,25 @@
 
 from fastapi import APIRouter
 
-from app.api import chat, documents, embeddings, health, ingestion, prompt, retrieval, search
+from app.api import (
+    auth,
+    chat,
+    documents,
+    embeddings,
+    health,
+    ingestion,
+    prompt,
+    retrieval,
+    search,
+)
 
 router = APIRouter()
 
 # Health / liveness / readiness probes
 router.include_router(health.router)
+
+# Auth (login, current user)
+router.include_router(auth.router)
 
 # Document CRUD
 router.include_router(documents.router)
