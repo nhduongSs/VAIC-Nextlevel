@@ -61,7 +61,7 @@ brotli==1.2.0
 
 # ── Uvicorn extras ────────────────────────────────────────────────────────────
 httptools==0.8.0
-websockets==16.1
+websockets==16.1.1
 watchfiles==1.2.0
 colorama==0.4.6
 pathspec==1.1.1
