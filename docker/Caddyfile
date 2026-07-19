@@ -1,0 +1,6 @@
+# Reverse proxy + HTTPS tự động cho backend.
+# BACKEND_DOMAIN phải trỏ (A record) về IP tĩnh của VM; mở port 80 & 443.
+# Caddy tự xin và gia hạn chứng chỉ Let's Encrypt.
+{$BACKEND_DOMAIN} {
+	reverse_proxy backend:8000
+}

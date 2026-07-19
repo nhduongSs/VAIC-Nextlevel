@@ -1,0 +1,90 @@
+# Compose cho VM trên GCP: chỉ chạy backend + Postgres + embedding (frontend đã ở Railway).
+# Caddy đứng trước backend, tự cấp HTTPS (Let's Encrypt) cho $BACKEND_DOMAIN.
+#
+# Chạy:  docker compose -f docker-compose.gcp.yml up -d --build
+# Chỉ backend expose ra ngoài qua Caddy (443); postgres/embedding chỉ nội bộ.
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Tạo extension vector/uuid-ossp/pg_trgm khi khởi tạo DB lần đầu
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  embedding-service:
+    build:
+      context: ./docker
+      dockerfile: embedding.Dockerfile
+    restart: unless-stopped
+    volumes:
+      - model_cache:/root/.cache/huggingface
+    environment:
+      MODEL_NAME: BAAI/bge-m3
+      RERANKER_MODEL_NAME: BAAI/bge-reranker-v2-m3
+      MODEL_LOAD_STRATEGY: ${MODEL_LOAD_STRATEGY:-lazy}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 120s
+      retries: 3
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      EMBEDDING_SERVICE_URL: http://embedding-service:8001
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      LLM_MODEL: ${LLM_MODEL:-deepseek-chat}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      ENV: production
+      LOG_LEVEL: INFO
+      # BẮT BUỘC ở production: nếu thiếu, TrustedHostMiddleware chặn (400) và CORS
+      # chặn frontend Railway. ALLOWED_HOSTS = domain backend; ALLOWED_ORIGINS = URL frontend.
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      embedding-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      BACKEND_DOMAIN: ${BACKEND_DOMAIN}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data     # lưu chứng chỉ TLS, không xin lại mỗi lần restart
+      - caddy_config:/config
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  model_cache:
+  caddy_data:
+  caddy_config:

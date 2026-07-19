@@ -19,6 +19,7 @@ RUN npm run build
 
 EXPOSE 3000
 
-# Next.js lắng nghe cổng do nền tảng cấp qua $PORT (Railway/Cloud Run);
-# mặc định 3000 khi chạy local/compose.
-CMD ["sh", "-c", "npm start -- -p ${PORT:-3000}"]
+# Nghe trên $PORT do nền tảng cấp (Railway/Cloud Run), mặc định 3000 khi chạy local.
+# -H 0.0.0.0 bắt buộc: mặc định next start bind vào localhost -> proxy Railway
+# không với tới được (502 Bad Gateway).
+CMD ["sh", "-c", "npm start -- -H 0.0.0.0 -p ${PORT:-3000}"]
