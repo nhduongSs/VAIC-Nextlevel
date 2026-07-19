@@ -8,8 +8,8 @@ const beVietnamPro = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "SHB Chat — Tư vấn tiền gửi",
-  description: "Trợ lý RAG tra cứu quy định tiền gửi SHB Bank",
+  title: "NextBank Chat — Tư vấn tiền gửi",
+  description: "Trợ lý RAG tra cứu quy định tiền gửi ngân hàng",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

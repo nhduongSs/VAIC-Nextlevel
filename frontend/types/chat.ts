@@ -24,11 +24,23 @@ export interface Conflict {
   confidence: number;
 }
 
+export interface TimelineEntry {
+  document_id: string;
+  document_title: string;
+  doc_number: string | null;
+  version: number;
+  effective_date: string | null;
+  issued_date: string | null;
+  relation_type: string | null;
+  is_current: boolean;
+}
+
 export interface ChatApiResponse {
   session_id: string;
   answer: string;
   sources: Source[];
   conflicts: Conflict[];
+  timeline: TimelineEntry[];
   blocked: boolean;
   block_reason: BlockReason;
 }
@@ -45,5 +57,6 @@ export interface Message {
   createdAt: string;
   sources?: Source[];
   conflicts?: Conflict[];
+  timeline?: TimelineEntry[];
   blockReason?: BlockReason;
 }

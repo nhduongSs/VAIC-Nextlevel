@@ -23,13 +23,14 @@ class ChatService:
 
     Steps in :meth:`handle_message`:
     1. Input guardrail
-    2. Hybrid retrieval (RAGService)
-    3. Knowledge Intelligence pipeline (DocumentRelationService)
-    4. Retrieval guardrail
-    5. Prompt building (PromptBuilder)
-    6. LLM generation (DeepSeekService)
-    7. Response formatting (ResponseFormatter)
-    8. Output guardrail
+    2. Small talk short-circuit (greetings/thanks/etc — no RAG, no citations)
+    3. Hybrid retrieval (RAGService)
+    4. Knowledge Intelligence pipeline (DocumentRelationService)
+    5. Retrieval guardrail
+    6. Prompt building (PromptBuilder)
+    7. LLM generation (DeepSeekService)
+    8. Response formatting (ResponseFormatter)
+    9. Output guardrail
     """
 
     def __init__(
@@ -67,13 +68,19 @@ class ChatService:
                 block_reason=input_check.reason,
             )
 
-        # ── 2. Hybrid retrieval ────────────────────────────────────────────
+        # ── 2. Small talk short-circuit ─────────────────────────────────────
+        small_talk_reply = self.guardrail.check_small_talk(message)
+        if small_talk_reply is not None:
+            log.info("chat_small_talk", session_id=session_id)
+            return ChatResponse(session_id=session_id, answer=small_talk_reply)
+
+        # ── 3. Hybrid retrieval ────────────────────────────────────────────
         chunks = await self.rag.retrieve(message)
 
-        # ── 3. Knowledge Intelligence pipeline ────────────────────────────
+        # ── 4. Knowledge Intelligence pipeline ────────────────────────────
         context_package = await self.relations.process(message, chunks)
 
-        # ── 4. Retrieval guardrail ─────────────────────────────────────────
+        # ── 5. Retrieval guardrail ─────────────────────────────────────────
         retrieval_check = self.guardrail.check_retrieval(context_package.ranked_chunks)
         if not retrieval_check.allowed:
             log.info(
@@ -88,21 +95,21 @@ class ChatService:
                 block_reason=retrieval_check.reason,
             )
 
-        # ── 5. Build prompt ────────────────────────────────────────────────
+        # ── 6. Build prompt ────────────────────────────────────────────────
         prompt_package = self.prompt_builder.build(
             context_package=context_package,
             prompt_type=PromptType.QA,
         )
 
-        # ── 6. Generate ────────────────────────────────────────────────────
+        # ── 7. Generate ────────────────────────────────────────────────────
         generation_result = await self.deepseek_service.generate(prompt_package)
 
-        # ── 7. Output guardrail ────────────────────────────────────────────
+        # ── 8. Output guardrail ────────────────────────────────────────────
         generation_result.content = self.guardrail.check_output(
             generation_result.content
         )
 
-        # ── 8. Format response ─────────────────────────────────────────────
+        # ── 9. Format response ─────────────────────────────────────────────
         total_latency_ms = (time.perf_counter() - t0) * 1000
         answer_package = self.response_formatter.format(
             session_id=session_id,
@@ -140,24 +147,31 @@ class ChatService:
             yield "data: [DONE]\n\n"
             return
 
-        # ── 2. Retrieval ───────────────────────────────────────────────────
+        # ── 2. Small talk short-circuit ─────────────────────────────────────
+        small_talk_reply = self.guardrail.check_small_talk(message)
+        if small_talk_reply is not None:
+            yield f"data: {small_talk_reply}\n\n"
+            yield "data: [DONE]\n\n"
+            return
+
+        # ── 3. Retrieval ───────────────────────────────────────────────────
         chunks = await self.rag.retrieve(message)
         context_package = await self.relations.process(message, chunks)
 
-        # ── 3. Retrieval guardrail ─────────────────────────────────────────
+        # ── 4. Retrieval guardrail ─────────────────────────────────────────
         retrieval_check = self.guardrail.check_retrieval(context_package.ranked_chunks)
         if not retrieval_check.allowed:
             yield f"data: {retrieval_check.message}\n\n"
             yield "data: [DONE]\n\n"
             return
 
-        # ── 4. Build prompt ────────────────────────────────────────────────
+        # ── 5. Build prompt ────────────────────────────────────────────────
         prompt_package = self.prompt_builder.build(
             context_package=context_package,
             prompt_type=PromptType.QA,
         )
 
-        # ── 5. Stream generation ───────────────────────────────────────────
+        # ── 6. Stream generation ───────────────────────────────────────────
         log.info("chat_stream_start", session_id=session_id)
         async for token in self.deepseek_service.stream_generate(prompt_package):
             yield f"data: {token}\n\n"

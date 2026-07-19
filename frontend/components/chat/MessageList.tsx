@@ -24,7 +24,7 @@ export function MessageList({ messages, isSending, onRetry }: MessageListProps) 
       <div className="flex flex-col gap-5 py-6">
         {messages.length === 0 && (
           <p className="mt-10 text-center text-sm text-muted-foreground">
-            Bắt đầu hỏi về lãi suất, kỳ hạn, điều khoản tiền gửi SHB.
+            Bắt đầu hỏi về lãi suất, kỳ hạn, điều khoản tiền gửi.
           </p>
         )}
         {messages.map((message) => (

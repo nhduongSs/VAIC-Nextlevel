@@ -6,6 +6,7 @@ import { ChatWindow } from "@/components/chat/ChatWindow";
 import { LoginView } from "@/components/login/LoginView";
 import { AdminDashboardView } from "@/components/admin/AdminDashboardView";
 import { sendChatMessage, ChatApiError } from "@/lib/api";
+import { clearAuthSession, loadAuthSession, saveAuthSession } from "@/lib/auth";
 import {
   createSessionId,
   deriveTitle,
@@ -15,6 +16,7 @@ import {
   type StoredSession,
 } from "@/lib/sessions";
 import type { Message, MessageKind } from "@/types/chat";
+import type { AuthUser, LoginApiResponse } from "@/types/auth";
 
 type View = "chat" | "login" | "dashboard";
 
@@ -31,6 +33,7 @@ function lastMessageOfRole(session: StoredSession | undefined, role: Message["ro
 export default function HomePage() {
   const [view, setView] = useState<View>("chat");
   const [adminEmail, setAdminEmail] = useState("");
+  const [adminUser, setAdminUser] = useState<AuthUser | null>(null);
   const [sessions, setSessions] = useState<StoredSession[]>([]);
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
@@ -39,6 +42,12 @@ export default function HomePage() {
     const stored = loadSessions();
     setSessions(stored);
     if (stored.length > 0) setActiveSessionId(stored[0].id);
+
+    const authSession = loadAuthSession();
+    if (authSession) {
+      setAdminEmail(authSession.user.email);
+      setAdminUser(authSession.user);
+    }
   }, []);
 
   function updateSessions(updater: (prev: StoredSession[]) => StoredSession[]) {
@@ -88,6 +97,7 @@ export default function HomePage() {
             createdAt: new Date().toISOString(),
             sources: response.sources,
             conflicts: response.conflicts,
+            timeline: response.timeline,
           };
       appendMessage(sessionId, replyMessage, text);
     } catch (error) {
@@ -141,8 +151,10 @@ export default function HomePage() {
   if (view === "login") {
     return (
       <LoginView
-        onLoginSuccess={(email) => {
-          setAdminEmail(email);
+        onLoginSuccess={(response: LoginApiResponse) => {
+          saveAuthSession(response);
+          setAdminEmail(response.user.email);
+          setAdminUser(response.user);
           setView("dashboard");
         }}
         onBackToChat={() => setView("chat")}
@@ -154,8 +166,11 @@ export default function HomePage() {
     return (
       <AdminDashboardView
         adminEmail={adminEmail}
+        permissions={adminUser?.permissions ?? []}
         onLogout={() => {
+          clearAuthSession();
           setAdminEmail("");
+          setAdminUser(null);
           setView("chat");
         }}
         onGoToChat={() => setView("chat")}

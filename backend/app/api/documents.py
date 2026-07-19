@@ -9,8 +9,9 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile, status
 
-from app.core.dependencies import get_document_service
+from app.core.dependencies import get_document_service, require_permission
 from app.models.enums import AuthorityLevel, DocumentStatus, DocumentType
+from app.models.orm import UserModel
 from app.models.schemas import (
     DocumentResponse,
     DocumentUpdateRequest,
@@ -185,7 +186,11 @@ async def update_document(
 @router.delete(
     "/{document_id}",
     status_code=status.HTTP_204_NO_CONTENT,
-    summary="Xoá tài liệu (soft delete)",
+    summary="Xoá tài liệu (soft delete) — yêu cầu quyền documents:delete",
 )
-async def delete_document(document_id: UUID, service: DocumentServiceDep) -> None:
+async def delete_document(
+    document_id: UUID,
+    service: DocumentServiceDep,
+    _: Annotated[UserModel, Depends(require_permission("documents:delete"))],
+) -> None:
     await service.delete_document(document_id)

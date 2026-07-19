@@ -3,7 +3,12 @@
 import type { ChangeEvent } from "react";
 import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DOC_CATEGORIES, type DocumentFormValues } from "@/lib/adminDocuments";
+import {
+  AUTHORITY_LEVEL_OPTIONS,
+  DOC_CATEGORIES,
+  DOC_TYPE_OPTIONS,
+  type DocumentFormValues,
+} from "@/lib/adminDocuments";
 
 interface DocumentFormModalProps {
   title: string;
@@ -43,7 +48,7 @@ export function DocumentFormModal({
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="flex w-[480px] max-w-full flex-col gap-3.5 rounded-2xl bg-card p-6 shadow-lg"
+        className="flex max-h-[90vh] w-[560px] max-w-full flex-col gap-3.5 overflow-y-auto rounded-2xl bg-card p-6 shadow-lg"
       >
         <span className="text-[15px] font-bold">{title}</span>
 
@@ -55,7 +60,7 @@ export function DocumentFormModal({
                 <Upload className="h-4 w-4" aria-hidden="true" />
               </span>
               <span className="text-[13px] text-muted-foreground">
-                {values.existingFileName || "Chưa đính kèm tệp"} (không thể thay tệp, chỉ sửa tên/danh mục)
+                {values.existingFileName || "Chưa đính kèm tệp"} (không thể thay tệp, chỉ sửa metadata)
               </span>
             </div>
           ) : (
@@ -72,7 +77,7 @@ export function DocumentFormModal({
         </div>
 
         <div className="grid grid-cols-2 gap-3.5">
-          <div className="flex flex-col gap-1.5">
+          <div className="col-span-2 flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-muted-foreground">Tên tài liệu</label>
             <input
               value={values.name}
@@ -81,19 +86,101 @@ export function DocumentFormModal({
               className="rounded-[9px] border border-border px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
             />
           </div>
+
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-muted-foreground">Danh mục</label>
+            <label className="text-xs font-semibold text-muted-foreground">Danh mục (nội bộ)</label>
             <select
               value={values.category}
               onChange={(event) => onChange({ ...values, category: event.target.value })}
               className="rounded-[9px] border border-border bg-card px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
             >
+              <option value="">— Không chọn —</option>
               {DOC_CATEGORIES.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-muted-foreground">Loại văn bản</label>
+            <select
+              value={values.docType}
+              onChange={(event) => onChange({ ...values, docType: event.target.value })}
+              className="rounded-[9px] border border-border bg-card px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            >
+              {DOC_TYPE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="col-span-2 flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-muted-foreground">Cấp thẩm quyền</label>
+            <select
+              value={values.authorityLevel}
+              onChange={(event) => onChange({ ...values, authorityLevel: event.target.value })}
+              className="rounded-[9px] border border-border bg-card px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            >
+              {AUTHORITY_LEVEL_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-muted-foreground">Số hiệu văn bản</label>
+            <input
+              value={values.docNumber}
+              onChange={(event) => onChange({ ...values, docNumber: event.target.value })}
+              placeholder="VD: 36/2014/TT-NHNN"
+              className="rounded-[9px] border border-border px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-muted-foreground">Cơ quan ban hành</label>
+            <input
+              value={values.issuingBody}
+              onChange={(event) => onChange({ ...values, issuingBody: event.target.value })}
+              placeholder="VD: Ngân hàng Nhà nước Việt Nam"
+              className="rounded-[9px] border border-border px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-muted-foreground">Ngày ban hành</label>
+            <input
+              type="date"
+              value={values.issuedDate}
+              onChange={(event) => onChange({ ...values, issuedDate: event.target.value })}
+              className="rounded-[9px] border border-border px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-muted-foreground">Ngày hiệu lực</label>
+            <input
+              type="date"
+              value={values.effectiveDate}
+              onChange={(event) => onChange({ ...values, effectiveDate: event.target.value })}
+              className="rounded-[9px] border border-border px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-muted-foreground">Ngày hết hiệu lực</label>
+            <input
+              type="date"
+              value={values.expiredDate}
+              onChange={(event) => onChange({ ...values, expiredDate: event.target.value })}
+              className="rounded-[9px] border border-border px-3 py-2.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            />
           </div>
         </div>
 

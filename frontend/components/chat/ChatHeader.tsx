@@ -13,7 +13,7 @@ export function ChatHeader({ onGoToLogin }: ChatHeaderProps) {
           <AvatarFallback className="text-[13px]">TL</AvatarFallback>
         </Avatar>
         <div className="flex flex-col leading-tight">
-          <span className="text-[14.5px] font-bold">Trợ lý ảo SHB</span>
+          <span className="text-[14.5px] font-bold">Trợ lý ảo NextBank</span>
           <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-success" aria-hidden="true" />
             Đang hoạt động · Tư vấn điều khoản gửi tiền

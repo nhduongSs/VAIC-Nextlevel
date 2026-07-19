@@ -581,6 +581,26 @@ class ChatResponse(BaseModel):
     block_reason: str = "none"
 
 
+class LoginRequest(BaseModel):
+    email: str = Field(..., description="Email đăng nhập")
+    password: str = Field(..., min_length=1, description="Mật khẩu")
+
+
+class UserResponse(BaseModel):
+    id: UUID
+    email: str
+    full_name: str
+    role: str = Field(description="ADMIN hoặc STAFF")
+    permissions: list[str] = Field(description="Danh sách quyền của user")
+
+
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    expires_in: int = Field(description="Thời gian hết hạn access token (giây)")
+    user: UserResponse
+
+
 # ── Wave 4 — AI Generation schemas ───────────────────────────────────────────
 
 
