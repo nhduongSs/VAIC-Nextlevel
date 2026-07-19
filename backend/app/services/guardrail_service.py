@@ -12,6 +12,26 @@ REFUSAL_MESSAGE = (
     "Bạn vui lòng đặt câu hỏi trong phạm vi này nhé."
 )
 
+SMALL_TALK_REPLIES: dict[str, str] = {
+    "greeting": (
+        "Chào bạn! Mình là trợ lý ảo NextBank, sẵn sàng hỗ trợ các câu hỏi về "
+        "lãi suất, kỳ hạn và điều khoản gửi tiền tiết kiệm. Bạn muốn hỏi gì nào?"
+    ),
+    "thanks": (
+        "Không có gì, rất vui được hỗ trợ bạn! Nếu còn thắc mắc về gửi tiền "
+        "tiết kiệm, cứ hỏi mình nhé."
+    ),
+    "farewell": "Tạm biệt bạn! Hẹn gặp lại khi bạn cần hỗ trợ thêm về dịch vụ gửi tiền nhé.",
+    "wellbeing": (
+        "Mình vẫn hoạt động tốt, cảm ơn bạn đã hỏi thăm! Mình có thể giúp gì "
+        "cho bạn về gửi tiền tiết kiệm không?"
+    ),
+    "identity": (
+        "Mình là trợ lý ảo NextBank, hỗ trợ tra cứu quy định, lãi suất và điều "
+        "khoản gửi tiền tiết kiệm. Bạn cứ đặt câu hỏi nhé!"
+    ),
+}
+
 
 class GuardrailResult:
     def __init__(self, allowed: bool, reason: str = "none", message: str = ""):
@@ -40,6 +60,14 @@ class GuardrailService:
                 "Vui lòng không gửi thông tin cá nhân nhạy cảm qua chat.",
             )
         return GuardrailResult(True)
+
+    def check_small_talk(self, message: str) -> str | None:
+        """Return a friendly canned reply for greetings/thanks/farewells/etc,
+        or None if the message isn't small talk (i.e. should go through RAG)."""
+        category = rules.match_small_talk(message)
+        if category is None:
+            return None
+        return SMALL_TALK_REPLIES[category]
 
     def check_retrieval(self, chunks: list[Any]) -> GuardrailResult:
         if not chunks:

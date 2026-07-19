@@ -33,6 +33,7 @@ def _make_guardrail_service(
         reason="none" if input_allowed else "unsafe_request",
         message="" if input_allowed else "Blocked input",
     )
+    svc.check_small_talk.return_value = None
     svc.check_retrieval.return_value = GuardrailResult(
         allowed=retrieval_allowed,
         reason="none" if retrieval_allowed else "out_of_scope",
