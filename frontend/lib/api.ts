@@ -1,15 +1,19 @@
 import type { ChatApiResponse } from "@/types/chat";
+import type { LoginApiResponse } from "@/types/auth";
+import type { DocumentFormValues } from "@/lib/adminDocuments";
+import { getAuthToken } from "@/lib/auth";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 const REQUEST_TIMEOUT_MS = 30000;
 
-// Admin uploads don't collect legal-document classification (doc_type / authority_level) —
-// bank product docs default to these two values.
-const DOC_DEFAULT_DOC_TYPE = "PRODUCT_DOC";
-const DOC_DEFAULT_AUTHORITY_LEVEL = "INTERNAL_POLICY";
-
 export class ChatApiError extends Error {}
 export class ApiError extends Error {}
+export class AuthApiError extends Error {}
+
+function authHeaders(): Record<string, string> {
+  const token = getAuthToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 export interface DocumentResponse {
   id: string;
@@ -58,7 +62,7 @@ async function fetchWithTimeout(url: string, init?: RequestInit): Promise<Respon
 async function patchDocument(id: string, body: Record<string, unknown>): Promise<DocumentResponse> {
   const response = await fetchWithTimeout(`${API_BASE_URL}/api/v1/documents/${id}`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...authHeaders() },
     body: JSON.stringify(body),
   });
   if (!response.ok) throw new ApiError(`Cập nhật tài liệu thất bại: ${response.status}`);
@@ -66,44 +70,83 @@ async function patchDocument(id: string, body: Record<string, unknown>): Promise
 }
 
 export async function listDocuments(): Promise<DocumentResponse[]> {
-  const response = await fetchWithTimeout(`${API_BASE_URL}/api/v1/documents?limit=100`);
+  const response = await fetchWithTimeout(`${API_BASE_URL}/api/v1/documents?limit=100`, {
+    headers: authHeaders(),
+  });
   if (!response.ok) throw new ApiError(`Không tải được danh sách tài liệu: ${response.status}`);
   const body = (await response.json()) as PaginatedResponse<DocumentResponse>;
   return body.data;
 }
 
-export async function createDocument(file: File, title: string, category: string): Promise<DocumentResponse> {
+export async function createDocument(file: File, values: DocumentFormValues): Promise<DocumentResponse> {
   const form = new FormData();
   form.append("file", file);
-  form.append("title", title);
-  form.append("doc_type", DOC_DEFAULT_DOC_TYPE);
-  form.append("authority_level", DOC_DEFAULT_AUTHORITY_LEVEL);
+  form.append("title", values.name);
+  form.append("doc_type", values.docType);
+  form.append("authority_level", values.authorityLevel);
+  if (values.docNumber) form.append("doc_number", values.docNumber);
+  if (values.issuingBody) form.append("issuing_body", values.issuingBody);
+  if (values.issuedDate) form.append("issued_date", values.issuedDate);
+  if (values.effectiveDate) form.append("effective_date", values.effectiveDate);
+  if (values.expiredDate) form.append("expired_date", values.expiredDate);
 
   const response = await fetchWithTimeout(`${API_BASE_URL}/api/v1/documents`, {
     method: "POST",
+    headers: authHeaders(),
     body: form,
   });
   if (!response.ok) throw new ApiError(`Tải tài liệu thất bại: ${response.status}`);
   const created = (await response.json()) as DocumentResponse;
 
-  // Category has no matching field on the backend document schema — stored as a tag.
-  return patchDocument(created.id, { tags: [category] });
+  // Category (nhóm sản phẩm nội bộ, không có cột riêng phía backend) lưu như một tag.
+  return patchDocument(created.id, { tags: [values.category] });
 }
 
-export async function updateDocument(
-  id: string,
-  values: { title: string; category: string },
-): Promise<DocumentResponse> {
-  return patchDocument(id, { title: values.title, tags: [values.category] });
+export async function updateDocument(id: string, values: DocumentFormValues): Promise<DocumentResponse> {
+  return patchDocument(id, {
+    title: values.name,
+    tags: [values.category],
+    doc_type: values.docType,
+    authority_level: values.authorityLevel,
+    doc_number: values.docNumber || null,
+    issuing_body: values.issuingBody || null,
+    issued_date: values.issuedDate || null,
+    effective_date: values.effectiveDate || null,
+    expired_date: values.expiredDate || null,
+  });
 }
 
 export async function deleteDocument(id: string): Promise<void> {
   const response = await fetchWithTimeout(`${API_BASE_URL}/api/v1/documents/${id}`, {
     method: "DELETE",
+    headers: authHeaders(),
   });
-  if (!response.ok && response.status !== 204) {
-    throw new ApiError(`Xóa tài liệu thất bại: ${response.status}`);
+  if (response.ok || response.status === 204) return;
+
+  if (response.status === 403) {
+    throw new ApiError("Tài khoản của bạn không có quyền xóa tài liệu.");
   }
+  if (response.status === 401) {
+    throw new ApiError("Vui lòng đăng nhập lại để thực hiện thao tác này.");
+  }
+  throw new ApiError(`Xóa tài liệu thất bại: ${response.status}`);
+}
+
+export async function login(email: string, password: string): Promise<LoginApiResponse> {
+  const response = await fetchWithTimeout(`${API_BASE_URL}/api/v1/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw new AuthApiError("Email hoặc mật khẩu không đúng");
+    }
+    throw new AuthApiError(`Đăng nhập thất bại: ${response.status}`);
+  }
+
+  return (await response.json()) as LoginApiResponse;
 }
 
 export async function sendChatMessage(sessionId: string, message: string): Promise<ChatApiResponse> {

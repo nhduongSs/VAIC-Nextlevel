@@ -4,11 +4,13 @@ import type { AdminDocument } from "@/lib/adminDocuments";
 
 interface DocumentTableProps {
   documents: AdminDocument[];
+  canEdit: boolean;
+  canDelete: boolean;
   onEdit: (doc: AdminDocument) => void;
   onDelete: (id: string) => void;
 }
 
-export function DocumentTable({ documents, onEdit, onDelete }: DocumentTableProps) {
+export function DocumentTable({ documents, canEdit, canDelete, onEdit, onDelete }: DocumentTableProps) {
   return (
     <Card className="overflow-hidden p-0">
       <div className="grid grid-cols-[2fr_1.1fr_1.2fr_1fr] bg-muted px-[18px] py-2.5 text-xs font-bold text-muted-foreground">
@@ -32,20 +34,25 @@ export function DocumentTable({ documents, onEdit, onDelete }: DocumentTableProp
           <span className="text-muted-foreground">{doc.category}</span>
           <span className="text-[12.5px] text-muted-foreground">{doc.updatedAt}</span>
           <span className="flex justify-end gap-3.5">
-            <button
-              type="button"
-              onClick={() => onEdit(doc)}
-              className="cursor-pointer text-[12.5px] font-semibold text-primary hover:underline"
-            >
-              Sửa
-            </button>
-            <button
-              type="button"
-              onClick={() => onDelete(doc.id)}
-              className="cursor-pointer text-[12.5px] font-semibold text-destructive hover:underline"
-            >
-              Xóa
-            </button>
+            {canEdit && (
+              <button
+                type="button"
+                onClick={() => onEdit(doc)}
+                className="cursor-pointer text-[12.5px] font-semibold text-primary hover:underline"
+              >
+                Sửa
+              </button>
+            )}
+            {canDelete && (
+              <button
+                type="button"
+                onClick={() => onDelete(doc.id)}
+                className="cursor-pointer text-[12.5px] font-semibold text-destructive hover:underline"
+              >
+                Xóa
+              </button>
+            )}
+            {!canEdit && !canDelete && <span className="text-[12.5px] text-muted-foreground">—</span>}
           </span>
         </div>
       ))}

@@ -9,6 +9,7 @@ import { DocumentFormModal } from "./DocumentFormModal";
 import {
   EMPTY_DOC_FORM,
   toAdminDocument,
+  toFormValues,
   type AdminDocument,
   type DocumentFormValues,
 } from "@/lib/adminDocuments";
@@ -16,11 +17,14 @@ import { ApiError, createDocument, deleteDocument, listDocuments, updateDocument
 
 interface AdminDashboardViewProps {
   adminEmail: string;
+  permissions: string[];
   onLogout: () => void;
   onGoToChat: () => void;
 }
 
-export function AdminDashboardView({ adminEmail, onLogout, onGoToChat }: AdminDashboardViewProps) {
+export function AdminDashboardView({ adminEmail, permissions, onLogout, onGoToChat }: AdminDashboardViewProps) {
+  const canEdit = permissions.includes("documents:manage");
+  const canDelete = permissions.includes("documents:delete");
   const [documents, setDocuments] = useState<AdminDocument[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,7 +58,7 @@ export function AdminDashboardView({ adminEmail, onLogout, onGoToChat }: AdminDa
 
   function openEditDocForm(doc: AdminDocument) {
     setEditingId(doc.id);
-    setFormValues({ name: doc.name, category: doc.category, file: null, existingFileName: doc.fileName });
+    setFormValues(toFormValues(doc));
     setIsFormOpen(true);
   }
 
@@ -72,9 +76,9 @@ export function AdminDashboardView({ adminEmail, onLogout, onGoToChat }: AdminDa
     setError(null);
     try {
       if (editingId !== null) {
-        await updateDocument(editingId, { title: formValues.name, category: formValues.category });
+        await updateDocument(editingId, formValues);
       } else {
-        await createDocument(formValues.file as File, formValues.name, formValues.category);
+        await createDocument(formValues.file as File, formValues);
       }
       await loadDocuments();
       closeForm();
@@ -125,7 +129,13 @@ export function AdminDashboardView({ adminEmail, onLogout, onGoToChat }: AdminDa
           {isLoading ? (
             <div className="text-[13.5px] text-muted-foreground">Đang tải danh sách tài liệu...</div>
           ) : (
-            <DocumentTable documents={documents} onEdit={openEditDocForm} onDelete={deleteDoc} />
+            <DocumentTable
+              documents={documents}
+              canEdit={canEdit}
+              canDelete={canDelete}
+              onEdit={openEditDocForm}
+              onDelete={deleteDoc}
+            />
           )}
         </div>
       </div>

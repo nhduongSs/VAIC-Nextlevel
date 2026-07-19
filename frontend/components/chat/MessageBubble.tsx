@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { BLOCK_REASON_LABELS } from "@/lib/blockReasons";
 import { SourcePill } from "./SourcePill";
 import { ConflictNotice } from "./ConflictNotice";
+import { DocumentTimeline } from "./DocumentTimeline";
 import { RateTableCard } from "./RateTableCard";
 import { InterestCalculatorCard } from "./InterestCalculatorCard";
 import type { Message } from "@/types/chat";
@@ -63,6 +64,8 @@ export function MessageBubble({ message, onRetry, isSending }: MessageBubbleProp
         )}
 
         {message.conflicts && message.conflicts.length > 0 && <ConflictNotice conflicts={message.conflicts} />}
+
+        {message.timeline && message.timeline.length > 0 && <DocumentTimeline timeline={message.timeline} />}
 
         {isError && (
           <Button size="sm" variant="outline" onClick={onRetry} disabled={isSending}>

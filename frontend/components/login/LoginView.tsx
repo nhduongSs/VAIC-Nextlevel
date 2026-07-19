@@ -3,27 +3,40 @@
 import { useState, type KeyboardEvent } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { login, AuthApiError } from "@/lib/api";
+import type { LoginApiResponse } from "@/types/auth";
 
 interface LoginViewProps {
-  onLoginSuccess: (email: string) => void;
+  onLoginSuccess: (response: LoginApiResponse) => void;
   onBackToChat: () => void;
 }
 
 export function LoginView({ onLoginSuccess, onBackToChat }: LoginViewProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!email.trim() || !password.trim()) {
-      setError(true);
+      setError("Vui lòng nhập đầy đủ email và mật khẩu.");
       return;
     }
-    onLoginSuccess(email.trim());
+
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      const response = await login(email.trim(), password);
+      onLoginSuccess(response);
+    } catch (err) {
+      setError(err instanceof AuthApiError ? err.message : "Không kết nối được máy chủ");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter") handleSubmit();
+    if (event.key === "Enter") void handleSubmit();
   }
 
   return (
@@ -31,7 +44,7 @@ export function LoginView({ onLoginSuccess, onBackToChat }: LoginViewProps) {
       <Card className="flex w-[380px] flex-col gap-5 p-9 shadow-sm">
         <div className="flex flex-col items-center gap-2.5 text-center">
           <div className="flex h-11 w-11 items-center justify-center rounded-[13px] bg-primary text-[15px] font-extrabold text-primary-foreground">
-            SHB
+            NB
           </div>
           <span className="text-base font-bold">Đăng nhập quản trị</span>
           <span className="text-[12.5px] text-muted-foreground">
@@ -45,10 +58,11 @@ export function LoginView({ onLoginSuccess, onBackToChat }: LoginViewProps) {
             value={email}
             onChange={(event) => {
               setEmail(event.target.value);
-              setError(false);
+              setError(null);
             }}
             onKeyDown={handleKeyDown}
-            placeholder="admin@shb.com.vn"
+            placeholder="admin@gmail.com"
+            disabled={isSubmitting}
             className="rounded-[10px] border border-border px-3.5 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           />
         </div>
@@ -60,22 +74,21 @@ export function LoginView({ onLoginSuccess, onBackToChat }: LoginViewProps) {
             value={password}
             onChange={(event) => {
               setPassword(event.target.value);
-              setError(false);
+              setError(null);
             }}
             onKeyDown={handleKeyDown}
             placeholder="••••••••"
+            disabled={isSubmitting}
             className="rounded-[10px] border border-border px-3.5 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           />
         </div>
 
         {error && (
-          <div className="rounded-lg bg-destructive/10 px-3 py-2 text-[12.5px] text-destructive">
-            Vui lòng nhập đầy đủ email và mật khẩu.
-          </div>
+          <div className="rounded-lg bg-destructive/10 px-3 py-2 text-[12.5px] text-destructive">{error}</div>
         )}
 
-        <Button onClick={handleSubmit} className="w-full justify-center py-3">
-          Đăng nhập
+        <Button onClick={handleSubmit} disabled={isSubmitting} className="w-full justify-center py-3">
+          {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
         </Button>
         <button
           type="button"

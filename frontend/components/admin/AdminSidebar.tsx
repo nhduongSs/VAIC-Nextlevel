@@ -13,7 +13,7 @@ export function AdminSidebar({ adminEmail, onLogout, onGoToChat }: AdminSidebarP
     <aside className="flex h-full w-[250px] flex-shrink-0 flex-col border-r border-border bg-card p-4">
       <div className="flex items-center gap-2.5 px-1.5 pb-5">
         <div className="flex h-[38px] w-[38px] flex-shrink-0 items-center justify-center rounded-[11px] bg-primary text-[13px] font-extrabold text-primary-foreground">
-          SHB
+          NB
         </div>
         <div className="flex flex-col leading-tight">
           <span className="text-[14.5px] font-bold">Quản trị</span>
