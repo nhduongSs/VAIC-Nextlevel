@@ -20,7 +20,13 @@ if TYPE_CHECKING:
     from app.services.embedding_service import EmbeddingService
 
 from app.models.entities import Chunk, DocumentRelation, ProcessingLog
-from app.models.enums import DocumentStatus, IngestionStatus, RelationType
+from app.models.enums import (
+    AuthorityLevel,
+    DocumentStatus,
+    DocumentType,
+    IngestionStatus,
+    RelationType,
+)
 from app.models.orm import DocumentModel
 from app.repositories.document_store import (
     PgChunkRepository,
@@ -176,8 +182,8 @@ class IngestionPipelineService:
                 doc_number=document.doc_number,
                 issuing_body=document.issuing_body,
             )
-            document.doc_type = classification.doc_type
-            document.authority_level = classification.authority_level
+            document.doc_type = DocumentType(classification.doc_type)
+            document.authority_level = AuthorityLevel(classification.authority_level)
             document.updated_at = datetime.now(UTC)
             await doc_repo.update(document)
             await session.commit()
